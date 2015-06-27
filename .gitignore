@@ -1,0 +1,16 @@
+*.iml
+*.ipr
+*.iws
+.metadata
+*.sw*
+RemoteSystemsTempFiles
+.project
+.classpath
+.settings
+target
+bin/
+Servers
+.gradle
+build
+*.war
+MANIFEST.MF

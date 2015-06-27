@@ -1,0 +1,6 @@
+include 'coollections'
+include 'test-codebases'
+include 'core'
+include 'db'
+include 'indexing'
+include 'service'

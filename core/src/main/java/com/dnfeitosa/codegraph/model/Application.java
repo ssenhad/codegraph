@@ -1,11 +1,9 @@
 package com.dnfeitosa.codegraph.model;
 
-import static com.dnfeitosa.coollections.Coollections.$;
-
 import java.util.Collections;
 import java.util.List;
 
-import com.dnfeitosa.coollections.Filter;
+import static com.dnfeitosa.coollections.Coollections.$;
 
 public class Application {
 
@@ -23,13 +21,6 @@ public class Application {
 		this.modules = assignToMe(modules);
 	}
 
-	private List<Module> assignToMe(List<Module> modules) {
-		for (Module module : modules) {
-			module.assignTo(this);
-		}
-		return modules;
-	}
-
 	public String getName() {
 		return name;
 	}
@@ -43,11 +34,13 @@ public class Application {
 	}
 
 	public Module getModule(final String name) {
-		return $(modules).find(new Filter<Module>() {
-			@Override
-			public Boolean matches(Module module) {
-				return module.getName().equals(name);
-			}
-		});
+		return $(modules).find(module -> module.getName().equals(name));
 	}
+
+    private List<Module> assignToMe(List<Module> modules) {
+        for (Module module : modules) {
+            module.setApplication(this);
+        }
+        return modules;
+    }
 }

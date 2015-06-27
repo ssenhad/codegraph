@@ -17,8 +17,8 @@ public class Terminal {
 	private static final Logger LOGGER = Logger.getLogger(Terminal.class);
 
 	public List<String> execute(String... strings) {
-		String command = join(strings, " ");
-		try {
+        String command = join(strings, " ");
+        try {
 			LOGGER.debug(format("Executing '%s'", command));
 			Process process = Runtime.getRuntime().exec(strings);
 			return waitAndRespond(process);
@@ -28,14 +28,14 @@ public class Terminal {
 	}
 
 	public List<String> execute(File workingDir, String... strings) {
-		String command = join(strings, " ");
-		try {
+        String command = join(strings, " ");
+        try {
 			LOGGER.debug(format("Executing '%s'", command));
 			Process process = Runtime.getRuntime().exec(strings, new String[0], workingDir);
 			return waitAndRespond(process);
 		} catch (Exception e) {
-			throw new TerminalException(format("Cannot execute command '%s'.", command), e);
-		}
+            throw new TerminalException(format("Cannot execute command '%s' at '%s'.", command, workingDir), e);
+        }
 	}
 
 	private List<String> waitAndRespond(Process process) throws InterruptedException, IOException {

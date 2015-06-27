@@ -45,26 +45,14 @@ public class ImpactZone {
 	}
 
 	private Filter<Impact> impactsIndirectly() {
-		return new Filter<Impact>() {
-			public Boolean matches(Impact impact) {
-				return !impact.getImpacting().equals(module);
-			}
-		};
+		return impact -> !impact.getImpacting().equals(module);
 	}
 
 	private Filter<Impact> impactsDirectly() {
-		return new Filter<Impact>() {
-			public Boolean matches(Impact impact) {
-				return impact.getImpacting().equals(module);
-			}
-		};
+		return impact -> impact.getImpacting().equals(module);
 	}
 
 	private Filter<Impact> sameApplication() {
-		return new Filter<Impact>() {
-			public Boolean matches(Impact impact) {
-				return impact.getImpacted().getApplication().equals(module.getApplication());
-			}
-		};
+		return impact -> impact.getImpacted().getApplication().equals(module.getApplication());
 	}
 }

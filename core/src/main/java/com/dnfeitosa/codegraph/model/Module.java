@@ -65,7 +65,7 @@ public class Module {
 		return format("Module{name='%s', application='%s'}", name, application.getName());
 	}
 
-	void assignTo(Application application) {
+	void setApplication(Application application) {
 		this.application = application;
 	}
 

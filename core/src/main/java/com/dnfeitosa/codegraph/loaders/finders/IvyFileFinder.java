@@ -22,10 +22,6 @@ public class IvyFileFinder {
 	}
 
 	private Function<String, IvyFile> toIvyFile() {
-		return new Function<String, IvyFile>() {
-			public IvyFile apply(String location) {
-				return new IvyFile(location);
-			}
-		};
+		return location -> new IvyFile(location);
 	}
 }

@@ -3,7 +3,7 @@ package com.dnfeitosa.codegraph;
 import com.dnfeitosa.codegraph.descriptors.ApplicationDescriptor;
 import com.dnfeitosa.codegraph.filesystem.Path;
 import com.dnfeitosa.codegraph.model.ArtifactType;
-import com.dnfeitosa.codegraph.model.IvyFile;
+import com.dnfeitosa.codegraph.descriptors.ivy.IvyFile;
 import com.dnfeitosa.codegraph.model.Jar;
 import com.dnfeitosa.codegraph.descriptors.ModuleDescriptor;
 

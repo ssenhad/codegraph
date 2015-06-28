@@ -1,5 +1,7 @@
-package com.dnfeitosa.codegraph.model;
+package com.dnfeitosa.codegraph.descriptors.ivy;
 
+import com.dnfeitosa.codegraph.model.ArtifactType;
+import com.dnfeitosa.codegraph.model.Jar;
 import com.dnfeitosa.codegraph.testing.TestContext;
 import org.junit.Before;
 import org.junit.Test;

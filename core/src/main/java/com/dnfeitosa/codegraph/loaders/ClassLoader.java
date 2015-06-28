@@ -179,7 +179,7 @@ public class ClassLoader {
 //	private List<IvyFile> getIvyFiles(String codebaseRoot, List<String> applications) {
 //		List<IvyFile> ivyFiles = new ArrayList<IvyFile>();
 //		for (String application : applications) {
-//			ivyFiles.addAll(ivyFileFinder.findFilesIn(join(codebaseRoot, application)));
+//			ivyFiles.addAll(ivyFileFinder.find(join(codebaseRoot, application)));
 //		}
 //		return ivyFiles;
 //	}

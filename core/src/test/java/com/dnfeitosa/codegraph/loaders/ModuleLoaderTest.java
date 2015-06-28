@@ -14,7 +14,7 @@ public class ModuleLoaderTest {
 //	public void shouldCreateAModuleBasedOnItsIvyConfiguration() {
 //		Module module = moduleLoader.apply(ivyFile);
 //
-//		assertThat(module.getName(), is(ivyFile.getName()));
+//		assertThat(module.name(), is(ivyFile.name()));
 //		assertThat(module.getDependencies(), is(ivyFile.getDependencies()));
 //		assertThat(module.getLocation(), is(ivyFile.getLocation()));
 //		assertThat(module.getExportTypes(), is(ivyFile.getExportTypes()));

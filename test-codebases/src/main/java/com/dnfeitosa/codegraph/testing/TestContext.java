@@ -12,31 +12,35 @@ public class TestContext {
     }
 
     public static FakeApp mirror() {
-        return new FakeApp(Path.join(FAKE_CODEBASE, "mirror"));
+        return new FakeApp("mirror");
     }
 
     public static FakeApp vraptor() {
-        return new FakeApp(Path.join(FAKE_CODEBASE, "vraptor4"));
+        return new FakeApp("vraptor4");
     }
 
     public static FakeApp ivyBased() {
-        return new FakeApp(Path.join(FAKE_CODEBASE, "ivy-based-application"));
+        return new FakeApp("ivy-based-application");
     }
 
     public static class FakeApp {
 
-		private final String location;
+		private final String name;
 
-		FakeApp(String location) {
-			this.location = location;
+		FakeApp(String name) {
+            this.name = name;
 		}
 
-		public String locationOf(String moduleName) {
-			return Path.join(location, moduleName);
+        public String name() {
+            return name;
+        }
+
+        public String locationOf(String moduleName) {
+			return Path.join(location(), moduleName);
 		}
 
 		public String location() {
-			return location;
+			return Path.join(FAKE_CODEBASE, name);
 		}
 	}
 

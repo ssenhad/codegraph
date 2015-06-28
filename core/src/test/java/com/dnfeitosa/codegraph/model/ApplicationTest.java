@@ -22,7 +22,7 @@ public class ApplicationTest {
 			dependencies, exports);
 	private final Module module2 = new Module("app4-Module2", "codebase/application4/app4-Module2", dependencies, exports);
 
-	private final Application application = new Application("application4", "codebase/application4", asList(module4, module2));
+	private final Application application = new Application("application4", asList(module4, module2));
 
 	@Test
 	public void whenCreatingAModule() {

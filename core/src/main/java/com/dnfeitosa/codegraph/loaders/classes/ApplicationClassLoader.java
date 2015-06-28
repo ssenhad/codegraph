@@ -3,7 +3,7 @@ package com.dnfeitosa.codegraph.loaders.classes;
 import com.dnfeitosa.codegraph.loaders.ClassFileLoader;
 import com.dnfeitosa.codegraph.loaders.finders.IvyFileFinder;
 import com.dnfeitosa.codegraph.loaders.finders.code.ClassFile;
-import com.dnfeitosa.codegraph.model.IvyFile;
+import com.dnfeitosa.codegraph.descriptors.ModuleDescriptor;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -31,13 +31,13 @@ public class ApplicationClassLoader {
 		LOGGER.info(String.format("Loading classes for application '%s'", applicationName));
 
 		List<ClassFile> classFiles = new ArrayList<>(10000);
-		for (IvyFile ivyFile : getModuleDefinitions(codebaseRoot, applicationName)) {
-			classFiles.addAll(classFileLoader.loadFor(ivyFile.getModuleName(), ivyFile.getLocation()));
+		for (ModuleDescriptor ivyFile : getModuleDefinitions(codebaseRoot, applicationName)) {
+			classFiles.addAll(classFileLoader.loadFor(ivyFile.getName(), ivyFile.getLocation()));
 		}
 		return classFiles;
 	}
 
-	private List<IvyFile> getModuleDefinitions(String codebaseRoot, String applicationName) {
+	private List<ModuleDescriptor> getModuleDefinitions(String codebaseRoot, String applicationName) {
 		return ivyFileFinder.findFilesIn(join(codebaseRoot, applicationName));
 	}
 }

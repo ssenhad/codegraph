@@ -2,6 +2,7 @@ dependencies {
   compile project(':coollections')
   compile project(':core')
   compile project(':db')
+  compile project(':service')
 
   compile group: "org.springframework", name: "spring-core", version: "4.1.0.RELEASE"
 

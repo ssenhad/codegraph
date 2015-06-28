@@ -98,9 +98,9 @@ public class ClassLoader {
 		return new Runnable() {
 			@Override
 			public void run() {
-				System.out.println(Thread.currentThread().getName() + " - Loading " + applicationName);
+				System.out.println(Thread.currentThread().getModuleName() + " - Loading " + applicationName);
 				results.put(applicationName, applicationClassLoader.loadFor(codebaseRoot, applicationName));
-				System.out.println(Thread.currentThread().getName() + " - Finished " + applicationName);
+				System.out.println(Thread.currentThread().getModuleName() + " - Finished " + applicationName);
 			}
 		};
 	}
@@ -137,7 +137,7 @@ public class ClassLoader {
 		return new Filter<ClassFile>() {
 			@Override
 			public Boolean matches(ClassFile input) {
-				List<String> result = terminal.execute("grep", input.getName(), Path.join(location, fileName));
+				List<String> result = terminal.execute("grep", input.getModuleName(), Path.join(location, fileName));
 				return !result.isEmpty();
 			}
 		};
@@ -148,7 +148,7 @@ public class ClassLoader {
 	// return new Function<ClassFile, String>() {
 	// @Override
 	// public String apply(ClassFile input) {
-	// return input.getName();
+	// return input.getModuleName();
 	// }
 	// };
 	// }

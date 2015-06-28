@@ -1,18 +1,22 @@
 package com.dnfeitosa.codegraph.loaders;
 
-import com.dnfeitosa.coollections.Function;
 import com.dnfeitosa.codegraph.loaders.finders.ApplicationsFinder;
 import com.dnfeitosa.codegraph.model.Application;
+import com.dnfeitosa.coollections.Function;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static com.dnfeitosa.coollections.Coollections.$;
 
+@Component
 public class ApplicationsLoader {
 
 	private ApplicationsFinder finder;
 	private ApplicationLoader loader;
 
+    @Autowired
 	public ApplicationsLoader(ApplicationsFinder finder, ApplicationLoader loader) {
 		this.finder = finder;
 		this.loader = loader;
@@ -27,10 +31,7 @@ public class ApplicationsLoader {
 	}
 
 	private Function<String, Application> applicationLoader(final String codebaseRoot) {
-		return new Function<String, Application>() {
-			public Application apply(String applicationName) {
-				return loader.load(codebaseRoot, applicationName);
-			}
-		};
+        return null;
+//		return applicationName -> loader.load(codebaseRoot, applicationName);
 	}
 }

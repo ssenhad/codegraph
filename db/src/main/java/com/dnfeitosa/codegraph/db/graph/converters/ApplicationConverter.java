@@ -24,7 +24,7 @@ public class ApplicationConverter {
 		LOGGER.trace(String.format("Converting node to application '%s'.", node.getName()));
 
 		List<com.dnfeitosa.codegraph.model.Module> modules = moduleConverter.fromNodes(node.getModules());
-		return new com.dnfeitosa.codegraph.model.Application(node.getName(), null, modules);
+		return new com.dnfeitosa.codegraph.model.Application(node.getName(), modules);
 	}
 
 	public com.dnfeitosa.codegraph.db.graph.nodes.Application toNode(com.dnfeitosa.codegraph.model.Application application) {

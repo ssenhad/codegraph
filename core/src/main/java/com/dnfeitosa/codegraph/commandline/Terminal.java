@@ -1,6 +1,7 @@
 package com.dnfeitosa.codegraph.commandline;
 
 import org.apache.log4j.Logger;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
@@ -12,6 +13,7 @@ import java.util.Scanner;
 import static java.lang.String.format;
 import static org.apache.commons.lang.StringUtils.join;
 
+@Component
 public class Terminal {
 
 	private static final Logger LOGGER = Logger.getLogger(Terminal.class);

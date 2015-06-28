@@ -1,19 +1,19 @@
 package com.dnfeitosa.codegraph.loaders;
 
-import static org.apache.commons.lang.StringUtils.join;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
-
-import com.dnfeitosa.codegraph.loaders.finders.IvyFileFinder;
-import com.dnfeitosa.codegraph.testing.TestContext;
-import org.apache.commons.lang.StringUtils;
+import com.dnfeitosa.codegraph.descriptors.ModuleDescriptor;
+import com.dnfeitosa.codegraph.descriptors.impl.SimpleApplication;
+import com.dnfeitosa.codegraph.model.Application;
+import com.dnfeitosa.codegraph.model.ArtifactType;
+import com.dnfeitosa.codegraph.model.Jar;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.dnfeitosa.codegraph.commandline.Terminal;
-import com.dnfeitosa.codegraph.model.Application;
+import java.util.List;
+import java.util.Set;
 
-import java.util.Arrays;
+import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.is;
+import static org.junit.Assert.assertThat;
 
 public class ApplicationLoaderTest {
 
@@ -21,15 +21,37 @@ public class ApplicationLoaderTest {
 
 	@Before
 	public void setUp() {
-		Terminal terminal = new Terminal();
-		loader = new ApplicationLoader(new ModulesLoader(new IvyFileFinder(terminal), new ModuleLoader()));
+		loader = new ApplicationLoader();
 	}
 
 	@Test
 	public void shouldLoadAnApplication() {
-		Application application = loader.load(TestContext.FAKE_CODEBASE, "application4");
+        SimpleApplication applicationDescriptor = new SimpleApplication("application name", "application location", asList(new ModuleDescriptor() {
+            @Override
+            public String getName() {
+                return "module name";
+            }
 
-		assertThat(application.getName(), is("application4"));
-		assertThat(application.getLocation(), is(StringUtils.join(Arrays.asList(TestContext.FAKE_CODEBASE, "application4"), "/")));
-	}
+            @Override
+            public String getLocation() {
+                return "module location";
+            }
+
+            @Override
+            public List<Jar> getDependencies() {
+                return null;
+            }
+
+            @Override
+            public Set<ArtifactType> getExportTypes() {
+                return null;
+            }
+        }));
+
+        Application application = loader.load(applicationDescriptor);
+
+		assertThat(application.getName(), is("application name"));
+        assertThat(application.getModules().size(), is(1));
+        assertThat(application.getModules().get(0).getName(), is("module name"));
+    }
 }

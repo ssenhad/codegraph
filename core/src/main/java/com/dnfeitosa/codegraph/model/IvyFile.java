@@ -12,35 +12,34 @@ import static com.dnfeitosa.coollections.Coollections.$;
 
 public class IvyFile {
 
-	private XmlFile xml;
-	private File file;
+    private final String location;
+    private final XmlFile xml;
 
 	public IvyFile(String path) {
-		this.file = new File(path);
+        File file = new File(path);
 		this.xml = new XmlFile(file);
+        this.location = file.getParent();
 	}
 
-	public String getModuleName() {
+    public String getModuleName() {
 		return xml.findAttribute("/ivy-module/info/@module").getValue();
 	}
 
-	public String getLocation() {
-		return file.getParent();
+    public String getLocation() {
+		return location;
 	}
 
-	public List<Jar> getDependencies() {
+    public List<Jar> getDependencies() {
 		return $(xml.findElements("/ivy-module/dependencies/dependency")).map(elementToJar());
 	}
 
 	private Function<Element, Jar> elementToJar() {
-		return new Function<Element, Jar>() {
-			public Jar apply(Element element) {
-				String organization = element.getAttribute("org").getValue();
-				String name = element.getAttribute("name").getValue();
-				String version = element.getAttribute("rev").getValue();
-				return new Jar(organization, name, version);
-			}
-		};
+		return element -> {
+            String organization = element.getAttribute("org").getValue();
+            String name = element.getAttribute("name").getValue();
+            String version = element.getAttribute("rev").getValue();
+            return new Jar(organization, name, version);
+        };
 	}
 
 	public Set<ArtifactType> getExportTypes() {
@@ -48,11 +47,9 @@ public class IvyFile {
 	}
 
 	private Function<Element, ArtifactType> toArtifactType() {
-		return new Function<Element, ArtifactType>() {
-			public ArtifactType apply(Element element) {
-				String type = element.getAttribute("type").getValue();
-				return ArtifactType.fromName(type.toUpperCase());
-			}
-		};
+		return element -> {
+            String type = element.getAttribute("type").getValue();
+            return ArtifactType.fromName(type.toUpperCase());
+        };
 	}
 }

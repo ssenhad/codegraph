@@ -43,7 +43,7 @@ public class ApplicationServiceTest {
 						jar("apache", "commons-lang", "1.0")), of(CONFIG, JAR)));
 
 	private final String app4 = "application4";
-	private final Application toSave = new Application(app4, null, modules);
+	private final Application toSave = new Application(app4, modules);
 
 	@Autowired
 	private ApplicationService service;

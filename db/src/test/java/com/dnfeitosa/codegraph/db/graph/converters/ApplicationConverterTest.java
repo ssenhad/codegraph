@@ -20,7 +20,7 @@ public class ApplicationConverterTest {
 	private final List<com.dnfeitosa.codegraph.model.Module> modules = asList(new com.dnfeitosa.codegraph.model.Module(null, null, null, null), new com.dnfeitosa.codegraph.model.Module(null, null, null, null));
 
 	private final com.dnfeitosa.codegraph.model.Application application = new com.dnfeitosa.codegraph.model.Application(
-			applicationName, location, modules);
+			applicationName, modules);
 
 	private final Application node = new Application() {
 		{

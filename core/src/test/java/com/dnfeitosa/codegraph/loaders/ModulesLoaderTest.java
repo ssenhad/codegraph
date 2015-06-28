@@ -5,6 +5,7 @@ import com.dnfeitosa.codegraph.loaders.finders.IvyFileFinder;
 import com.dnfeitosa.codegraph.model.Module;
 import com.dnfeitosa.codegraph.testing.TestContext;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import java.util.List;
@@ -27,6 +28,7 @@ public class ModulesLoaderTest {
     }
 
 	@Test
+    @Ignore
 	public void shouldLoadTheModulesBasedOnTheirIvyFiles() {
 		List<Module> modules = loader.loadAllFrom(TestContext.ivyBased().location());
 

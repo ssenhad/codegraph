@@ -1,15 +1,19 @@
 package com.dnfeitosa.codegraph.loaders.finders;
 
 import com.dnfeitosa.codegraph.commandline.Terminal;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 import static com.dnfeitosa.coollections.Coollections.$;
 
+@Component
 public class ApplicationsFinder {
 
 	private Terminal terminal;
 
+    @Autowired
 	public ApplicationsFinder(Terminal terminal) {
 		this.terminal = terminal;
 	}

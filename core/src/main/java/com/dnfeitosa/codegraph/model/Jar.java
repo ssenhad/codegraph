@@ -27,7 +27,17 @@ public class Jar {
 		return version;
 	}
 
-	@Override
+    public String getOrganization() {
+        return organization;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("Jar{org: %s, name: %s, version: %s}", organization, name, version);
+    }
+
+
+    @Override
 	public boolean equals(Object o) {
 		return reflectionEquals(this, o);
 	}
@@ -35,9 +45,5 @@ public class Jar {
 	@Override
 	public int hashCode() {
 		return reflectionHashCode(this);
-	}
-
-	public String getOrganization() {
-		return organization;
 	}
 }

@@ -5,7 +5,7 @@ import com.dnfeitosa.codegraph.descriptors.ivy.IvyModuleDescriptor;
 import com.dnfeitosa.codegraph.descriptors.maven.MavenModuleDescriptor;
 import com.dnfeitosa.codegraph.descriptors.maven.PomFile;
 
-public enum DescriptorTypes {
+public enum DescriptorType {
 
     IVY("ivy.xml") {
         @Override
@@ -23,7 +23,7 @@ public enum DescriptorTypes {
 
     private String fileName;
 
-    DescriptorTypes(String fileName) {
+    DescriptorType(String fileName) {
         this.fileName = fileName;
     }
 

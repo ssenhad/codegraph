@@ -22,7 +22,7 @@ public class IvyModuleDescriptor implements ModuleDescriptor {
 
     @Override
     public String getLocation() {
-        return null;
+        return ivyFile.getLocation();
     }
 
     @Override

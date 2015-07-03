@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.services;
 
-import com.dnfeitosa.codegraph.model.Application;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.Application;
+import com.dnfeitosa.codegraph.core.model.Module;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

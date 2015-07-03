@@ -1,8 +1,8 @@
 package com.dnfeitosa.codegraph.analysis.impactzone;
 
-import com.dnfeitosa.codegraph.model.Impact;
-import com.dnfeitosa.codegraph.model.ImpactZone;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.Impact;
+import com.dnfeitosa.codegraph.core.model.ImpactZone;
+import com.dnfeitosa.codegraph.core.model.Module;
 
 import java.util.ArrayList;
 import java.util.Collections;

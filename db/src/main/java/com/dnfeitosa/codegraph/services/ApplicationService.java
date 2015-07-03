@@ -1,18 +1,17 @@
 package com.dnfeitosa.codegraph.services;
 
-import static com.dnfeitosa.coollections.Coollections.$;
-import static java.lang.String.format;
-
-import java.util.List;
-
 import com.dnfeitosa.codegraph.db.graph.converters.ApplicationConverter;
 import com.dnfeitosa.codegraph.db.graph.repositories.GraphApplicationRepository;
+import com.dnfeitosa.coollections.Function;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.stereotype.Service;
 
-import com.dnfeitosa.coollections.Function;
+import java.util.List;
+
+import static com.dnfeitosa.coollections.Coollections.$;
+import static java.lang.String.format;
 
 @Service
 public class ApplicationService {
@@ -28,7 +27,7 @@ public class ApplicationService {
 		this.converter = converter;
 	}
 
-	public void save(com.dnfeitosa.codegraph.model.Application application) {
+	public void save(com.dnfeitosa.codegraph.core.model.Application application) {
 		LOGGER.info(format("Saving '%s'.", application.getName()));
 		com.dnfeitosa.codegraph.db.graph.nodes.Application node = converter.toNode(application);
 		graphRepository.save(node);
@@ -38,22 +37,17 @@ public class ApplicationService {
 		return graphRepository.getApplicationNames();
 	}
 
-	public com.dnfeitosa.codegraph.model.Application find(String name) {
+	public com.dnfeitosa.codegraph.core.model.Application find(String name) {
 		com.dnfeitosa.codegraph.db.graph.nodes.Application node = graphRepository.findBySchemaPropertyValue("name", name);
 		return converter.fromNode(node);
 	}
 
-	public List<com.dnfeitosa.codegraph.model.Application> getAll() {
+	public List<com.dnfeitosa.codegraph.core.model.Application> getAll() {
 		Result<com.dnfeitosa.codegraph.db.graph.nodes.Application> all = graphRepository.findAll();
 		return $(all).map(toModel()).toList();
 	}
 
-	private Function<com.dnfeitosa.codegraph.db.graph.nodes.Application, com.dnfeitosa.codegraph.model.Application> toModel() {
-		return new Function<com.dnfeitosa.codegraph.db.graph.nodes.Application, com.dnfeitosa.codegraph.model.Application>() {
-			@Override
-			public com.dnfeitosa.codegraph.model.Application apply(com.dnfeitosa.codegraph.db.graph.nodes.Application input) {
-				return converter.fromNode(input);
-			}
-		};
+	private Function<com.dnfeitosa.codegraph.db.graph.nodes.Application, com.dnfeitosa.codegraph.core.model.Application> toModel() {
+		return input -> converter.fromNode(input);
 	}
 }

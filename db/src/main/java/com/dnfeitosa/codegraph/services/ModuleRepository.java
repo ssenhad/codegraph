@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import com.dnfeitosa.codegraph.db.graph.converters.ImpactConverter;
-import com.dnfeitosa.codegraph.model.ImpactZone;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.ImpactZone;
+import com.dnfeitosa.codegraph.core.model.Module;
 
 @Repository
 public class ModuleRepository {

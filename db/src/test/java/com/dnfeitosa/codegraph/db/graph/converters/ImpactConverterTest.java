@@ -8,7 +8,7 @@ import com.dnfeitosa.codegraph.db.graph.nodes.Module;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.dnfeitosa.codegraph.model.Impact;
+import com.dnfeitosa.codegraph.core.model.Impact;
 
 public class ImpactConverterTest {
 

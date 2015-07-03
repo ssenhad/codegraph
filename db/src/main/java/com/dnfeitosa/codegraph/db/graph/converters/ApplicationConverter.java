@@ -20,21 +20,21 @@ public class ApplicationConverter {
 		this.moduleConverter = moduleConverter;
 	}
 
-	public com.dnfeitosa.codegraph.model.Application fromNode(com.dnfeitosa.codegraph.db.graph.nodes.Application node) {
+	public com.dnfeitosa.codegraph.core.model.Application fromNode(com.dnfeitosa.codegraph.db.graph.nodes.Application node) {
 		LOGGER.trace(String.format("Converting node to application '%s'.", node.getName()));
 
-		List<com.dnfeitosa.codegraph.model.Module> modules = moduleConverter.fromNodes(node.getModules());
-		return new com.dnfeitosa.codegraph.model.Application(node.getName(), modules);
+		List<com.dnfeitosa.codegraph.core.model.Module> modules = moduleConverter.fromNodes(node.getModules());
+		return new com.dnfeitosa.codegraph.core.model.Application(node.getName(), modules);
 	}
 
-	public com.dnfeitosa.codegraph.db.graph.nodes.Application toNode(com.dnfeitosa.codegraph.model.Application application) {
+	public com.dnfeitosa.codegraph.db.graph.nodes.Application toNode(com.dnfeitosa.codegraph.core.model.Application application) {
 		com.dnfeitosa.codegraph.db.graph.nodes.Application node = new com.dnfeitosa.codegraph.db.graph.nodes.Application();
 		node.setName(application.getName());
 		node.setModules(toNodes(application.getModules()));
 		return node;
 	}
 
-	private Set<com.dnfeitosa.codegraph.db.graph.nodes.Module> toNodes(Collection<com.dnfeitosa.codegraph.model.Module> modules) {
+	private Set<com.dnfeitosa.codegraph.db.graph.nodes.Module> toNodes(Collection<com.dnfeitosa.codegraph.core.model.Module> modules) {
 		return moduleConverter.toNodes(modules);
 	}
 }

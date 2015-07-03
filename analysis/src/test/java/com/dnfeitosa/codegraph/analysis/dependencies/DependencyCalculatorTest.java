@@ -1,9 +1,9 @@
 package com.dnfeitosa.codegraph.analysis.dependencies;
 
 import com.dnfeitosa.codegraph.analysis.TaintedTest;
-import com.dnfeitosa.codegraph.model.Dependencies;
-import com.dnfeitosa.codegraph.model.Dependency;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.Dependencies;
+import com.dnfeitosa.codegraph.core.model.Dependency;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.web.TaintedEggs;
 
 import org.junit.Before;

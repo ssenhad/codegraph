@@ -17,9 +17,9 @@ public class ApplicationConverterTest {
 
 	private final String applicationName = "name";
 	private final String location = "location";
-	private final List<com.dnfeitosa.codegraph.model.Module> modules = asList(new com.dnfeitosa.codegraph.model.Module(null, null, null, null), new com.dnfeitosa.codegraph.model.Module(null, null, null, null));
+	private final List<com.dnfeitosa.codegraph.core.model.Module> modules = asList(new com.dnfeitosa.codegraph.core.model.Module(null, null, null, null), new com.dnfeitosa.codegraph.core.model.Module(null, null, null, null));
 
-	private final com.dnfeitosa.codegraph.model.Application application = new com.dnfeitosa.codegraph.model.Application(
+	private final com.dnfeitosa.codegraph.core.model.Application application = new com.dnfeitosa.codegraph.core.model.Application(
 			applicationName, modules);
 
 	private final Application node = new Application() {
@@ -52,7 +52,7 @@ public class ApplicationConverterTest {
 
 	@Test
 	public void shouldConvertANodeToApplication() {
-		com.dnfeitosa.codegraph.model.Application application = converter.fromNode(node);
+		com.dnfeitosa.codegraph.core.model.Application application = converter.fromNode(node);
 
 		assertThat(application.getName(), is(applicationName));
 		assertThat(application.getModules().size(), is(2));

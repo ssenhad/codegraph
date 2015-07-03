@@ -1,9 +1,9 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
-import com.dnfeitosa.codegraph.model.Application;
-import com.dnfeitosa.codegraph.model.ArtifactType;
-import com.dnfeitosa.codegraph.model.Jar;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.Application;
+import com.dnfeitosa.codegraph.core.model.ArtifactType;
+import com.dnfeitosa.codegraph.core.model.Jar;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.services.ApplicationService;
 import com.dnfeitosa.coollections.Function;
 import org.junit.Test;
@@ -18,8 +18,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.model.ArtifactType.CONFIG;
-import static com.dnfeitosa.codegraph.model.ArtifactType.JAR;
+import static com.dnfeitosa.codegraph.core.model.ArtifactType.CONFIG;
+import static com.dnfeitosa.codegraph.core.model.ArtifactType.JAR;
 import static com.dnfeitosa.coollections.Coollections.$;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;

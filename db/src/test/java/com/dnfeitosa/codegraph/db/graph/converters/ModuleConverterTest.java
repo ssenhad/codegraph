@@ -2,8 +2,8 @@ package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.Artifact;
 import com.dnfeitosa.codegraph.db.graph.nodes.Module;
-import com.dnfeitosa.codegraph.model.ArtifactType;
-import com.dnfeitosa.codegraph.model.Jar;
+import com.dnfeitosa.codegraph.core.model.ArtifactType;
+import com.dnfeitosa.codegraph.core.model.Jar;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -12,8 +12,8 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.model.ArtifactType.CONFIG;
-import static com.dnfeitosa.codegraph.model.ArtifactType.JAR;
+import static com.dnfeitosa.codegraph.core.model.ArtifactType.CONFIG;
+import static com.dnfeitosa.codegraph.core.model.ArtifactType.JAR;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -31,7 +31,7 @@ public class ModuleConverterTest {
 		}
 	};
 
-	private final com.dnfeitosa.codegraph.model.Module module = new com.dnfeitosa.codegraph.model.Module(moduleName, null, dependencies, exportTypes);
+	private final com.dnfeitosa.codegraph.core.model.Module module = new com.dnfeitosa.codegraph.core.model.Module(moduleName, null, dependencies, exportTypes);
 
 	private final Module node = new Module() {
 		{
@@ -77,7 +77,7 @@ public class ModuleConverterTest {
 
 	@Test
 	public void shouldConvertANodeToModule() {
-		com.dnfeitosa.codegraph.model.Module module = converter.fromNode(node);
+		com.dnfeitosa.codegraph.core.model.Module module = converter.fromNode(node);
 
 		assertThat(module.getName(), is(moduleName));
 		assertThat(module.getDependencies().size(), is(4));

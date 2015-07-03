@@ -10,13 +10,13 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.dnfeitosa.codegraph.concurrency.Executor;
-import com.dnfeitosa.codegraph.concurrency.ResultHandler;
+import com.dnfeitosa.codegraph.core.concurrency.Executor;
+import com.dnfeitosa.codegraph.core.concurrency.ResultHandler;
 import com.dnfeitosa.codegraph.db.graph.nodes.Class;
 import com.dnfeitosa.codegraph.db.graph.repositories.GraphModuleRepository;
-import com.dnfeitosa.codegraph.loaders.classes.ApplicationClassLoader;
-import com.dnfeitosa.codegraph.loaders.finders.ApplicationsFinder;
-import com.dnfeitosa.codegraph.loaders.finders.code.ClassFile;
+import com.dnfeitosa.codegraph.core.loaders.classes.ApplicationClassLoader;
+import com.dnfeitosa.codegraph.core.loaders.finders.ApplicationsFinder;
+import com.dnfeitosa.codegraph.core.loaders.finders.code.ClassFile;
 import org.apache.log4j.Logger;
 import org.neo4j.graphdb.GraphDatabaseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 
 import com.dnfeitosa.coollections.Coollections;
 import com.dnfeitosa.coollections.Function;
-import com.dnfeitosa.codegraph.concurrency.ParallelProcessor;
+import com.dnfeitosa.codegraph.core.concurrency.ParallelProcessor;
 import com.dnfeitosa.codegraph.db.graph.nodes.Module;
 import com.dnfeitosa.codegraph.db.graph.repositories.GraphClassRepository;
 

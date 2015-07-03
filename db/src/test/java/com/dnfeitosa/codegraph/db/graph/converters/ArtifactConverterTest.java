@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.Artifact;
-import com.dnfeitosa.codegraph.model.ArtifactType;
+import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import org.junit.Before;
 import org.junit.Test;
 

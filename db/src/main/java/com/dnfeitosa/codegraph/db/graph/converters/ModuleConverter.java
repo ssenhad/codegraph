@@ -1,8 +1,8 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.Module;
-import com.dnfeitosa.codegraph.model.ArtifactType;
-import com.dnfeitosa.codegraph.model.Jar;
+import com.dnfeitosa.codegraph.core.model.ArtifactType;
+import com.dnfeitosa.codegraph.core.model.Jar;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -29,23 +29,23 @@ public class ModuleConverter {
 		this.artifactConverter = artifactConverter;
 	}
 
-	public Set<Module> toNodes(Collection<com.dnfeitosa.codegraph.model.Module> modules) {
+	public Set<Module> toNodes(Collection<com.dnfeitosa.codegraph.core.model.Module> modules) {
 		Set<Module> set = new HashSet<>();
-		for (com.dnfeitosa.codegraph.model.Module module : modules) {
+		for (com.dnfeitosa.codegraph.core.model.Module module : modules) {
 			set.add(toNode(module));
 		}
 		return set;
 	}
 
-	public List<com.dnfeitosa.codegraph.model.Module> fromNodes(Set<Module> nodes) {
-		List<com.dnfeitosa.codegraph.model.Module> modules = new ArrayList<>();
+	public List<com.dnfeitosa.codegraph.core.model.Module> fromNodes(Set<Module> nodes) {
+		List<com.dnfeitosa.codegraph.core.model.Module> modules = new ArrayList<>();
 		for (Module node : nodes) {
 			modules.add(fromNode(node));
 		}
 		return modules;
 	}
 
-	public Module toNode(com.dnfeitosa.codegraph.model.Module module) {
+	public Module toNode(com.dnfeitosa.codegraph.core.model.Module module) {
 		Module node = new Module();
 		node.setName(module.getName());
 		node.setArtifacts(artifactConverter.toNodes(module.getExportTypes()));
@@ -53,7 +53,7 @@ public class ModuleConverter {
 		return node;
 	}
 
-	private void setDependencies(com.dnfeitosa.codegraph.model.Module module, Module node) {
+	private void setDependencies(com.dnfeitosa.codegraph.core.model.Module module, Module node) {
 //        node.setDependencies(jarConverter.toNodes(module.getDependencies()));
 	}
 
@@ -67,13 +67,13 @@ public class ModuleConverter {
 		return modules;
 	}
 
-	public com.dnfeitosa.codegraph.model.Module fromNode(Module node) {
+	public com.dnfeitosa.codegraph.core.model.Module fromNode(Module node) {
 		LOGGER.trace(String.format("Converting node to module '%s'.", node.getName()));
 
 		List<Jar> dependencies = null; //jarConverter.fromNodes(node.getDependencies());
 
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
-		return new com.dnfeitosa.codegraph.model.Module(node.getName(), null, dependencies, artifacts);
+		return new com.dnfeitosa.codegraph.core.model.Module(node.getName(), null, dependencies, artifacts);
 	}
 
 }

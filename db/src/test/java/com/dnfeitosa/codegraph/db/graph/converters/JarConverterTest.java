@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
-import com.dnfeitosa.codegraph.model.Jar;
+import com.dnfeitosa.codegraph.core.model.Jar;
 import org.junit.Before;
 import org.junit.Test;
 

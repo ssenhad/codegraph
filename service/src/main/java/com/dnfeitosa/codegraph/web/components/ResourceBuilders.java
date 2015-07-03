@@ -1,19 +1,19 @@
 package com.dnfeitosa.codegraph.web.components;
 
-import com.dnfeitosa.codegraph.model.Dependency;
-import com.dnfeitosa.codegraph.model.ImpactGraph;
-import com.dnfeitosa.codegraph.model.Jar;
+import com.dnfeitosa.codegraph.core.model.Dependency;
+import com.dnfeitosa.codegraph.core.model.ImpactGraph;
+import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.web.resources.ApplicationResource;
 import com.dnfeitosa.codegraph.web.resources.DependenciesResource;
 import com.dnfeitosa.codegraph.web.resources.ImpactGraphResource;
 import com.dnfeitosa.codegraph.web.resources.ImpactResource;
 import com.dnfeitosa.codegraph.web.resources.ModuleResource;
 import com.dnfeitosa.coollections.Function;
-import com.dnfeitosa.codegraph.model.Application;
-import com.dnfeitosa.codegraph.model.Dependencies;
-import com.dnfeitosa.codegraph.model.Impact;
-import com.dnfeitosa.codegraph.model.ImpactZone;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.Application;
+import com.dnfeitosa.codegraph.core.model.Dependencies;
+import com.dnfeitosa.codegraph.core.model.Impact;
+import com.dnfeitosa.codegraph.core.model.ImpactZone;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.web.resources.DependencyResource;
 import com.dnfeitosa.codegraph.web.resources.ImpactZoneResource;
 import com.dnfeitosa.codegraph.web.resources.JarResource;

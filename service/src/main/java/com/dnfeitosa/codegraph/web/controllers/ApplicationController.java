@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dnfeitosa.codegraph.model.Application;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.Application;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.services.CodeGraph;
 import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
 import com.dnfeitosa.codegraph.web.resources.ModuleResource;

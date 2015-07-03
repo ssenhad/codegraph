@@ -1,9 +1,9 @@
 package com.dnfeitosa.codegraph.analysis.impactzone;
 
 import com.dnfeitosa.codegraph.analysis.TaintedTest;
-import com.dnfeitosa.codegraph.model.Impact;
-import com.dnfeitosa.codegraph.model.ImpactZone;
-import com.dnfeitosa.codegraph.model.Module;
+import com.dnfeitosa.codegraph.core.model.Impact;
+import com.dnfeitosa.codegraph.core.model.ImpactZone;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.web.TaintedEggs;
 
 import org.junit.Before;

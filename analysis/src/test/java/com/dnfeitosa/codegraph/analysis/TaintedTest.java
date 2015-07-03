@@ -1,14 +1,14 @@
 package com.dnfeitosa.codegraph.analysis;
 
-import com.dnfeitosa.codegraph.commandline.Terminal;
-import com.dnfeitosa.codegraph.loaders.ApplicationLoader;
-import com.dnfeitosa.codegraph.loaders.ApplicationsLoader;
-import com.dnfeitosa.codegraph.loaders.ClassFileLoader;
-import com.dnfeitosa.codegraph.loaders.ModuleLoader;
-import com.dnfeitosa.codegraph.loaders.ModulesLoader;
-import com.dnfeitosa.codegraph.loaders.finders.ApplicationsFinder;
-import com.dnfeitosa.codegraph.loaders.finders.IvyFileFinder;
-import com.dnfeitosa.codegraph.loaders.finders.JavaFileFinder;
+import com.dnfeitosa.codegraph.core.commandline.Terminal;
+import com.dnfeitosa.codegraph.core.loaders.ApplicationLoader;
+import com.dnfeitosa.codegraph.core.loaders.ApplicationsLoader;
+import com.dnfeitosa.codegraph.core.loaders.ClassFileLoader;
+import com.dnfeitosa.codegraph.core.loaders.ModuleLoader;
+import com.dnfeitosa.codegraph.core.loaders.ModulesLoader;
+import com.dnfeitosa.codegraph.core.loaders.finders.ApplicationsFinder;
+import com.dnfeitosa.codegraph.core.loaders.finders.IvyFileFinder;
+import com.dnfeitosa.codegraph.core.loaders.finders.JavaFileFinder;
 import com.dnfeitosa.codegraph.web.TaintedEggs;
 
 import static com.dnfeitosa.codegraph.testing.TestContext.FAKE_CODEBASE;

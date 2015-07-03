@@ -8,7 +8,7 @@ import java.util.Set;
 import com.dnfeitosa.codegraph.db.graph.nodes.Artifact;
 import org.springframework.stereotype.Component;
 
-import com.dnfeitosa.codegraph.model.ArtifactType;
+import com.dnfeitosa.codegraph.core.model.ArtifactType;
 
 @Component
 public class ArtifactConverter {

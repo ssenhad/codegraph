@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.Module;
-import com.dnfeitosa.codegraph.model.Jar;
+import com.dnfeitosa.codegraph.core.model.Jar;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 

@@ -6,6 +6,8 @@ import com.dnfeitosa.codegraph.core.descriptors.ModuleDescriptor;
 import com.dnfeitosa.codegraph.core.descriptors.impl.SimpleApplication;
 import com.dnfeitosa.codegraph.core.filesystem.Path;
 import com.dnfeitosa.codegraph.core.loaders.finders.FileFinder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.util.List;
@@ -15,10 +17,12 @@ import static com.dnfeitosa.coollections.Coollections.$;
 import static com.dnfeitosa.coollections.Coollections.asSet;
 import static com.dnfeitosa.coollections.NotFilter.not;
 
+@Component
 public class MultiModuleApplicationReader implements ApplicationReader {
 
     private FileFinder fileFinder;
 
+    @Autowired
     public MultiModuleApplicationReader(FileFinder fileFinder) {
         this.fileFinder = fileFinder;
     }

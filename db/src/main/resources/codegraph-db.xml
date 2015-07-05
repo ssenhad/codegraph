@@ -11,17 +11,19 @@
         http://www.springframework.org/schema/context
         http://www.springframework.org/schema/context/spring-context.xsd">
 
+    <import resource="classpath:/codegraph-core.xml" />
+
     <neo4j:repositories base-package="com.dnfeitosa.codegraph.db"/>
     <context:component-scan base-package="com.dnfeitosa.codegraph.db" />
     <context:component-scan base-package="com.dnfeitosa.codegraph.services" />
+    <!--<context:component-scan base-package="com.dnfeitosa.codegraph.services" />-->
 
-    <import resource="codegraph-core.xml" />
 
     <neo4j:config graphDatabaseService="graphDatabaseService" base-package="com.dnfeitosa.codegraph.db.graph.nodes" />
+    <beans profile="default">
         <bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
             <constructor-arg index="0" value="http://localhost:7474/db/data"/>
     <!--             <constructor-arg index="0" value="http://10.9.53.64:7474/db/data"/> -->
         </bean>
-    <beans profile="production">
     </beans>
 </beans>

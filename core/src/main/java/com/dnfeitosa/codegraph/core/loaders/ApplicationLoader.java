@@ -13,9 +13,6 @@ import static com.dnfeitosa.coollections.Coollections.$;
 @Component
 public class ApplicationLoader {
 
-	public ApplicationLoader() {
-	}
-
 	public Application load(ApplicationDescriptor applicationDescriptor) {
         List<Module> modules = $(applicationDescriptor.getModules())
             .map(this::toModule);

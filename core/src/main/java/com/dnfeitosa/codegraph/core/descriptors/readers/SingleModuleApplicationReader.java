@@ -5,12 +5,14 @@ import com.dnfeitosa.codegraph.core.descriptors.DescriptorType;
 import com.dnfeitosa.codegraph.core.descriptors.ModuleDescriptor;
 import com.dnfeitosa.codegraph.core.descriptors.impl.SimpleApplication;
 import com.dnfeitosa.codegraph.core.filesystem.Path;
+import org.springframework.stereotype.Component;
 
 import java.util.Set;
 
 import static com.dnfeitosa.coollections.Coollections.asSet;
 import static java.util.Arrays.asList;
 
+@Component
 public class SingleModuleApplicationReader implements ApplicationReader {
 
     @Override

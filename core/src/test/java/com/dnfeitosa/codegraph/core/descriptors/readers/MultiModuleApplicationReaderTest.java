@@ -13,7 +13,6 @@ import java.util.Set;
 import static com.dnfeitosa.codegraph.core.descriptors.DescriptorType.MAVEN;
 import static com.dnfeitosa.codegraph.testing.TestContext.vraptor;
 import static com.dnfeitosa.coollections.Coollections.$;
-import static com.dnfeitosa.coollections.Filter.empty;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -30,7 +29,7 @@ public class MultiModuleApplicationReaderTest {
 
     @Test
     public void shouldReadAMultiModuleApplicationAtALocation() throws ReadException {
-        Set<ApplicationDescriptor> appDescriptors = applicationReader.readAt(vraptorLocation, MAVEN, empty());
+        Set<ApplicationDescriptor> appDescriptors = applicationReader.readAt(vraptorLocation, MAVEN, input -> false);
 
         assertThat(appDescriptors.size(), is(1));
 

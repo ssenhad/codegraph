@@ -5,6 +5,7 @@ import com.dnfeitosa.codegraph.core.descriptors.DescriptorType;
 import com.dnfeitosa.codegraph.core.descriptors.ModuleDescriptor;
 import com.dnfeitosa.codegraph.core.descriptors.impl.SimpleApplication;
 import com.dnfeitosa.codegraph.core.filesystem.Path;
+import com.dnfeitosa.coollections.Filter;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
@@ -16,7 +17,8 @@ import static java.util.Arrays.asList;
 public class SingleModuleApplicationReader implements ApplicationReader {
 
     @Override
-    public Set<ApplicationDescriptor> readAt(String location, DescriptorType descriptorType) throws ReadException {
+    public Set<ApplicationDescriptor> readAt(String location, DescriptorType descriptorType, Filter<String> ignores)
+            throws ReadException {
         try {
             String descriptorFile = Path.join(location, descriptorType.getFileName());
 

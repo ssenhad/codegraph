@@ -6,6 +6,7 @@ import com.dnfeitosa.codegraph.core.descriptors.ModuleDescriptor;
 import com.dnfeitosa.codegraph.core.descriptors.impl.SimpleApplication;
 import com.dnfeitosa.codegraph.core.filesystem.Path;
 import com.dnfeitosa.codegraph.core.loaders.finders.FileFinder;
+import com.dnfeitosa.coollections.Filter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,6 @@ import java.util.Set;
 
 import static com.dnfeitosa.coollections.Coollections.$;
 import static com.dnfeitosa.coollections.Coollections.asSet;
-import static com.dnfeitosa.coollections.NotFilter.not;
 
 @Component
 public class MultiModuleApplicationReader implements ApplicationReader {
@@ -28,13 +28,14 @@ public class MultiModuleApplicationReader implements ApplicationReader {
     }
 
     @Override
-    public Set<ApplicationDescriptor> readAt(String location, DescriptorType descriptorType) throws ReadException {
+    public Set<ApplicationDescriptor> readAt(String location, DescriptorType descriptorType, Filter<String> ignores) throws ReadException {
         String appDescriptorPath = Path.join(location, descriptorType.getFileName());
 
         List<String> descriptorFiles = findModuleDescriptors(location, descriptorType);
         List<ModuleDescriptor> moduleDescriptors = $(descriptorFiles)
-            .filter(not(file -> file.equals(appDescriptorPath)))
-            .map(descriptorType::buildDescriptor);
+            .filter(filePath -> !filePath.equals(appDescriptorPath))
+            .filter(filePath -> !ignores.matches(new File(filePath).getParentFile().getName()))
+            .map(filePath -> descriptorType.buildDescriptor(filePath));
 
         String applicationName = getApplicationNameFrom(location);
 

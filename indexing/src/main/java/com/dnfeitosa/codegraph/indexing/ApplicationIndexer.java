@@ -7,6 +7,7 @@ import com.dnfeitosa.codegraph.core.descriptors.readers.ReadException;
 import com.dnfeitosa.codegraph.core.loaders.ApplicationLoader;
 import com.dnfeitosa.codegraph.core.model.Application;
 import com.dnfeitosa.codegraph.services.ApplicationService;
+import com.dnfeitosa.coollections.Filter;
 
 import java.util.Set;
 
@@ -23,9 +24,9 @@ public class ApplicationIndexer {
         this.applicationService = applicationService;
     }
 
-    public void index(String codebasePath, DescriptorType descriptorType) {
+    public void index(String codebasePath, DescriptorType descriptorType, Filter<String> ignores) {
         try {
-            Set<ApplicationDescriptor> descriptors = applicationReader.readAt(codebasePath, descriptorType);
+            Set<ApplicationDescriptor> descriptors = applicationReader.readAt(codebasePath, descriptorType, ignores);
             descriptors.parallelStream().forEach(descriptor -> {
                 Application application = applicationLoader.load(descriptor);
                 applicationService.save(application);

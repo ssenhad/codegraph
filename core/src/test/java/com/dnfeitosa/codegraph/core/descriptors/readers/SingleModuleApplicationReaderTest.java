@@ -11,6 +11,7 @@ import java.util.Set;
 import static com.dnfeitosa.codegraph.core.descriptors.DescriptorType.IVY;
 import static com.dnfeitosa.codegraph.core.descriptors.DescriptorType.MAVEN;
 import static com.dnfeitosa.codegraph.testing.TestContext.mirror;
+import static com.dnfeitosa.coollections.Filter.empty;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -28,7 +29,7 @@ public class SingleModuleApplicationReaderTest {
 
     @Test
     public void shouldDetectASingleModuleApplicationAtALocation() throws ReadException {
-        Set<ApplicationDescriptor> appDescriptors = applicationReader.readAt(mirrorLocation, MAVEN);
+        Set<ApplicationDescriptor> appDescriptors = applicationReader.readAt(mirrorLocation, MAVEN, empty());
 
         assertThat(appDescriptors.size(), is(1));
 
@@ -42,6 +43,6 @@ public class SingleModuleApplicationReaderTest {
 
     @Test(expected = ReadException.class)
     public void shouldThrowExceptionWhenApplicationDescriptorIsNotPresentAtExpectedLocation() throws ReadException {
-        applicationReader.readAt(mirrorLocation, IVY);
+        applicationReader.readAt(mirrorLocation, IVY, empty());
     }
 }

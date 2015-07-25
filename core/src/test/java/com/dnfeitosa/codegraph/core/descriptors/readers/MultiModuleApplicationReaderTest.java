@@ -13,6 +13,7 @@ import java.util.Set;
 import static com.dnfeitosa.codegraph.core.descriptors.DescriptorType.MAVEN;
 import static com.dnfeitosa.codegraph.testing.TestContext.vraptor;
 import static com.dnfeitosa.coollections.Coollections.$;
+import static com.dnfeitosa.coollections.Filter.empty;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -29,7 +30,7 @@ public class MultiModuleApplicationReaderTest {
 
     @Test
     public void shouldReadAMultiModuleApplicationAtALocation() throws ReadException {
-        Set<ApplicationDescriptor> appDescriptors = applicationReader.readAt(vraptorLocation, MAVEN);
+        Set<ApplicationDescriptor> appDescriptors = applicationReader.readAt(vraptorLocation, MAVEN, empty());
 
         assertThat(appDescriptors.size(), is(1));
 
@@ -38,7 +39,19 @@ public class MultiModuleApplicationReaderTest {
 
         List<ModuleDescriptor> modules = appDescriptor.getModules();
         assertThat(modules.size(), is(3));
-        System.out.println($(modules).map(m -> m.getName()));
         assertThat($(modules).map(m -> m.getName()), hasItems("vraptor", "vraptor-musicjungle", "vraptor-blank-project"));
+    }
+
+    @Test
+    public void shouldIgnoreDirectoriesSpecifiedInTheFilter() throws ReadException {
+        Set<ApplicationDescriptor> appDescriptors = applicationReader.readAt(vraptorLocation, MAVEN, x -> x.equals("vraptor-musicjungle"));
+
+        assertThat(appDescriptors.size(), is(1));
+
+        ApplicationDescriptor appDescriptor = appDescriptors.stream().findFirst().get();
+        List<ModuleDescriptor> modules = appDescriptor.getModules();
+
+        assertThat(modules.size(), is(2));
+        assertThat($(modules).map(m -> m.getName()), hasItems("vraptor", "vraptor-blank-project"));
     }
 }

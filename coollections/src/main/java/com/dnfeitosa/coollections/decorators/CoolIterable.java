@@ -1,13 +1,13 @@
 package com.dnfeitosa.coollections.decorators;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-
 import com.dnfeitosa.coollections.Function;
 import com.dnfeitosa.coollections.operations.Collectable;
 import com.dnfeitosa.coollections.operations.Mappable;
 import com.dnfeitosa.coollections.operations.Mapper;
+
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
 
 public class CoolIterable<T> implements Iterable<T>, Mappable<CoolIterable<?>, T>, Collectable<CoolIterable<?>, T> {
 	private final Iterable<T> iterable;

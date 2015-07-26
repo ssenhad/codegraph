@@ -4,15 +4,15 @@ import com.dnfeitosa.coollections.Filter;
 
 import java.io.File;
 
-public class IsDirectory implements Filter<String> {
+public class DirectoryFilter implements Filter<File> {
 
 	private String location;
 
-	public IsDirectory(String location) {
+	public DirectoryFilter(String location) {
 		this.location = location;
 	}
 
-	public Boolean matches(String s) {
-		return new File(location, s).isDirectory();
+	public Boolean matches(File s) {
+		return s.isDirectory();
 	}
 }

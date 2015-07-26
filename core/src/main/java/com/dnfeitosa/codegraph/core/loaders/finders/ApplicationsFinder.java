@@ -19,7 +19,7 @@ public class ApplicationsFinder {
 	}
 
 	public List<String> findApplicationsIn(String location) {
-		return $(applicationsIn(location)).filter(new NotBuildFolderFilter()).filter(new IsDirectory(location));
+		return $(applicationsIn(location));
 	}
 
 	private List<String> applicationsIn(String location) {

@@ -24,8 +24,11 @@ public class MultiApplicationReader implements ApplicationReader {
     }
 
     @Override
-    public Set<ApplicationDescriptor> readAt(String location, DescriptorType descriptorType, Filter<String> ignores) throws ReadException {
+    public Set<ApplicationDescriptor> readAt(String location, DescriptorType descriptorType, Filter<String> ignores)
+        throws ReadException {
+
         return getApplicationsInsideOf(location)
+                .filter(file -> file.isDirectory() && !file.isHidden())
                 .filter(file -> !ignores.matches(file.getName()))
                 .map(appDir -> loadDescriptor(descriptorType, appDir))
                 .filter(descriptor -> descriptor != null)

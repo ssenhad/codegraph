@@ -37,7 +37,7 @@ public class PomFileTest {
 
     @Test
     public void shouldReturnTheModuleExportTypesFromThePackaging() {
-        assertThat(pomFile.getExportTypes(), hasItem(ArtifactType.JAR));
+        assertThat(pomFile.getExportTypes(), hasItem(new ArtifactType("jar")));
     }
 
     private Jar jar(String org, String name, String version) {

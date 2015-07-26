@@ -51,7 +51,7 @@ public class IvyFile {
 	private Function<Element, ArtifactType> toArtifactType() {
 		return element -> {
             String type = element.getAttribute("type").getValue();
-            return ArtifactType.fromName(type.toUpperCase());
+            return new ArtifactType(type);
         };
 	}
 }

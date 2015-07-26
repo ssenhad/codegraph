@@ -19,9 +19,9 @@ public class ArtifactConverterTest {
 
 	@Test
 	public void shouldConvertAnArtifactTypeToNode() {
-		Artifact artifact = converter.toNode(ArtifactType.COOKBOOK);
+		Artifact artifact = converter.toNode(new ArtifactType("cookbook"));
 
-		assertThat(artifact.getName(), is("COOKBOOK"));
+		assertThat(artifact.getName(), is("cookbook"));
 	}
 
 	@Test
@@ -32,7 +32,6 @@ public class ArtifactConverterTest {
 			}
 		});
 
-		assertThat(cookbook, is(ArtifactType.COOKBOOK));
+		assertThat(cookbook, is(new ArtifactType("cookbook")));
 	}
-
 }

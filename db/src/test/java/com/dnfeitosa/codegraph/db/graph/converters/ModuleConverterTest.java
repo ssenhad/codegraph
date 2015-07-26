@@ -12,8 +12,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.model.ArtifactType.CONFIG;
-import static com.dnfeitosa.codegraph.core.model.ArtifactType.JAR;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -26,8 +24,8 @@ public class ModuleConverterTest {
 			new Jar("org", null, null), new Jar("org", null, null));
 	private final Set<ArtifactType> exportTypes = new HashSet<ArtifactType>() {
 		{
-			add(JAR);
-			add(CONFIG);
+			add(new ArtifactType("jar"));
+			add(new ArtifactType("config"));
 		}
 	};
 

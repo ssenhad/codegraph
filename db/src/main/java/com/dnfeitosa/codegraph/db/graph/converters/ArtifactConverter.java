@@ -23,7 +23,7 @@ public class ArtifactConverter {
 
 	public Artifact toNode(ArtifactType exportType) {
 		Artifact artifact = new Artifact();
-		artifact.setName(exportType.name());
+        artifact.setName(exportType.getName());
 		return artifact;
 	}
 
@@ -36,6 +36,6 @@ public class ArtifactConverter {
 	}
 
 	public ArtifactType fromNode(Artifact artifact) {
-		return ArtifactType.fromName(artifact.getName());
-	}
+        return new ArtifactType(artifact.getName());
+    }
 }

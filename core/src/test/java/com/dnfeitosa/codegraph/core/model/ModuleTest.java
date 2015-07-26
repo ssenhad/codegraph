@@ -3,12 +3,9 @@ package com.dnfeitosa.codegraph.core.model;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.EnumSet;
 import java.util.List;
 
-import static com.dnfeitosa.codegraph.core.model.ArtifactType.JAR;
-import static com.dnfeitosa.codegraph.core.model.ArtifactType.CONFIG;
-import static com.dnfeitosa.codegraph.core.model.ArtifactType.WEBAPP;
+import static com.dnfeitosa.coollections.Coollections.asSet;
 import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.CoreMatchers.sameInstance;
@@ -25,7 +22,7 @@ public class ModuleTest {
 
 	@Before
 	public void setUp() {
-		module = new Module("aModule", "location", asList(commonsLang, springCore), EnumSet.of(JAR, CONFIG));
+		module = new Module("aModule", "location", asList(commonsLang, springCore), asSet(new ArtifactType("jar"), new ArtifactType("config")));
 	}
 
 	@Test
@@ -54,8 +51,8 @@ public class ModuleTest {
 
 	@Test
 	public void shouldTellWhetherAModuleExportsAnArtifactType() {
-		assertTrue(module.exports(JAR));
-		assertTrue(module.exports(CONFIG));
-		assertFalse(module.exports(WEBAPP));
+		assertTrue(module.exports(new ArtifactType("jar")));
+		assertTrue(module.exports(new ArtifactType("config")));
+		assertFalse(module.exports(new ArtifactType("webapp")));
 	}
 }

@@ -18,12 +18,10 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.model.ArtifactType.CONFIG;
-import static com.dnfeitosa.codegraph.core.model.ArtifactType.JAR;
 import static com.dnfeitosa.coollections.Coollections.$;
+import static com.dnfeitosa.coollections.Coollections.asSet;
 import static java.lang.String.format;
 import static java.util.Arrays.asList;
-import static java.util.EnumSet.of;
 import static org.hamcrest.Matchers.hasItems;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
@@ -37,10 +35,10 @@ public class ApplicationServiceTest {
 
 	private final List<Module> modules = asList(
 			module("app4-Module4", Arrays.asList(jar("org", "app2-Module2", "1.0"), jar("org", "module", "1.0")),
-					of(CONFIG, JAR)),
+					asSet(new ArtifactType("config"), new ArtifactType("jar"))),
 			module("app4-Module2",
 					Arrays.asList(jar("org", "app2-Module2", "1.0"), jar("org", "module", "1.0"),
-						jar("apache", "commons-lang", "1.0")), of(CONFIG, JAR)));
+						jar("apache", "commons-lang", "1.0")), asSet(new ArtifactType("config"), new ArtifactType("jar"))));
 
 	private final String app4 = "application4";
 	private final Application toSave = new Application(app4, modules);
@@ -58,12 +56,12 @@ public class ApplicationServiceTest {
 
 		Module mod4 = findModule(modules, "app4-Module4");
 		assertThat(mod4.getName(), is("app4-Module4"));
-		assertThat(mod4.getExportTypes(), hasItems(CONFIG, JAR));
+		assertThat(mod4.getExportTypes(), hasItems(new ArtifactType("config"), new ArtifactType("jar")));
 		assertThat(mod4.getDependencies().size(), is(2));
 
 		Module mod2 = findModule(modules, "app4-Module2");
 		assertThat(mod2.getName(), is("app4-Module2"));
-		assertThat(mod2.getExportTypes(), hasItems(CONFIG, JAR));
+		assertThat(mod2.getExportTypes(), hasItems(new ArtifactType("config"), new ArtifactType("jar")));
 		assertThat(mod2.getDependencies().size(), is(3));
 	}
 

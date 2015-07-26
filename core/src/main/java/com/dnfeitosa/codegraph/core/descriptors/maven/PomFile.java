@@ -41,7 +41,7 @@ public class PomFile {
 
     public Set<ArtifactType> getExportTypes() {
         Set<ArtifactType> exportTypes = new HashSet<>();
-        exportTypes.add(ArtifactType.fromName(xml.findElement("/ns:project/ns:packaging").getText()));
+        exportTypes.add(new ArtifactType(xml.findElement("/ns:project/ns:packaging").getText()));
         return exportTypes;
     }
 }

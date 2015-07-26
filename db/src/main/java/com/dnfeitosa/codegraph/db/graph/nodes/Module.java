@@ -10,7 +10,7 @@ import java.util.Set;
 import static org.neo4j.graphdb.Direction.OUTGOING;
 
 @NodeEntity
-public class Module implements CodePackage {
+public class Module {
 
 	@GraphId
 	private Long id;

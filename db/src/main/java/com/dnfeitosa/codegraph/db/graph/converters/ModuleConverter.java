@@ -1,8 +1,8 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
-import com.dnfeitosa.codegraph.db.graph.nodes.Module;
 import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.core.model.Jar;
+import com.dnfeitosa.codegraph.db.graph.nodes.Module;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -54,7 +54,8 @@ public class ModuleConverter {
 	}
 
 	private void setDependencies(com.dnfeitosa.codegraph.core.model.Module module, Module node) {
-//        node.setDependencies(jarConverter.toNodes(module.getDependencies()));
+        Set<com.dnfeitosa.codegraph.db.graph.nodes.Jar> jars = jarConverter.toNodes(module.getDependencies());
+        node.setDependencies(jars);
 	}
 
 	private Set<Module> toModules(List<Jar> dependencies) {
@@ -70,7 +71,7 @@ public class ModuleConverter {
 	public com.dnfeitosa.codegraph.core.model.Module fromNode(Module node) {
 		LOGGER.trace(String.format("Converting node to module '%s'.", node.getName()));
 
-		List<Jar> dependencies = null; //jarConverter.fromNodes(node.getDependencies());
+		List<Jar> dependencies = jarConverter.fromNodes(node.getDependencies());
 
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
 		return new com.dnfeitosa.codegraph.core.model.Module(node.getName(), null, dependencies, artifacts);

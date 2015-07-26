@@ -17,8 +17,8 @@ public class JarConverter {
 
 	private static final Logger LOGGER = Logger.getLogger(JarConverter.class);
 
-	public Set<com.dnfeitosa.codegraph.db.graph.nodes.CodePackage> toNodes(List<Jar> dependencies) {
-		Set<com.dnfeitosa.codegraph.db.graph.nodes.CodePackage> jars = new HashSet<>();
+	public Set<com.dnfeitosa.codegraph.db.graph.nodes.Jar> toNodes(List<Jar> dependencies) {
+		Set<com.dnfeitosa.codegraph.db.graph.nodes.Jar> jars = new HashSet<>();
 		for (Jar dependency : notNull(dependencies)) {
 			jars.add(toNode(dependency));
 		}

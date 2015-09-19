@@ -1,7 +1,10 @@
 package com.dnfeitosa.codegraph.db.graph.nodes;
 
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.Index;
+import org.neo4j.ogm.annotation.NodeEntity;
+
+import static java.lang.String.format;
 
 @NodeEntity
 public class Jar {
@@ -36,4 +39,9 @@ public class Jar {
 	public void setVersion(String version) {
 		this.version = version;
 	}
+
+    @Index(unique = true)
+    public String uniqueName() {
+        return format("%s-%s-%s", organization, name, version);
+    }
 }

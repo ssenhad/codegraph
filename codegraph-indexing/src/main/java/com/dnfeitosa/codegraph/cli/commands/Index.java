@@ -8,6 +8,7 @@ import io.airlift.airline.Option;
 
 import java.util.List;
 
+import static java.lang.String.format;
 import static java.lang.System.out;
 import static java.util.Arrays.asList;
 
@@ -26,8 +27,8 @@ public class Index extends AbstractCommand {
         ApplicationIndexer indexer = new ApplicationIndexer(getReader(), getLoader(), getService());
 
         List<String> ignores = asList(ignore.split(","));
-        out.println(String.format("Indexing code in '%s'.", dir));
-        out.println(String.format("~> ignoring data in '%s'.", ignores));
+        out.println(format("Indexing code in '%s'.", dir));
+        out.println(format("~> ignoring data in '%s'.", ignores));
         indexer.index(dir, DescriptorType.IVY, name -> ignores.contains(name));
     }
 }

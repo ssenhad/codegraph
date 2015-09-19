@@ -28,7 +28,7 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.fail;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/codegraph-db.xml", "classpath:/codegraph-db-test.xml" })
+@ContextConfiguration(locations = { "classpath:/codegraph-db.xml" /*, "classpath:/codegraph-db-test.xml"*/ })
 @ActiveProfiles("test")
 @Transactional
 public class ApplicationServiceTest {
@@ -78,12 +78,7 @@ public class ApplicationServiceTest {
 	}
 
 	private Function<Application, String> names() {
-		return new Function<Application, String>() {
-			@Override
-			public String apply(Application input) {
-				return input.getName();
-			}
-		};
+		return input -> input.getName();
 	}
 
 	@Test

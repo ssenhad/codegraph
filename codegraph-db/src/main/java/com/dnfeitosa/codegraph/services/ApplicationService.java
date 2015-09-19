@@ -1,11 +1,11 @@
 package com.dnfeitosa.codegraph.services;
 
 import com.dnfeitosa.codegraph.db.graph.converters.ApplicationConverter;
+import com.dnfeitosa.codegraph.db.graph.nodes.Application;
 import com.dnfeitosa.codegraph.db.graph.repositories.GraphApplicationRepository;
 import com.dnfeitosa.coollections.Function;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -38,13 +38,13 @@ public class ApplicationService {
 	}
 
 	public com.dnfeitosa.codegraph.core.model.Application find(String name) {
-		com.dnfeitosa.codegraph.db.graph.nodes.Application node = graphRepository.findBySchemaPropertyValue("name", name);
+		com.dnfeitosa.codegraph.db.graph.nodes.Application node = graphRepository.findByName(name);
 		return converter.fromNode(node);
 	}
 
 	public List<com.dnfeitosa.codegraph.core.model.Application> getAll() {
-		Result<com.dnfeitosa.codegraph.db.graph.nodes.Application> all = graphRepository.findAll();
-		return $(all).map(toModel()).toList();
+        Iterable<Application> all = graphRepository.findAll();
+        return $(all).map(toModel()).toList();
 	}
 
 	private Function<com.dnfeitosa.codegraph.db.graph.nodes.Application, com.dnfeitosa.codegraph.core.model.Application> toModel() {

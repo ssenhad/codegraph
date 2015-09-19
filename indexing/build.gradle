@@ -1,3 +1,5 @@
+apply plugin: 'application'
+
 dependencies {
   compile project(':coollections')
   compile project(':core')
@@ -9,3 +11,6 @@ dependencies {
 
   testCompile group: "org.springframework", name: "spring-test", version: "4.1.0.RELEASE"
 }
+
+mainClassName = 'com.dnfeitosa.codegraph.cli.CodeGraphMain'
+applicationDefaultJvmArgs = []

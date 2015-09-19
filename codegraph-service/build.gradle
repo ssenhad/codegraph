@@ -3,8 +3,8 @@ apply plugin: 'jetty'
 
 dependencies {
   compile project(':coollections')
-  compile project(':core')
-  compile project(':db')
+  compile project(':codegraph-core')
+  compile project(':codegraph-db')
 
   compile group: "org.springframework", name: "spring-core", version: "4.1.0.RELEASE"
   compile group: "org.springframework", name: "spring-webmvc", version: "4.1.0.RELEASE"

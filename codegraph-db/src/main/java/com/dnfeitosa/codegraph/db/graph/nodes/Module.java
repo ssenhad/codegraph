@@ -18,15 +18,12 @@ public class Module {
 	@Indexed(unique = true)
 	private String name;
 
-	@Indexed
-	@RelatedTo(direction = OUTGOING, type = "DEPENDS_ON", enforceTargetType = true)
+	@RelatedTo(direction = OUTGOING, type = "DEPENDS_ON")
 	private Set<Jar> dependencies;
 
-	@Indexed
 	@RelatedTo(direction = OUTGOING, type = "EXPORTS")
 	private Set<Artifact> artifacts;
 
-	@Indexed
 	@RelatedTo(direction = OUTGOING, type = "HOLDS")
 	private Set<Class> classes;
 

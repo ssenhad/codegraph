@@ -1,24 +1,22 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
-import static com.dnfeitosa.coollections.Coollections.notNull;
-
-import java.util.HashSet;
-import java.util.Set;
-
+import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.db.graph.nodes.Artifact;
 import org.springframework.stereotype.Component;
 
-import com.dnfeitosa.codegraph.core.model.ArtifactType;
+import java.util.Set;
+import java.util.stream.Collectors;
+
+import static com.dnfeitosa.coollections.Coollections.notNull;
 
 @Component
 public class ArtifactConverter {
 
 	public Set<Artifact> toNodes(Set<ArtifactType> exportTypes) {
-		Set<Artifact> artifacts = new HashSet<>();
-		for (ArtifactType exportType : notNull(exportTypes)) {
-			artifacts.add(toNode(exportType));
-		}
-		return artifacts;
+        return notNull(exportTypes)
+            .stream()
+            .map(exportType -> toNode(exportType))
+            .collect(Collectors.toSet());
 	}
 
 	public Artifact toNode(ArtifactType exportType) {
@@ -28,14 +26,13 @@ public class ArtifactConverter {
 	}
 
 	public Set<ArtifactType> fromNodes(Set<Artifact> artifacts) {
-		Set<ArtifactType> artifactTypes = new HashSet<>();
-		for (Artifact artifact : notNull(artifacts)) {
-			artifactTypes.add(fromNode(artifact));
-		}
-		return artifactTypes;
+        return notNull(artifacts)
+            .stream()
+            .map(artifact -> fromNode(artifact))
+            .collect(Collectors.toSet());
 	}
 
-	public ArtifactType fromNode(Artifact artifact) {
+    public ArtifactType fromNode(Artifact artifact) {
         return new ArtifactType(artifact.getName());
     }
 }

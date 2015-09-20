@@ -7,11 +7,11 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static com.dnfeitosa.coollections.Coollections.notNull;
 
@@ -38,11 +38,10 @@ public class ModuleConverter {
 	}
 
 	public List<com.dnfeitosa.codegraph.core.model.Module> fromNodes(Set<Module> nodes) {
-		List<com.dnfeitosa.codegraph.core.model.Module> modules = new ArrayList<>();
-		for (Module node : nodes) {
-			modules.add(fromNode(node));
-		}
-		return modules;
+        return nodes
+            .parallelStream()
+            .map(this::fromNode)
+            .collect(Collectors.toList());
 	}
 
 	public Module toNode(com.dnfeitosa.codegraph.core.model.Module module) {
@@ -76,5 +75,4 @@ public class ModuleConverter {
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
 		return new com.dnfeitosa.codegraph.core.model.Module(node.getName(), null, dependencies, artifacts);
 	}
-
 }

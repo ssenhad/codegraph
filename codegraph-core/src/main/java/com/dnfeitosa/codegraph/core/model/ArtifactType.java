@@ -8,7 +8,9 @@ public class ArtifactType {
     private String name;
 
     public ArtifactType(String name) {
-        this.name = name.toLowerCase();
+        if (name != null) {
+            this.name = name.toLowerCase();
+        }
     }
 
     public String getName() {

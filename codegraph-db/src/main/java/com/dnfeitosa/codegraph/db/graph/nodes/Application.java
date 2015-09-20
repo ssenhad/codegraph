@@ -1,13 +1,14 @@
 package com.dnfeitosa.codegraph.db.graph.nodes;
 
-import static org.neo4j.graphdb.Direction.OUTGOING;
-
-import java.util.Set;
-
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
+
+import java.util.Set;
+
+import static org.neo4j.graphdb.Direction.OUTGOING;
 
 @NodeEntity
 public class Application {
@@ -19,6 +20,7 @@ public class Application {
 	private String name;
 
 	@Indexed
+    @Fetch
 	@RelatedTo(direction = OUTGOING, type = "EXPORTS")
 	private Set<Module> modules;
 

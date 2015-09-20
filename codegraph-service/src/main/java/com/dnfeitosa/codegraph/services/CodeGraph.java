@@ -11,12 +11,12 @@ import java.util.List;
 public class CodeGraph {
 
 	private final ApplicationService applicationRepository;
-	private final ModuleRepository moduleRepository;
+	private final ModuleService moduleService;
 
 	@Autowired
-	public CodeGraph(ApplicationService applicationRepository, ModuleRepository moduleRepository) {
+	public CodeGraph(ApplicationService applicationRepository, ModuleService moduleService) {
 		this.applicationRepository = applicationRepository;
-		this.moduleRepository = moduleRepository;
+		this.moduleService = moduleService;
 	}
 
 	public List<Application> applications() {
@@ -32,6 +32,6 @@ public class CodeGraph {
 	}
 
 	public Module getModule(String name) {
-		return moduleRepository.find(name);
+		return moduleService.find(name);
 	}
 }

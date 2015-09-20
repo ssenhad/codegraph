@@ -13,7 +13,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import com.dnfeitosa.codegraph.core.concurrency.Executor;
 import com.dnfeitosa.codegraph.core.concurrency.ResultHandler;
 import com.dnfeitosa.codegraph.db.graph.nodes.Class;
-import com.dnfeitosa.codegraph.db.graph.repositories.GraphModuleRepository;
+import com.dnfeitosa.codegraph.db.graph.repositories.ModuleRepository;
 import com.dnfeitosa.codegraph.core.loaders.classes.ApplicationClassLoader;
 import com.dnfeitosa.codegraph.core.loaders.finders.ApplicationsFinder;
 import com.dnfeitosa.codegraph.core.loaders.finders.code.ClassFile;
@@ -28,7 +28,7 @@ import com.dnfeitosa.coollections.Coollections;
 import com.dnfeitosa.coollections.Function;
 import com.dnfeitosa.codegraph.core.concurrency.ParallelProcessor;
 import com.dnfeitosa.codegraph.db.graph.nodes.Module;
-import com.dnfeitosa.codegraph.db.graph.repositories.GraphClassRepository;
+import com.dnfeitosa.codegraph.db.graph.repositories.ClassRepository;
 
 @Service
 public class ClassesIndexer {
@@ -37,17 +37,17 @@ public class ClassesIndexer {
 
 	private final ApplicationClassLoader applicationClassLoader;
 	private final ApplicationsFinder applicationsFinder;
-	private final GraphModuleRepository moduleRepository;
+	private final ModuleRepository moduleRepository;
 	private final Neo4jTemplate template;
 
 	private final GraphDatabaseService service;
 
-	private final GraphClassRepository classRepository;
+	private final ClassRepository classRepository;
 
 	@Autowired
 	public ClassesIndexer(ApplicationsFinder applicationsFinder, ApplicationClassLoader applicationClassLoader,
-			GraphModuleRepository moduleRepository, Neo4jTemplate template,
-			@Qualifier("graphDatabaseService") GraphDatabaseService service, GraphClassRepository classRepository) {
+			ModuleRepository moduleRepository, Neo4jTemplate template,
+			@Qualifier("graphDatabaseService") GraphDatabaseService service, ClassRepository classRepository) {
 		this.applicationsFinder = applicationsFinder;
 		this.applicationClassLoader = applicationClassLoader;
 		this.moduleRepository = moduleRepository;

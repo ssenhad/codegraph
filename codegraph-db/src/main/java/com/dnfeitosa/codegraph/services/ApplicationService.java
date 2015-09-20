@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.services;
 
 import com.dnfeitosa.codegraph.db.graph.converters.ApplicationConverter;
-import com.dnfeitosa.codegraph.db.graph.repositories.GraphApplicationRepository;
+import com.dnfeitosa.codegraph.db.graph.repositories.ApplicationRepository;
 import com.dnfeitosa.coollections.Function;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,32 +18,32 @@ public class ApplicationService {
 
 	private static final Logger LOGGER = Logger.getLogger(ApplicationService.class);
 
-	private final GraphApplicationRepository graphRepository;
+	private final ApplicationRepository applicationRepository;
 	private final ApplicationConverter converter;
 
 	@Autowired
-	public ApplicationService(GraphApplicationRepository graphRepository, ApplicationConverter converter) {
-		this.graphRepository = graphRepository;
+	public ApplicationService(ApplicationRepository applicationRepository, ApplicationConverter converter) {
+		this.applicationRepository = applicationRepository;
 		this.converter = converter;
 	}
 
 	public void save(com.dnfeitosa.codegraph.core.model.Application application) {
 		LOGGER.info(format("Saving '%s'.", application.getName()));
 		com.dnfeitosa.codegraph.db.graph.nodes.Application node = converter.toNode(application);
-		graphRepository.save(node);
+		applicationRepository.save(node);
 	}
 
 	public List<String> getApplicationNames() {
-		return graphRepository.getApplicationNames();
+		return applicationRepository.getApplicationNames();
 	}
 
 	public com.dnfeitosa.codegraph.core.model.Application find(String name) {
-		com.dnfeitosa.codegraph.db.graph.nodes.Application node = graphRepository.findBySchemaPropertyValue("name", name);
+		com.dnfeitosa.codegraph.db.graph.nodes.Application node = applicationRepository.findBySchemaPropertyValue("name", name);
 		return converter.fromNode(node);
 	}
 
 	public List<com.dnfeitosa.codegraph.core.model.Application> getAll() {
-		Result<com.dnfeitosa.codegraph.db.graph.nodes.Application> all = graphRepository.findAll();
+		Result<com.dnfeitosa.codegraph.db.graph.nodes.Application> all = applicationRepository.findAll();
 		return $(all).map(toModel()).toList();
 	}
 

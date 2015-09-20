@@ -1,16 +1,11 @@
 package com.dnfeitosa.codegraph.db.graph.repositories;
 
-import static com.dnfeitosa.coollections.Coollections.$;
-import static java.util.Arrays.asList;
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
-import java.util.List;
-
 import com.dnfeitosa.codegraph.db.graph.nodes.Application;
 import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
 import com.dnfeitosa.codegraph.db.graph.nodes.Module;
 import com.dnfeitosa.coollections.Coollections;
+import com.dnfeitosa.coollections.Function;
+import com.dnfeitosa.coollections.decorators.CoolList;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -21,8 +16,12 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dnfeitosa.coollections.Function;
-import com.dnfeitosa.coollections.decorators.CoolList;
+import java.util.List;
+
+import static com.dnfeitosa.coollections.Coollections.$;
+import static java.util.Arrays.asList;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
 @Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -32,10 +31,10 @@ import com.dnfeitosa.coollections.decorators.CoolList;
 public class GraphModuleRepositoryTest {
 
 	@Autowired
-	private GraphApplicationRepository applicationRepository;
+	private ApplicationRepository applicationRepository;
 
 	@Autowired
-	private GraphModuleRepository moduleRepository;
+	private ModuleRepository moduleRepository;
 
 	@Before
 	public void setUp() {

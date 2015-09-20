@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.Jar;
-import com.dnfeitosa.codegraph.db.graph.repositories.GraphJarRepository;
+import com.dnfeitosa.codegraph.db.graph.repositories.JarRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,7 +21,7 @@ import static org.hamcrest.Matchers.is;
 public class JarRepositoryTest {
 
     @Autowired
-    private GraphJarRepository repository;
+    private JarRepository repository;
 
     @Test
     public void shouldSaveASingleJarInstanceBasedOnTheCombinationOfFields() {

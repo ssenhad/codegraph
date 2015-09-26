@@ -2,7 +2,6 @@ dependencies {
   compile project(':coollections')
   compile project(':codegraph-core')
   compile project(':codegraph-db')
-  compile project(':codegraph-service')
 
   compile group: "io.airlift", name: "airline", version: "0.7" // git-like command line parsing
   compile group: "org.springframework", name: "spring-core", version: "4.1.0.RELEASE"

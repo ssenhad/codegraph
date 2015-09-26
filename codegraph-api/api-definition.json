@@ -1,0 +1,82 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "0.1.0",
+        "title": "Codegraph API"
+    },
+    "paths": {
+        "/applications": {
+            "get": {
+                "description": "Lists all applications.",
+                "parameters": [
+                    {
+                        "name": "zoom",
+                        "in": "query",
+                        "description": "Comma separated list of attributes to be eargerly retried as part of the request. Possible values are: `modules`. Unidentified values will be ignored.\n",
+                        "required": false,
+                        "type": "string",
+                        "items": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful response",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/Application"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "Resource": {
+            "type": "object",
+            "properties": {
+                "href": {
+                    "type": "string"
+                }
+            }
+        },
+        "Module": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Resource"
+                }
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "application": {
+                    "$ref": "#/definitions/Application"
+                }
+            }
+        },
+        "Application": {
+            "type": "object",
+            "allOf": [
+                {
+                    "$ref": "#/definitions/Resource"
+                }
+            ],
+            "properties": {
+                "name": {
+                    "type": "string"
+                },
+                "modules": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/Module"
+                    }
+                }
+            }
+        }
+    }
+}

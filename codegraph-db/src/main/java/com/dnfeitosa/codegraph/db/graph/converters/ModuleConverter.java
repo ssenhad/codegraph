@@ -23,11 +23,11 @@ public class ModuleConverter {
 	private final JarConverter jarConverter;
 	private final ArtifactConverter artifactConverter;
 
-	@Autowired
-	public ModuleConverter(JarConverter jarConverter, ArtifactConverter artifactConverter) {
-		this.jarConverter = jarConverter;
+    @Autowired
+    public ModuleConverter(JarConverter jarConverter, ArtifactConverter artifactConverter) {
+        this.jarConverter = jarConverter;
 		this.artifactConverter = artifactConverter;
-	}
+    }
 
 	public Set<Module> toNodes(Collection<com.dnfeitosa.codegraph.core.model.Module> modules) {
 		Set<Module> set = new HashSet<>();
@@ -73,6 +73,7 @@ public class ModuleConverter {
 		List<Jar> dependencies = jarConverter.fromNodes(node.getDependencies());
 
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
-		return new com.dnfeitosa.codegraph.core.model.Module(node.getName(), null, dependencies, artifacts);
+        com.dnfeitosa.codegraph.core.model.Module module = new com.dnfeitosa.codegraph.core.model.Module(node.getName(), null, dependencies, artifacts);
+        return module;
 	}
 }

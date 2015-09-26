@@ -23,7 +23,6 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = { "classpath:/codegraph-db.xml", "classpath:/codegraph-db-test.xml" })
 @ActiveProfiles("test")
@@ -54,6 +53,7 @@ public class GraphModuleRepositoryTest {
 	}
 
 	@Test
+    @Ignore
 	public void shouldReturnTheFullImpactZoneOfAModule() {
 		List<ImpactResult> list = moduleRepository.fullImpactOf("module");
 
@@ -64,6 +64,7 @@ public class GraphModuleRepositoryTest {
 	}
 
 	@Test
+    @Ignore
 	public void shouldReturnTheImmediateImpactZoneOfAModule() {
 		List<ImpactResult> list = moduleRepository.immediateImpactOf("module");
 
@@ -71,6 +72,13 @@ public class GraphModuleRepositoryTest {
 		assertIsImpactResult(list.get(0), "module", "app4-Module4");
 		assertIsImpactResult(list.get(1), "module", "app2-Module2");
 	}
+
+    @Test
+    public void shouldReturnTheModuleWithItsInformation() {
+        Module module = moduleRepository.findByName("module");
+        assertThat(module.getName(), is("module"));
+        assertThat(module.getApplication().getName(), is("application"));
+    }
 
 	private void assertIsImpactResult(ImpactResult result, String impactor, String impacted) {
 		assertThat(result.getImpactor().getName(), is(impactor));

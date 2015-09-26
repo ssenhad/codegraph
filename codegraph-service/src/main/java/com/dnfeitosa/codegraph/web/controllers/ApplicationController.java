@@ -1,9 +1,12 @@
 package com.dnfeitosa.codegraph.web.controllers;
 
-import static com.dnfeitosa.codegraph.web.Responses.notFound;
-import static com.dnfeitosa.codegraph.web.Responses.ok;
-
+import com.dnfeitosa.codegraph.core.model.Application;
+import com.dnfeitosa.codegraph.core.model.Module;
+import com.dnfeitosa.codegraph.services.CodeGraph;
+import com.dnfeitosa.codegraph.services.ModuleService;
+import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
 import com.dnfeitosa.codegraph.web.resources.ApplicationResource;
+import com.dnfeitosa.codegraph.web.resources.ModuleResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -11,22 +14,21 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.dnfeitosa.codegraph.core.model.Application;
-import com.dnfeitosa.codegraph.core.model.Module;
-import com.dnfeitosa.codegraph.services.CodeGraph;
-import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
-import com.dnfeitosa.codegraph.web.resources.ModuleResource;
+import static com.dnfeitosa.codegraph.web.Responses.notFound;
+import static com.dnfeitosa.codegraph.web.Responses.ok;
 
 @Controller
 public class ApplicationController {
 
 	private final CodeGraph codeGraph;
+    private final ModuleService moduleService;
 	private final ResourceBuilders resourceBuilders;
 
 	@Autowired
-	public ApplicationController(CodeGraph codeGraph, ResourceBuilders resourceBuilders) {
+	public ApplicationController(CodeGraph codeGraph, ModuleService moduleService, ResourceBuilders resourceBuilders) {
 		this.codeGraph = codeGraph;
-		this.resourceBuilders = resourceBuilders;
+        this.moduleService = moduleService;
+        this.resourceBuilders = resourceBuilders;
 	}
 
 	@RequestMapping("/applications/{name}")
@@ -39,7 +41,7 @@ public class ApplicationController {
 	@RequestMapping("/modules/{moduleName}")
 	@ResponseBody
 	public ResponseEntity<ModuleResource> module(@PathVariable("moduleName") String moduleName) {
-		Module module = codeGraph.getModule(moduleName);
+		Module module = moduleService.find(moduleName);
 		return respondWith(module);
 	}
 

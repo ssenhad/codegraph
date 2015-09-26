@@ -51,7 +51,6 @@ public class ResourceBuilders {
 			{
 				setName(module.getName());
 				setApplication(module.getApplication().getName());
-				setFromOrg(true);
 			}
 		};
 	}

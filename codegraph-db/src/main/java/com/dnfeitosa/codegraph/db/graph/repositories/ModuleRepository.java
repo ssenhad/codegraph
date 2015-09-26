@@ -25,5 +25,8 @@ public interface ModuleRepository extends GraphRepository<Module> {
 	@Query("MATCH p=shortestPath((module:Module {name: {0}})-[:DEPENDS_ON]->(mod:Module)) "
 		 + "RETURN distinct mod")
 	List<Module> dependenciesOf(String moduleName);
+
+    @Query("MATCH (module:Module { name: {0} }) return module")
+    Module findByName(String module);
 }
 

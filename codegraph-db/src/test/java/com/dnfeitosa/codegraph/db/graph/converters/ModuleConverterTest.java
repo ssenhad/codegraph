@@ -2,6 +2,7 @@ package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.core.model.Jar;
+import com.dnfeitosa.codegraph.db.graph.nodes.Application;
 import com.dnfeitosa.codegraph.db.graph.nodes.Artifact;
 import com.dnfeitosa.codegraph.db.graph.nodes.Module;
 import org.junit.Before;
@@ -37,9 +38,12 @@ public class ModuleConverterTest {
 		{
 			setId(1L);
 			setName(moduleName);
+            setApplication(new Application() {{
+                setName("applicationName");
+            }});
 			setArtifacts(new HashSet<Artifact>() {
-				{
-					add(new Artifact() {{
+                {
+                    add(new Artifact() {{
                         setName("JAR");
                     }});
                     add(new Artifact() {{
@@ -79,5 +83,5 @@ public class ModuleConverterTest {
 		assertThat(module.getName(), is(moduleName));
 		assertThat(module.getDependencies().size(), is(2));
 		assertThat(module.getExportTypes().size(), is(2));
-	}
+    }
 }

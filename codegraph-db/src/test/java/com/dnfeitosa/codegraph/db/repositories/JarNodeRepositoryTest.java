@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
-import com.dnfeitosa.codegraph.db.graph.nodes.Jar;
+import com.dnfeitosa.codegraph.db.graph.nodes.JarNode;
 import com.dnfeitosa.codegraph.db.graph.repositories.JarRepository;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -18,7 +18,7 @@ import static org.hamcrest.Matchers.is;
 @ContextConfiguration(locations = { "classpath:/codegraph-db.xml", "classpath:/codegraph-db-test.xml" })
 @ActiveProfiles("test")
 @Transactional
-public class JarRepositoryTest {
+public class JarNodeRepositoryTest {
 
     @Autowired
     private JarRepository repository;
@@ -28,13 +28,13 @@ public class JarRepositoryTest {
         repository.save(commonsLogging());
         repository.save(commonsLogging());
 
-        Iterable<Jar> all = repository.findAll();
+        Iterable<JarNode> all = repository.findAll();
 
         assertThat($(all).toList().size(), is(1));
     }
 
-    private Jar commonsLogging() {
-        Jar commonsLogging = new Jar();
+    private JarNode commonsLogging() {
+        JarNode commonsLogging = new JarNode();
         commonsLogging.setOrganization("apache");
         commonsLogging.setName("commons-logging");
         commonsLogging.setVersion("1.0");

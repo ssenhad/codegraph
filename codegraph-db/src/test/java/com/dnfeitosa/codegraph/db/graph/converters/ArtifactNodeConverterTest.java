@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
-import com.dnfeitosa.codegraph.db.graph.nodes.Artifact;
+import com.dnfeitosa.codegraph.db.graph.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import org.junit.Before;
 import org.junit.Test;
@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class ArtifactConverterTest {
+public class ArtifactNodeConverterTest {
 
 	private ArtifactConverter converter;
 
@@ -19,14 +19,14 @@ public class ArtifactConverterTest {
 
 	@Test
 	public void shouldConvertAnArtifactTypeToNode() {
-		Artifact artifact = converter.toNode(new ArtifactType("cookbook"));
+		ArtifactNode artifactNode = converter.toNode(new ArtifactType("cookbook"));
 
-		assertThat(artifact.getName(), is("cookbook"));
+		assertThat(artifactNode.getName(), is("cookbook"));
 	}
 
 	@Test
 	public void shouldConvertANodeToArtifactType() {
-		ArtifactType cookbook = converter.fromNode(new Artifact() {
+		ArtifactType cookbook = converter.fromNode(new ArtifactNode() {
 			{
 				setName("COOKBOOK");
 			}

@@ -1,5 +1,6 @@
 package com.dnfeitosa.codegraph.db.graph.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
@@ -11,8 +12,9 @@ import java.util.Set;
 import static org.neo4j.graphdb.Direction.INCOMING;
 import static org.neo4j.graphdb.Direction.OUTGOING;
 
+@TypeAlias("Module")
 @NodeEntity
-public class Module {
+public class ModuleNode {
 
 	@GraphId
 	private Long id;
@@ -21,17 +23,17 @@ public class Module {
 	private String name;
 
 	@RelatedTo(direction = OUTGOING, type = "DEPENDS_ON")
-	private Set<Jar> dependencies;
+	private Set<JarNode> dependencies;
 
 	@RelatedTo(direction = OUTGOING, type = "EXPORTS")
-	private Set<Artifact> artifacts;
+	private Set<ArtifactNode> artifactNodes;
 
 	@RelatedTo(direction = OUTGOING, type = "HOLDS")
-	private Set<Class> classes;
+	private Set<ClassNode> classNodes;
 
     @Fetch
     @RelatedTo(direction = INCOMING, type = "EXPORTS")
-    private Application application;
+    private ApplicationNode applicationNode;
 
 	public Long getId() {
 		return id;
@@ -49,35 +51,35 @@ public class Module {
 		this.name = name;
 	}
 
-	public Set<Jar> getDependencies() {
+	public Set<JarNode> getDependencies() {
 		return dependencies;
 	}
 
-	public void setDependencies(Set<Jar> dependencies) {
+	public void setDependencies(Set<JarNode> dependencies) {
 		this.dependencies = dependencies;
 	}
 
-	public Set<Artifact> getArtifacts() {
-		return artifacts;
+	public Set<ArtifactNode> getArtifacts() {
+		return artifactNodes;
 	}
 
-	public void setArtifacts(Set<Artifact> artifacts) {
-		this.artifacts = artifacts;
+	public void setArtifacts(Set<ArtifactNode> artifactNodes) {
+		this.artifactNodes = artifactNodes;
 	}
 
-	public Set<Class> getClasses() {
-		return classes;
+	public Set<ClassNode> getClassNodes() {
+		return classNodes;
 	}
 
-	public void setClasses(Set<Class> classes) {
-		this.classes = classes;
+	public void setClassNodes(Set<ClassNode> classNodes) {
+		this.classNodes = classNodes;
 	}
 
-    public Application getApplication() {
-        return application;
+    public ApplicationNode getApplication() {
+        return applicationNode;
     }
 
-    public void setApplication(Application application) {
-        this.application = application;
+    public void setApplication(ApplicationNode applicationNode) {
+        this.applicationNode = applicationNode;
     }
 }

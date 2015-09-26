@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
-import com.dnfeitosa.codegraph.db.graph.nodes.Application;
-import com.dnfeitosa.codegraph.db.graph.nodes.Module;
+import com.dnfeitosa.codegraph.db.graph.nodes.ApplicationNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -13,7 +13,7 @@ import static org.hamcrest.core.Is.is;
 import static org.junit.Assert.assertThat;
 
 @SuppressWarnings("serial")
-public class ApplicationConverterTest {
+public class ApplicationNodeConverterTest {
 
 	private final String applicationName = "name";
 	private final String location = "location";
@@ -22,14 +22,14 @@ public class ApplicationConverterTest {
 	private final com.dnfeitosa.codegraph.core.model.Application application = new com.dnfeitosa.codegraph.core.model.Application(
 			applicationName, modules);
 
-	private final Application node = new Application() {
+	private final ApplicationNode node = new ApplicationNode() {
 		{
 			setId(1L);
 			setName(applicationName);
-			setModules(new HashSet<Module>() {
+			setModules(new HashSet<ModuleNode>() {
 				{
-					add(new Module());
-					add(new Module());
+					add(new ModuleNode());
+					add(new ModuleNode());
 				}
 			});
 		}
@@ -44,7 +44,7 @@ public class ApplicationConverterTest {
 
 	@Test
 	public void shouldConvertAnApplicationToNode() {
-		Application node = converter.toNode(application);
+		ApplicationNode node = converter.toNode(application);
 
 		assertThat(node.getName(), is(applicationName));
 		assertThat(node.getModules().size(), is(2));

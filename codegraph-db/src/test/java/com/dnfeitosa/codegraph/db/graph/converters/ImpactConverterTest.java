@@ -4,7 +4,7 @@ import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
-import com.dnfeitosa.codegraph.db.graph.nodes.Module;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,12 +12,12 @@ import com.dnfeitosa.codegraph.core.model.Impact;
 
 public class ImpactConverterTest {
 
-	private final Module impactor = new Module() {
+	private final ModuleNode impactor = new ModuleNode() {
 		{
 			setName("impactor");
 		}
 	};
-	private final Module impacted = new Module() {
+	private final ModuleNode impacted = new ModuleNode() {
 		{
 			setName("impacted");
 		}
@@ -38,21 +38,21 @@ public class ImpactConverterTest {
 	}
 
 	public static class ImpactResultStub implements ImpactResult {
-		private final Module impactor;
-		private final Module impacted;
+		private final ModuleNode impactor;
+		private final ModuleNode impacted;
 
-		public ImpactResultStub(Module impactor, Module impacted) {
+		public ImpactResultStub(ModuleNode impactor, ModuleNode impacted) {
 			this.impactor = impactor;
 			this.impacted = impacted;
 		}
 
 		@Override
-		public Module getImpactor() {
+		public ModuleNode getImpactor() {
 			return impactor;
 		}
 
 		@Override
-		public Module getImpacted() {
+		public ModuleNode getImpacted() {
 			return impacted;
 		}
 	}

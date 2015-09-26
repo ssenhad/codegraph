@@ -1,6 +1,7 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.core.model.Jar;
+import com.dnfeitosa.codegraph.db.graph.nodes.JarNode;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
@@ -16,22 +17,22 @@ public class JarConverter {
 
 	private static final Logger LOGGER = Logger.getLogger(JarConverter.class);
 
-	public Set<com.dnfeitosa.codegraph.db.graph.nodes.Jar> toNodes(List<Jar> dependencies) {
+	public Set<JarNode> toNodes(List<Jar> dependencies) {
         return notNull(dependencies)
                 .stream()
                 .map(this::toNode)
                 .collect(toSet());
 	}
 
-	public List<Jar> fromNodes(Set<com.dnfeitosa.codegraph.db.graph.nodes.Jar> dependencies) {
+	public List<Jar> fromNodes(Set<JarNode> dependencies) {
         return notNull(dependencies)
                 .stream()
                 .map(this::fromNode)
                 .collect(toList());
 	}
 
-	public com.dnfeitosa.codegraph.db.graph.nodes.Jar toNode(Jar jar) {
-		com.dnfeitosa.codegraph.db.graph.nodes.Jar node = new com.dnfeitosa.codegraph.db.graph.nodes.Jar();
+	public JarNode toNode(Jar jar) {
+		JarNode node = new JarNode();
 		node.setOrganization(jar.getOrganization());
 		node.setName(jar.getName());
 		node.setVersion(jar.getVersion());
@@ -39,7 +40,7 @@ public class JarConverter {
 		return node;
 	}
 
-	public Jar fromNode(com.dnfeitosa.codegraph.db.graph.nodes.Jar node) {
+	public Jar fromNode(JarNode node) {
 		LOGGER.trace(String.format("Converting node to jar '%s'", node.getName()));
 
 		return new Jar(node.getOrganization(), node.getName(), node.getVersion());

@@ -2,9 +2,10 @@ package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.core.model.Jar;
-import com.dnfeitosa.codegraph.db.graph.nodes.Application;
-import com.dnfeitosa.codegraph.db.graph.nodes.Artifact;
-import com.dnfeitosa.codegraph.db.graph.nodes.Module;
+import com.dnfeitosa.codegraph.db.graph.nodes.ApplicationNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.ArtifactNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.JarNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -16,7 +17,7 @@ import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class ModuleConverterTest {
+public class ModuleNodeConverterTest {
 
 	private final String moduleName = "moduleName";
 	private final List<Jar> dependencies = asList(
@@ -34,27 +35,27 @@ public class ModuleConverterTest {
 
 	private final com.dnfeitosa.codegraph.core.model.Module module = new com.dnfeitosa.codegraph.core.model.Module(moduleName, null, dependencies, exportTypes);
 
-	private final Module moduleNode = new Module() {
+	private final ModuleNode moduleNodeNode = new ModuleNode() {
 		{
 			setId(1L);
 			setName(moduleName);
-            setApplication(new Application() {{
+            setApplication(new ApplicationNode() {{
                 setName("applicationName");
             }});
-			setArtifacts(new HashSet<Artifact>() {
+			setArtifacts(new HashSet<ArtifactNode>() {
                 {
-                    add(new Artifact() {{
+                    add(new ArtifactNode() {{
                         setName("JAR");
                     }});
-                    add(new Artifact() {{
+                    add(new ArtifactNode() {{
                         setName("CONFIG");
                     }});
                 }
             });
-            setDependencies(new HashSet<com.dnfeitosa.codegraph.db.graph.nodes.Jar>() {
+            setDependencies(new HashSet<JarNode>() {
                 {
-                    add(new com.dnfeitosa.codegraph.db.graph.nodes.Jar());
-                    add(new com.dnfeitosa.codegraph.db.graph.nodes.Jar());
+                    add(new JarNode());
+                    add(new JarNode());
                 }
             });
 		}
@@ -69,7 +70,7 @@ public class ModuleConverterTest {
 
 	@Test
 	public void shouldConvertAModuleToNode() {
-		Module node = converter.toNode(module);
+		ModuleNode node = converter.toNode(module);
 
 		assertThat(node.getName(), is(moduleName));
 		assertThat(node.getArtifacts().size(), is(2));
@@ -78,7 +79,7 @@ public class ModuleConverterTest {
 
 	@Test
 	public void shouldConvertANodeToModule() {
-		com.dnfeitosa.codegraph.core.model.Module module = converter.fromNode(moduleNode);
+		com.dnfeitosa.codegraph.core.model.Module module = converter.fromNode(moduleNodeNode);
 
 		assertThat(module.getName(), is(moduleName));
 		assertThat(module.getDependencies().size(), is(2));

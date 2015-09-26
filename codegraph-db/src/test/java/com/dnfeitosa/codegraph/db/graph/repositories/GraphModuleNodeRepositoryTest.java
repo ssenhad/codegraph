@@ -1,8 +1,8 @@
 package com.dnfeitosa.codegraph.db.graph.repositories;
 
-import com.dnfeitosa.codegraph.db.graph.nodes.Application;
+import com.dnfeitosa.codegraph.db.graph.nodes.ApplicationNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
-import com.dnfeitosa.codegraph.db.graph.nodes.Module;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import com.dnfeitosa.coollections.Coollections;
 import com.dnfeitosa.coollections.Function;
 import com.dnfeitosa.coollections.decorators.CoolList;
@@ -27,7 +27,7 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = { "classpath:/codegraph-db.xml", "classpath:/codegraph-db-test.xml" })
 @ActiveProfiles("test")
 @Transactional
-public class GraphModuleRepositoryTest {
+public class GraphModuleNodeRepositoryTest {
 
 	@Autowired
 	private ApplicationRepository applicationRepository;
@@ -37,15 +37,15 @@ public class GraphModuleRepositoryTest {
 
 	@Before
 	public void setUp() {
-		Application app1 = new Application();
+		ApplicationNode app1 = new ApplicationNode();
 		app1.setName("application4");
 		app1.setModules(Coollections.asSet(module("app4-Module4", "app2-Module2", "module")));
 
-		Application app2 = new Application();
+		ApplicationNode app2 = new ApplicationNode();
 		app2.setName("application2");
 		app2.setModules(Coollections.asSet(module("app2-Module2", "module")));
 
-		Application app3 = new Application();
+		ApplicationNode app3 = new ApplicationNode();
 		app3.setName("application");
 		app3.setModules(Coollections.asSet(module("module")));
 
@@ -75,9 +75,9 @@ public class GraphModuleRepositoryTest {
 
     @Test
     public void shouldReturnTheModuleWithItsInformation() {
-        Module module = moduleRepository.findByName("module");
-        assertThat(module.getName(), is("module"));
-        assertThat(module.getApplication().getName(), is("application"));
+        ModuleNode moduleNode = moduleRepository.findByName("module");
+        assertThat(moduleNode.getName(), is("module"));
+        assertThat(moduleNode.getApplication().getName(), is("application"));
     }
 
 	private void assertIsImpactResult(ImpactResult result, String impactor, String impacted) {
@@ -85,20 +85,20 @@ public class GraphModuleRepositoryTest {
 		assertThat(result.getImpacted().getName(), is(impacted));
 	}
 
-	private Module module(String name, String... dependencies) {
-		Module module = new Module();
-		module.setName(name);
-//		module.setDependencies(toModules(dependencies).toSet());
-		return module;
+	private ModuleNode module(String name, String... dependencies) {
+		ModuleNode moduleNode = new ModuleNode();
+		moduleNode.setName(name);
+//		moduleNode.setDependencies(toModules(dependencies).toSet());
+		return moduleNode;
 	}
 
-	private CoolList<Module> toModules(String... dependencies) {
-		Function<String, Module> toModule = new Function<String, Module>() {
+	private CoolList<ModuleNode> toModules(String... dependencies) {
+		Function<String, ModuleNode> toModule = new Function<String, ModuleNode>() {
 			@Override
-			public Module apply(String name) {
-				Module module = new Module();
-				module.setName(name);
-				return module;
+			public ModuleNode apply(String name) {
+				ModuleNode moduleNode = new ModuleNode();
+				moduleNode.setName(name);
+				return moduleNode;
 			}
 		};
 		return $(asList(dependencies)).collect(toModule);

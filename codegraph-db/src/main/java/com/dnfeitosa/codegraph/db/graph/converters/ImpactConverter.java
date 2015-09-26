@@ -3,6 +3,7 @@ package com.dnfeitosa.codegraph.db.graph.converters;
 import java.util.List;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.springframework.stereotype.Component;
 
 import com.dnfeitosa.codegraph.core.model.Impact;
@@ -18,7 +19,7 @@ public class ImpactConverter {
 		return new Impact(toModule(impactResult.getImpactor()), toModule(impactResult.getImpacted()));
 	}
 
-	private com.dnfeitosa.codegraph.core.model.Module toModule(com.dnfeitosa.codegraph.db.graph.nodes.Module impactor) {
+	private com.dnfeitosa.codegraph.core.model.Module toModule(ModuleNode impactor) {
 		return new com.dnfeitosa.codegraph.core.model.Module(impactor.getName());
 	}
 }

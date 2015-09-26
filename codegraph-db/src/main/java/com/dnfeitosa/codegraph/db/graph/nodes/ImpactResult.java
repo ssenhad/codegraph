@@ -7,8 +7,8 @@ import org.springframework.data.neo4j.annotation.ResultColumn;
 public interface ImpactResult {
 
 	@ResultColumn("impactor")
-	Module getImpactor();
+    ModuleNode getImpactor();
 
 	@ResultColumn("impacted")
-	Module getImpacted();
+    ModuleNode getImpacted();
 }

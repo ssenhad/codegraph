@@ -1,13 +1,16 @@
 package com.dnfeitosa.codegraph.db.graph.nodes;
 
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 
 import static java.lang.String.format;
 
+
+@TypeAlias("Jar")
 @NodeEntity
-public class Jar {
+public class JarNode {
 
 	@GraphId
 	private Long id;
@@ -44,7 +47,7 @@ public class Jar {
 	}
 
     /**
-     * This method to be called before saving any Jar entity. Neo4J currently does not
+     * This method to be called before saving any JarNode entity. Neo4J currently does not
      * provide the support for unique indexes on composite fields, so this method
      * prepares the node to be saved by concatenating its values to form the canonical
      * name.

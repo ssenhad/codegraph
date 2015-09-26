@@ -30,7 +30,7 @@ import static org.junit.Assert.fail;
 @ContextConfiguration(locations = { "classpath:/codegraph-db.xml", "classpath:/codegraph-db-test.xml" })
 @ActiveProfiles("test")
 @Transactional
-public class ApplicationServiceTest {
+public class ApplicationNodeServiceTest {
 
 	private final List<Module> modules = asList(
 			module("app4-Module4",

@@ -12,7 +12,8 @@ import java.util.concurrent.ConcurrentHashMap;
 
 import com.dnfeitosa.codegraph.core.concurrency.Executor;
 import com.dnfeitosa.codegraph.core.concurrency.ResultHandler;
-import com.dnfeitosa.codegraph.db.graph.nodes.Class;
+import com.dnfeitosa.codegraph.db.graph.nodes.ClassNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import com.dnfeitosa.codegraph.db.graph.repositories.ModuleRepository;
 import com.dnfeitosa.codegraph.core.loaders.classes.ApplicationClassLoader;
 import com.dnfeitosa.codegraph.core.loaders.finders.ApplicationsFinder;
@@ -27,7 +28,6 @@ import org.springframework.stereotype.Service;
 import com.dnfeitosa.coollections.Coollections;
 import com.dnfeitosa.coollections.Function;
 import com.dnfeitosa.codegraph.core.concurrency.ParallelProcessor;
-import com.dnfeitosa.codegraph.db.graph.nodes.Module;
 import com.dnfeitosa.codegraph.db.graph.repositories.ClassRepository;
 
 @Service
@@ -57,42 +57,42 @@ public class ClassesIndexer {
 	}
 
 	public void index(final String codebaseRoot) {
-//		Module module2 = new Module();
-//		module2.setName("module");
-//		Artifact artifact = new Artifact();
+//		ModuleNode module2 = new ModuleNode();
+//		module2.setName("moduleNode");
+//		ArtifactNode artifact = new ArtifactNode();
 //		artifact.setName("artifact");
 //		module2.setArtifacts(asSet(artifact));
 //		moduleRepository.save(module2);
 //
-//		Class class2 = new Class();
+//		ClassNode class2 = new ClassNode();
 //		class2.setFullName("com.package.Imported");
-//		class2.setCanonicalName("Module:com.package.Imported");
+//		class2.setCanonicalName("ModuleNode:com.package.Imported");
 //		class2.setPackageName("com.package");
 //		class2.setType("SRC");
 //		class2.setName("Imported");
 //
-//		Module anotherModule = new Module();
+//		ModuleNode anotherModule = new ModuleNode();
 //		anotherModule.setName("anotherModule");
-//		anotherModule.setClasses(asSet(class2));
+//		anotherModule.setClassNodes(asSet(class2));
 //		moduleRepository.save(anotherModule);
 //
-//		Class imported = new Class();
+//		ClassNode imported = new ClassNode();
 //		imported.setFullName("com.package.Imported");
 //
-//		Class class1 = new Class();
+//		ClassNode class1 = new ClassNode();
 //		class1.setName("Name");
-//		class1.setCanonicalName("Module:com.package.Name");
+//		class1.setCanonicalName("ModuleNode:com.package.Name");
 //		class1.setPackageName("com.package");
 //		class1.setType("SRC");
 //		class1.setFullName("com.package.Name");
 //		class1.setImports(asSet(imported));
 //
 //
-//		Module module = new Module();
-//		module.setName("module");
-//		module.setClasses(asSet(class1));
+//		ModuleNode moduleNode = new ModuleNode();
+//		moduleNode.setName("moduleNode");
+//		moduleNode.setClassNodes(asSet(class1));
 //
-//		moduleRepository.save(module);
+//		moduleRepository.save(moduleNode);
 //		template.save(class1);
 //		template.save(class2);
 
@@ -105,19 +105,19 @@ public class ClassesIndexer {
 		indexClassImports(processor, handler.getModules());
 	}
 
-	private void indexClassImports(ParallelProcessor processor, List<Module> modules) {
-		final Map<String, Set<String>> classesByModule = getClassesByModule(processor, modules);
+	private void indexClassImports(ParallelProcessor processor, List<ModuleNode> moduleNodes) {
+		final Map<String, Set<String>> classesByModule = getClassesByModule(processor, moduleNodes);
 
-		processor.process(modules, new Executor<Module, Void>() {
+		processor.process(moduleNodes, new Executor<ModuleNode, Void>() {
 
 			@Override
-			public Void execute(Module module) {
-				LOGGER.info(String.format("Resolving class imports for '%s' classes.", module.getName()));
-				List<Module> dependencies = moduleRepository.dependenciesOf(module.getName());
+			public Void execute(ModuleNode moduleNode) {
+				LOGGER.info(String.format("Resolving class imports for '%s' classes.", moduleNode.getName()));
+				List<ModuleNode> dependencies = moduleRepository.dependenciesOf(moduleNode.getName());
 
-				for (com.dnfeitosa.codegraph.db.graph.nodes.Class clazz : module.getClasses()) {
-					for (Class import_ : Coollections.notNull(clazz.getImports())) {
-						for (Module dep : dependencies) {
+				for (ClassNode clazz : moduleNode.getClassNodes()) {
+					for (ClassNode import_ : Coollections.notNull(clazz.getImports())) {
+						for (ModuleNode dep : dependencies) {
 							if (classesByModule.get(dep.getName()).contains(import_.getFullName())) {
 								import_.setCanonicalName(dep.getName() + ":" + import_.getFullName());
 							}
@@ -125,47 +125,47 @@ public class ClassesIndexer {
 					}
 
 				}
-				classRepository.save(module.getClasses());
+				classRepository.save(moduleNode.getClassNodes());
 
 				return null;
 			}
 		});
 	}
 
-	private Map<String, Set<String>> getClassesByModule(ParallelProcessor processor, List<Module> modules) {
+	private Map<String, Set<String>> getClassesByModule(ParallelProcessor processor, List<ModuleNode> moduleNodes) {
 		final Map<String, Set<String>> result = new ConcurrentHashMap<>();
-		ResultHandler<Module, List<Class>> resultHandler = new ResultHandler<Module, List<Class>>() {
+		ResultHandler<ModuleNode, List<ClassNode>> resultHandler = new ResultHandler<ModuleNode, List<ClassNode>>() {
 
 			@Override
-			public void handle(Module input, List<Class> value) {
+			public void handle(ModuleNode input, List<ClassNode> value) {
 				result.put(input.getName(), $(value).collect(className()).toSet());
 			}
 
-			private Function<Class, String> className() {
-				return new Function<Class, String>() {
+			private Function<ClassNode, String> className() {
+				return new Function<ClassNode, String>() {
 					@Override
-					public String apply(Class input) {
+					public String apply(ClassNode input) {
 						return input.getFullName();
 					}
 				};
 			}
 		};
-		Executor<Module, List<Class>> executor = new Executor<Module, List<Class>>() {
+		Executor<ModuleNode, List<ClassNode>> executor = new Executor<ModuleNode, List<ClassNode>>() {
 				@Override
-				public List<Class> execute(Module input) {
-					return new ArrayList<Class>(input.getClasses());
+				public List<ClassNode> execute(ModuleNode input) {
+					return new ArrayList<ClassNode>(input.getClassNodes());
 				}
 			};
-		processor.process(modules, executor, resultHandler);
+		processor.process(moduleNodes, executor, resultHandler);
 		return result;
 	}
 
-	private void indexModuleClasses(ParallelProcessor processor, List<Module> modules) {
-		processor.process(modules, new Executor<Module, Void>() {
+	private void indexModuleClasses(ParallelProcessor processor, List<ModuleNode> moduleNodes) {
+		processor.process(moduleNodes, new Executor<ModuleNode, Void>() {
 			@Override
-			public Void execute(Module module) {
-				LOGGER.info(String.format("Indexing classes of '%s'", module.getName()));
-				moduleRepository.save(module);
+			public Void execute(ModuleNode moduleNode) {
+				LOGGER.info(String.format("Indexing classes of '%s'", moduleNode.getName()));
+				moduleRepository.save(moduleNode);
 				return null;
 			}
 		});
@@ -176,48 +176,48 @@ public class ClassesIndexer {
 		processor.process(applications, executor(codebaseRoot), handler);
 	}
 
-	public static class ModulesHandler implements ResultHandler<String, List<Module>> {
+	public static class ModulesHandler implements ResultHandler<String, List<ModuleNode>> {
 
-		private final List<Module> modules = Collections.synchronizedList(new ArrayList<Module>());
+		private final List<ModuleNode> moduleNodes = Collections.synchronizedList(new ArrayList<ModuleNode>());
 
 		@Override
-		public void handle(String input, List<Module> value) {
-			modules.addAll(value);
+		public void handle(String input, List<ModuleNode> value) {
+			moduleNodes.addAll(value);
 		}
 
-		public List<Module> getModules() {
-			return modules;
+		public List<ModuleNode> getModules() {
+			return moduleNodes;
 		}
 	}
 
-	private Executor<String, List<Module>> executor(final String codebaseRoot) {
-		return new Executor<String, List<Module>>() {
+	private Executor<String, List<ModuleNode>> executor(final String codebaseRoot) {
+		return new Executor<String, List<ModuleNode>>() {
 
 			@Override
-			public List<Module> execute(String application) {
+			public List<ModuleNode> execute(String application) {
 				List<ClassFile> classes = applicationClassLoader.loadFor(codebaseRoot, application);
 
 				Map<String, List<ClassFile>> byModule = $(classes).groupBy(byModule());
 
-				List<Module> modules = new ArrayList<>(byModule.size());
+				List<ModuleNode> moduleNodes = new ArrayList<>(byModule.size());
 				for (Entry<String,List<ClassFile>> entry : byModule.entrySet()) {
 					String moduleName = entry.getKey();
 
-					Module module = new Module();
-					module.setName(moduleName);
-					module.setClasses(toClasses(entry.getValue(), moduleName));
+					ModuleNode moduleNode = new ModuleNode();
+					moduleNode.setName(moduleName);
+					moduleNode.setClassNodes(toClasses(entry.getValue(), moduleName));
 
-					modules.add(module);
+					moduleNodes.add(moduleNode);
 				}
 
-				return modules;
+				return moduleNodes;
 			}
 
-			private Set<Class> toClasses(List<ClassFile> value, final String moduleName) {
-				return $(value).collect(new Function<ClassFile, Class>() {
+			private Set<ClassNode> toClasses(List<ClassFile> value, final String moduleName) {
+				return $(value).collect(new Function<ClassFile, ClassNode>() {
 					@Override
-					public Class apply(ClassFile input) {
-						Class clazz = new Class();
+					public ClassNode apply(ClassFile input) {
+						ClassNode clazz = new ClassNode();
 						clazz.setCanonicalName(moduleName + ":" + input.getQualifiedName());
 						clazz.setName(input.getName());
 						clazz.setFullName(input.getQualifiedName());

@@ -1,17 +1,19 @@
 package com.dnfeitosa.codegraph.db.graph.nodes;
 
-import static org.neo4j.graphdb.Direction.OUTGOING;
-
-import java.util.Set;
-
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
+import java.util.Set;
+
+import static org.neo4j.graphdb.Direction.OUTGOING;
+
+@TypeAlias("Class")
 @NodeEntity
-public class Class {
+public class ClassNode {
 
 	@GraphId
 	private Long id;
@@ -29,7 +31,7 @@ public class Class {
 
 	@Fetch
 	@RelatedTo(direction = OUTGOING, type = "IMPORT")
-	private Set<Class> imports;
+	private Set<ClassNode> imports;
 
 	public Long getId() {
 		return id;
@@ -79,11 +81,11 @@ public class Class {
 		this.type = type;
 	}
 
-	public Set<Class> getImports() {
+	public Set<ClassNode> getImports() {
 		return imports;
 	}
 
-	public void setImports(Set<Class> imports) {
+	public void setImports(Set<ClassNode> imports) {
 		this.imports = imports;
 	}
 }

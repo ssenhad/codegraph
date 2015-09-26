@@ -6,6 +6,7 @@ import com.dnfeitosa.codegraph.db.graph.converters.ApplicationConverter;
 import com.dnfeitosa.codegraph.db.graph.converters.ImpactConverter;
 import com.dnfeitosa.codegraph.db.graph.converters.ModuleConverter;
 import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import com.dnfeitosa.codegraph.db.graph.repositories.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -35,9 +36,9 @@ public class ModuleService {
 	}
 
 	public Module find(String name) {
-        com.dnfeitosa.codegraph.db.graph.nodes.Module moduleNode = moduleRepository.findByName(name);
-        Module module = moduleConverter.fromNode(moduleNode);
-        module.setApplication(applicationConverter.fromNode(moduleNode.getApplication()));
+        ModuleNode moduleNodeNode = moduleRepository.findByName(name);
+        Module module = moduleConverter.fromNode(moduleNodeNode);
+        module.setApplication(applicationConverter.fromNode(moduleNodeNode.getApplication()));
         return module;
 	}
 }

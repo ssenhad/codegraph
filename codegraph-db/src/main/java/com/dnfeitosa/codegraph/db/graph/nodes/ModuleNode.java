@@ -1,7 +1,6 @@
 package com.dnfeitosa.codegraph.db.graph.nodes;
 
 import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -31,7 +30,6 @@ public class ModuleNode {
 	@RelatedTo(direction = OUTGOING, type = "HOLDS")
 	private Set<ClassNode> classNodes;
 
-    @Fetch
     @RelatedTo(direction = INCOMING, type = "EXPORTS")
     private ApplicationNode applicationNode;
 

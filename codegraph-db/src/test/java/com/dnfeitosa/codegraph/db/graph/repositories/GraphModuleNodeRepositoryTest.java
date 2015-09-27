@@ -74,10 +74,9 @@ public class GraphModuleNodeRepositoryTest {
 	}
 
     @Test
-    public void shouldReturnTheModuleWithItsInformation() {
+    public void shouldReturnTheModuleByName() {
         ModuleNode moduleNode = moduleRepository.findByName("module");
         assertThat(moduleNode.getName(), is("module"));
-        assertThat(moduleNode.getApplication().getName(), is("application"));
     }
 
 	private void assertIsImpactResult(ImpactResult result, String impactor, String impacted) {

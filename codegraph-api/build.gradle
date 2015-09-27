@@ -1,5 +1,6 @@
 apply plugin: 'war'
 apply plugin: 'jetty'
+apply plugin: 'java'
 
 dependencies {
   compile project(':coollections')
@@ -15,4 +16,24 @@ dependencies {
 httpPort = 8080
 stopPort = 9080
 stopKey = 'stopKey'
+
+sourceSets {
+    acceptance {
+        java {
+            compileClasspath += main.output
+            runtimeClasspath += main.output
+        }
+    }
+}
+
+configurations {
+    acceptanceCompile.extendsFrom testCompile
+    acceptanceRuntime.extendsFrom testRuntime
+}
+
+
+task acceptance(type: Test) {
+    testClassesDir = project.sourceSets.acceptance.output.classesDir
+    classpath = project.sourceSets.acceptance.runtimeClasspath
+}
 

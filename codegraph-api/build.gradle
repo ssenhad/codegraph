@@ -11,6 +11,8 @@ dependencies {
   compile group: "org.springframework", name: "spring-webmvc", version: "4.1.0.RELEASE"
   compile group: "com.fasterxml.jackson.core", name: "jackson-databind", version: "2.3.3"
   compile group: "org.codehaus.jackson", name: "jackson-mapper-asl", version: "1.9.13"
+
+  testCompile group: "org.springframework", name: "spring-test", version: "4.1.0.RELEASE"
 }
 
 httpPort = 8080

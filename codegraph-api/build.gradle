@@ -20,12 +20,7 @@ stopPort = 9080
 stopKey = 'stopKey'
 
 sourceSets {
-    acceptance {
-        java {
-            compileClasspath += main.output
-            runtimeClasspath += main.output
-        }
-    }
+    acceptance
 }
 
 configurations {
@@ -33,9 +28,10 @@ configurations {
     acceptanceRuntime.extendsFrom testRuntime
 }
 
-
-task acceptance(type: Test) {
+task acceptanceTests(type: Test) {
     testClassesDir = project.sourceSets.acceptance.output.classesDir
     classpath = project.sourceSets.acceptance.runtimeClasspath
 }
+
+build.dependsOn acceptanceTests
 

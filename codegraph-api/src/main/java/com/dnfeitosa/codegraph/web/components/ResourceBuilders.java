@@ -30,12 +30,9 @@ import static com.dnfeitosa.coollections.Coollections.$;
 public class ResourceBuilders {
 
 	public ApplicationResource toResource(final Application application) {
-		return new ApplicationResource() {
-			{
-				setName(application.getName());
-				setModules(getModuleNames(application));
-			}
-		};
+        ApplicationResource resource = new ApplicationResource(application.getName());
+        resource.setModules(getModuleNames(application));
+        return resource;
 	}
 
 	private List<String> getModuleNames(Application application) {

@@ -39,9 +39,12 @@ public class ApplicationService {
 	}
 
 	public com.dnfeitosa.codegraph.core.model.Application find(String name) {
-		ApplicationNode node = applicationRepository.findBySchemaPropertyValue("name", name);
-		return converter.fromNode(node);
-	}
+        ApplicationNode node = applicationRepository.findBySchemaPropertyValue("name", name);
+        if (node == null) {
+            return null;
+        }
+        return converter.fromNode(node);
+    }
 
 	public List<com.dnfeitosa.codegraph.core.model.Application> getAll() {
 		Result<ApplicationNode> all = applicationRepository.findAll();

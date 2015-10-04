@@ -34,9 +34,11 @@ sourceSets {
     }
 }
 
-configurations {
-    acceptanceCompile.extendsFrom testCompile
-    acceptanceRuntime.extendsFrom testRuntime
+dependencies {
+    acceptanceCompile sourceSets.main.output
+    acceptanceCompile sourceSets.test.output
+    acceptanceCompile configurations.testCompile
+    acceptanceRuntime configurations.testRuntime
 }
 
 task acceptanceTests(type: Test) {
@@ -45,4 +47,3 @@ task acceptanceTests(type: Test) {
 }
 
 build.dependsOn acceptanceTests
-

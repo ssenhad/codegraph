@@ -31,4 +31,4 @@ idea {
     }
 }
 
-defaultTasks 'clean', 'build', 'acceptance'
+defaultTasks 'clean', 'build'

@@ -1,6 +1,7 @@
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'java'
+apply plugin: 'idea'
 
 dependencies {
   compile project(':coollections')
@@ -22,6 +23,14 @@ stopKey = 'stopKey'
 
 sourceSets {
     acceptance
+
+    // IntelliJ bug that prevents custom test resources to be added into the
+    // classpath when executing JUnit tests. See IDEA-128966
+    if (System.properties.'idea.active') {
+        main {
+            resources.srcDir file('src/acceptance/resources')
+        }
+    }
 }
 
 configurations {

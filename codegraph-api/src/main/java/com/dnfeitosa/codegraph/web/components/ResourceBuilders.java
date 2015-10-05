@@ -35,41 +35,33 @@ public class ResourceBuilders {
         return resource;
 	}
 
-	private List<String> getModuleNames(Application application) {
+	private List<ModuleResource> getModuleNames(Application application) {
         return application.getModules()
                 .stream()
-                .map(Module::getName)
-                .sorted()
+                .map(module -> new ModuleResource(new ApplicationResource(application.getName()), module.getName()))
+//                .sorted((m1, m2) -> m1.getName().compareTo(m2.getName()))
                 .collect(Collectors.toList());
 	}
 
 	public ModuleResource toResource(final Module module) {
-		return new ModuleResource() {
-			{
-				setName(module.getName());
-				setApplication(module.getApplication().getName());
-			}
-		};
+        ApplicationResource application = new ApplicationResource(module.getApplication().getName());
+        return new ModuleResource(application, module.getName());
 	}
 
 	public ImpactResource toResource(final Impact impact) {
-		return new ImpactResource() {
-			{
-				setImpacted(toResource(impact.getImpacted()));
-				setImpacting(toResource(impact.getImpacting()));
-			}
-		};
+        ImpactResource impactResource = new ImpactResource();
+        impactResource.setImpacted(toResource(impact.getImpacted()));
+        impactResource.setImpacting(toResource(impact.getImpacting()));
+        return impactResource;
 	}
 
 	public ImpactZoneResource toResource(final ImpactZone impactZone) {
-		return new ImpactZoneResource() {
-			{
-				setModule(toResource(impactZone.getModule()));
-				setDirect(toModuleResources(impactZone.getDirect()));
-				setIndirect(toModuleResources(impactZone.getIndirect()));
-				setSameApplication(toModuleResources(impactZone.getFromSameApplication()));
-			}
-		};
+        ImpactZoneResource impactZoneResource = new ImpactZoneResource();
+        impactZoneResource.setModule(toResource(impactZone.getModule()));
+        impactZoneResource.setDirect(toModuleResources(impactZone.getDirect()));
+        impactZoneResource.setIndirect(toModuleResources(impactZone.getIndirect()));
+        impactZoneResource.setSameApplication(toModuleResources(impactZone.getFromSameApplication()));
+        return impactZoneResource;
 	}
 
 	private List<ModuleResource> toModuleResources(List<Impact> impacts) {

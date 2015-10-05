@@ -8,8 +8,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.dnfeitosa.coollections.Coollections.$;
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
 
 @Controller
@@ -25,7 +25,9 @@ public class ApplicationsController {
 	@RequestMapping(value = "/applications", method = GET)
 	@ResponseBody
 	public List<ApplicationResource> applications() {
-        return $(applicationRepository.getApplicationNames())
-            .map(applicationName -> new ApplicationResource(applicationName));
+        return applicationRepository.getApplicationNames()
+            .stream()
+            .map(applicationName -> new ApplicationResource(applicationName))
+            .collect(Collectors.toList());
 	}
 }

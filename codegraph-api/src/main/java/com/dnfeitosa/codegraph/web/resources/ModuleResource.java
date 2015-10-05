@@ -1,12 +1,21 @@
 package com.dnfeitosa.codegraph.web.resources;
 
-public class ModuleResource {
+import com.dnfeitosa.codegraph.web.resources.Resource.Resource;
 
-	private boolean fromOrg;
-	private String application;
+import static java.lang.String.format;
+
+public class ModuleResource implements Resource {
+
+    private final ApplicationResource application;
+    private boolean fromOrg;
 	private String name;
 
-	public boolean isFromOrg() {
+    public ModuleResource(ApplicationResource application, String name) {
+        this.application = application;
+        this.name = name;
+    }
+
+    public boolean isFromOrg() {
 		return fromOrg;
 	}
 
@@ -14,15 +23,11 @@ public class ModuleResource {
 		this.fromOrg = fromOrg;
 	}
 
-	public String getApplication() {
-		return application;
-	}
+    public ApplicationResource getApplication() {
+        return application;
+    }
 
-	public void setApplication(String application) {
-		this.application = application;
-	}
-
-	public String getName() {
+    public String getName() {
 		return name;
 	}
 

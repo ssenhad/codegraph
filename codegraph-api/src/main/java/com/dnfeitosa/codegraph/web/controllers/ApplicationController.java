@@ -2,7 +2,7 @@ package com.dnfeitosa.codegraph.web.controllers;
 
 import com.dnfeitosa.codegraph.core.model.Application;
 import com.dnfeitosa.codegraph.core.model.Module;
-import com.dnfeitosa.codegraph.services.CodeGraph;
+import com.dnfeitosa.codegraph.services.ApplicationService;
 import com.dnfeitosa.codegraph.services.ModuleService;
 import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
 import com.dnfeitosa.codegraph.web.resources.ApplicationResource;
@@ -20,13 +20,14 @@ import static com.dnfeitosa.codegraph.web.Responses.ok;
 @Controller
 public class ApplicationController {
 
-	private final CodeGraph codeGraph;
+    private final ApplicationService applicationService;
     private final ModuleService moduleService;
 	private final ResourceBuilders resourceBuilders;
 
 	@Autowired
-	public ApplicationController(CodeGraph codeGraph, ModuleService moduleService, ResourceBuilders resourceBuilders) {
-		this.codeGraph = codeGraph;
+    public ApplicationController(ApplicationService applicationService, ModuleService moduleService,
+        ResourceBuilders resourceBuilders) {
+        this.applicationService = applicationService;
         this.moduleService = moduleService;
         this.resourceBuilders = resourceBuilders;
 	}
@@ -34,9 +35,9 @@ public class ApplicationController {
 	@RequestMapping("/applications/{name}")
 	@ResponseBody
 	public ResponseEntity<ApplicationResource> application(@PathVariable("name") String name) {
-		Application application = codeGraph.getApplication(name);
-		return respond(application);
-	}
+        Application application = applicationService.find(name);
+        return respond(application);
+    }
 
 	@RequestMapping("/modules/{moduleName}")
 	@ResponseBody

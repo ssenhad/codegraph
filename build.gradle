@@ -1,6 +1,7 @@
 apply plugin: 'idea'
 
 subprojects {
+    apply plugin: 'idea'
     apply plugin: 'java'
     version = '1.0'
 
@@ -30,5 +31,6 @@ idea {
         languageLevel = '1.8'
     }
 }
+
 
 defaultTasks 'clean', 'build'

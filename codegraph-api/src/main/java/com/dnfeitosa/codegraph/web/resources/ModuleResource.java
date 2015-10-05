@@ -29,4 +29,9 @@ public class ModuleResource {
 	public void setName(String name) {
 		this.name = name;
 	}
+
+    @Override
+    public String getUri() {
+        return format("/applications/%s/modules/%s", application.getName(), name);
+    }
 }

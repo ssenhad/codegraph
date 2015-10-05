@@ -38,7 +38,7 @@
         "Resource": {
             "type": "object",
             "properties": {
-                "href": {
+                "uri": {
                     "type": "string"
                 }
             }

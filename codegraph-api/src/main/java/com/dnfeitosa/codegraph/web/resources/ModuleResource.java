@@ -7,21 +7,12 @@ import static java.lang.String.format;
 public class ModuleResource implements Resource {
 
     private final ApplicationResource application;
-    private boolean fromOrg;
 	private String name;
 
     public ModuleResource(ApplicationResource application, String name) {
         this.application = application;
         this.name = name;
     }
-
-    public boolean isFromOrg() {
-		return fromOrg;
-	}
-
-	public void setFromOrg(boolean fromOrg) {
-		this.fromOrg = fromOrg;
-	}
 
     public ApplicationResource getApplication() {
         return application;

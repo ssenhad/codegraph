@@ -8,26 +8,29 @@
         "/applications": {
             "get": {
                 "description": "Lists all applications.",
+                "responses": {
+                    "200": {
+                        "description": "Successful response containing a list of applications"
+                    }
+                }
+            }
+        },
+        "/applications/{name}": {
+            "get": {
                 "parameters": [
                     {
-                        "name": "zoom",
-                        "in": "query",
-                        "description": "Comma separated list of attributes to be eargerly retried as part of the request. Possible values are: `modules`. Unidentified values will be ignored.\n",
-                        "required": false,
+                        "name": "name",
                         "type": "string",
-                        "items": {
-                            "type": "string"
-                        }
+                        "in": "path",
+                        "required": true,
+                        "description": "Application name."
                     }
                 ],
                 "responses": {
                     "200": {
-                        "description": "Successful response",
+                        "description": "Successful response containing the application data",
                         "schema": {
-                            "type": "array",
-                            "items": {
-                                "$ref": "#/definitions/Application"
-                            }
+                            "$ref": "#/definitions/Application"
                         }
                     }
                 }

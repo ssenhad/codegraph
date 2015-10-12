@@ -38,7 +38,7 @@ public class ModuleService {
 	public Module find(String name) {
         ModuleNode moduleNodeNode = moduleRepository.findByName(name);
         Module module = moduleConverter.fromNode(moduleNodeNode);
-        module.setApplication(applicationConverter.fromNode(moduleNodeNode.getApplication()));
+//        module.setApplication(applicationConverter.fromNode(moduleNodeNode.getApplication()));
         return module;
 	}
 }

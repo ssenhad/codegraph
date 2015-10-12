@@ -5,7 +5,6 @@ import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.db.graph.nodes.JarNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.apache.log4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -24,8 +23,11 @@ public class ModuleConverter {
 	private final JarConverter jarConverter;
 	private final ArtifactConverter artifactConverter;
 
-    @Autowired
-    public ModuleConverter(JarConverter jarConverter, ArtifactConverter artifactConverter) {
+    public ModuleConverter() {
+        this(new JarConverter(), new ArtifactConverter());
+    }
+
+    ModuleConverter(JarConverter jarConverter, ArtifactConverter artifactConverter) {
         this.jarConverter = jarConverter;
 		this.artifactConverter = artifactConverter;
     }
@@ -69,7 +71,11 @@ public class ModuleConverter {
 	}
 
 	public com.dnfeitosa.codegraph.core.model.Module fromNode(ModuleNode node) {
-		LOGGER.trace(String.format("Converting node to module '%s'.", node.getName()));
+        if (node == null) {
+            return null;
+        }
+
+        LOGGER.trace(String.format("Converting node to module '%s'.", node.getName()));
 
 		List<Jar> dependencies = jarConverter.fromNodes(node.getDependencies());
 

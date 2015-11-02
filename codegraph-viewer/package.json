@@ -1,5 +1,5 @@
 {
-  "name": "Codegraph Viewer",
+  "name": "CodeGraph Viewer",
   "description": "Visualize and navigate through your application's dependencies and other applications connections.",
   "repository": "https://github.com/dnfeitosa/codegraph",
   "devDependencies": {

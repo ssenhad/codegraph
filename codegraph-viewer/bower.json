@@ -1,0 +1,13 @@
+{
+    "name": "Codegraph Viewer",
+    "version": "0.0.1",
+    "license": "Apache License 2.0",
+    "directory":"components/",
+    "dependencies": {
+        "angular": "~1.4",
+        "angular-route": "~1.4",
+        "bootstrap": "~3.3",
+        "angular-bootstrap": "~0.14",
+        "angular-mocks": "~1.4"
+    }
+}

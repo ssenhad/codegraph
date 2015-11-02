@@ -43,10 +43,16 @@ public class ResourceBuilders {
                 .collect(Collectors.toList());
 	}
 
+    @Deprecated
 	public ModuleResource toResource(final Module module) {
         ApplicationResource application = new ApplicationResource(module.getApplication().getName());
         return new ModuleResource(application, module.getName());
 	}
+
+    public ModuleResource toResource(final Module module, String applicationName) {
+        ApplicationResource application = new ApplicationResource(applicationName);
+        return new ModuleResource(application, module.getName());
+    }
 
 	public ImpactResource toResource(final Impact impact) {
         ImpactResource impactResource = new ImpactResource();

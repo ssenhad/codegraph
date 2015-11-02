@@ -31,17 +31,14 @@ public class ModuleController {
     public ResponseEntity<ModuleResource> module(@PathVariable("applicationName") String applicationName,
                                                  @PathVariable("moduleName") String moduleName) {
         Module module = moduleService.find(moduleName);
-        return respondWith(module);
+        return respondWith(module, applicationName);
     }
 
-    private ResponseEntity<ModuleResource> respondWith(Module module) {
+    private ResponseEntity<ModuleResource> respondWith(Module module, String applicationName) {
         if (module == null) {
             return notFound();
         }
-        return ok(toResource(module));
+        return ok(resourceBuilders.toResource(module, applicationName));
     }
 
-    private ModuleResource toResource(Module module) {
-        return resourceBuilders.toResource(module);
-    }
 }

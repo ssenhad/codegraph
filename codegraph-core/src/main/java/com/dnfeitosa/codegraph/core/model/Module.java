@@ -28,6 +28,7 @@ public class Module {
 		this.exportTypes = exportTypes;
 	}
 
+    @Deprecated
 	public Application getApplication() {
 		return application;
 	}
@@ -65,6 +66,7 @@ public class Module {
 		return format("Module{name='%s', application='%s'}", name, application.getName());
 	}
 
+    @Deprecated
 	public void setApplication(Application application) {
 		this.application = application;
 	}

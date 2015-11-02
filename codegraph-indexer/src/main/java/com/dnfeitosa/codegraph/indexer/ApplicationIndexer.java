@@ -1,4 +1,4 @@
-package com.dnfeitosa.codegraph.indexing;
+package com.dnfeitosa.codegraph.indexer;
 
 import com.dnfeitosa.codegraph.core.descriptors.ApplicationDescriptor;
 import com.dnfeitosa.codegraph.core.descriptors.DescriptorType;

@@ -1,4 +1,4 @@
-package com.dnfeitosa.codegraph.indexing;
+package com.dnfeitosa.codegraph.indexer;
 
 import static com.dnfeitosa.coollections.Coollections.$;
 

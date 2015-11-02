@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.cli.commands;
 
 import com.dnfeitosa.codegraph.core.descriptors.DescriptorType;
-import com.dnfeitosa.codegraph.indexing.ApplicationIndexer;
+import com.dnfeitosa.codegraph.indexer.ApplicationIndexer;
 import io.airlift.airline.Arguments;
 import io.airlift.airline.Command;
 import io.airlift.airline.Option;

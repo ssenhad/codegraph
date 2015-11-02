@@ -8,7 +8,7 @@ public class CodeGraphMain {
 
     public static void main(String[] args) {
         Cli<Runnable> cli = Cli.<Runnable>builder("codegraph")
-                .withDescription("CodeGraph indexing tool")
+                .withDescription("CodeGraph indexer tool")
                 .withDefaultCommand(Help.class)
                 .withCommands(Help.class, Index.class)
                 .build();

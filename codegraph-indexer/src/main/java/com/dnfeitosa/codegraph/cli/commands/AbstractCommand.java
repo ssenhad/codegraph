@@ -12,7 +12,7 @@ public abstract class AbstractCommand implements Runnable {
     protected ApplicationContext applicationContext;
 
     public AbstractCommand() {
-        applicationContext = new ClassPathXmlApplicationContext(new String[] { "/codegraph-indexing.xml" });
+        applicationContext = new ClassPathXmlApplicationContext(new String[] {"/codegraph-indexer.xml"});
     }
 
     protected ApplicationService getService() {

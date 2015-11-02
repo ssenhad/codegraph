@@ -11,5 +11,5 @@
     <import resource="classpath:/codegraph-core.xml" />
     <import resource="classpath:/codegraph-db.xml" />
 
-    <context:component-scan base-package="com.dnfeitosa.codegraph.indexing" />
+    <context:component-scan base-package="com.dnfeitosa.codegraph.indexer" />
 </beans>

@@ -1,0 +1,13 @@
+body {
+    padding-top: 60px;
+}
+
+.preloader {
+    padding-top: 200px;
+    text-align: center;
+}
+
+.canvas {
+    border: solid 1px black;
+    height: 90%;
+}

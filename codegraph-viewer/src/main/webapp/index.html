@@ -36,8 +36,7 @@
 
     <div class="container-fluid">
         <main ng-view>
-            <!--<div class="preloader"><img src="/images/ring.gif" /></div>-->
-            <div class="canvas">Contents</div>
+            <div class="preloader"><img src="/images/ring.gif" /></div>
         </main>
     </div>
 
@@ -47,12 +46,20 @@
     <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
     <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/components/d3/d3.min.js"></script>
+    <script src="/components/lodash/lodash.min.js"></script>
+    <script src="/components/graphlib/dist/graphlib.core.min.js"></script>
+    <script src="/components/dagre/dist/dagre.core.min.js"></script>
+    <script src="/components/dagre-d3/dist/dagre-d3.core.min.js"></script>
 
+    <script src="/app/extensions.js"></script>
     <script src="/app/modules/api/api.module.js"></script>
     <script src="/app/modules/api/api.service.js"></script>
     <script src="/app/modules/index/index.module.js"></script>
     <script src="/app/modules/index/index.service.js"></script>
     <script src="/app/modules/index/index.controller.js"></script>
+    <script src="/app/modules/application/application.module.js"></script>
+    <script src="/app/modules/application/application.controller.js"></script>
     <script src="/app/app.js"></script>
 </body>
 </html>

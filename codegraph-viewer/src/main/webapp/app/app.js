@@ -17,5 +17,13 @@ angular
             templateUrl: 'app/modules/application/partials/applicationView.html',
             controller: 'ApplicationController'
         });
+    })
+    .service('config', function () {
+        this.protocol = 'http';
+        this.host = 'localhost:8080';
+
+        this.baseUrl = function () {
+            return "{protocol}://{host}".apply(this);
+        };
     });
 

@@ -2,8 +2,8 @@
 
 angular.module('CodeGraph.application')
     .controller('ApplicationController', function ($scope, $routeParams, api) {
-        var uri = '/api/applications/{name}'.apply({name: $routeParams.application});
-        api.get(uri).then(function (application) {
+        api.modules($routeParams.application).then(function (application) {
+            $scope.application = application;
             var graph = new dagreD3.graphlib.Graph()
                 .setGraph({})
                 .setDefaultEdgeLabel(function () {

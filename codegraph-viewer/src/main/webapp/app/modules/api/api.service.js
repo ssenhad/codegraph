@@ -1,10 +1,10 @@
 'use strict';
 
 angular.module('CodeGraph.api')
-    .service('api', function ($http) {
+    .service('api', function ($http, config) {
         this.get = function (url) {
             return $http
-                .get(url)
+                .get([ config.baseUrl(), url ].join('/'))
                 .then(function (response) {
                     return response.data;
                 });
@@ -25,6 +25,10 @@ angular.module('CodeGraph.api')
         };
 
         this.applications = function () {
-            return this.get('/api/applications');
+            return this.get('api/applications');
+        };
+
+        this.modules = function (application) {
+            return this.get('api/applications/{name}'.apply({ name: application }));
         }
     });

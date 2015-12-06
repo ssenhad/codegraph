@@ -19,8 +19,8 @@ public class ApplicationNodeConverterTest {
 
 	private final String applicationName = "name";
 	private final List<Module> modules = asList(
-        new Module(null, null, null, null, null),
-        new Module(null, null, null, null, null)
+        new Module(null, null, null, null),
+        new Module(null, null, null, null)
     );
 
 	private final Application application = new Application(applicationName, modules);

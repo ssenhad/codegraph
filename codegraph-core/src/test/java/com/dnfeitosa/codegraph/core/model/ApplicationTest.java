@@ -16,8 +16,8 @@ public class ApplicationTest {
 	private final List<Jar> dependencies = Collections.emptyList();
 	private final Set<ArtifactType> exports = asSet(new ArtifactType("jar"), new ArtifactType("config"));
 
-	private final Module module4 = new Module("app4-Module4", null, "organization", dependencies, exports);
-	private final Module module2 = new Module("app4-Module2", null, "organization", dependencies, exports);
+	private final Module module4 = new Module("app4-Module4", "organization", dependencies, exports);
+	private final Module module2 = new Module("app4-Module2", "organization", dependencies, exports);
 
 	private final Application application = new Application("application4", asList(module4, module2));
 

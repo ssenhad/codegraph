@@ -34,7 +34,7 @@ public class ModuleNodeConverterTest {
 		}
 	};
 
-	private final Module module = new Module(moduleName, null, organization, dependencies, exportTypes);
+	private final Module module = new Module(moduleName, organization, dependencies, exportTypes);
 
 	private final ModuleNode moduleNodeNode = new ModuleNode() {
 		{

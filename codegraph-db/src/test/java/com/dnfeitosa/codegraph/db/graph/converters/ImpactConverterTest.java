@@ -1,15 +1,16 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
-import static org.hamcrest.Matchers.is;
-import static org.junit.Assert.assertThat;
-
+import com.dnfeitosa.codegraph.core.model.Impact;
 import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 
-import com.dnfeitosa.codegraph.core.model.Impact;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
 
+@Ignore("functionality is not implemented")
 public class ImpactConverterTest {
 
 	private final ModuleNode impactor = new ModuleNode() {

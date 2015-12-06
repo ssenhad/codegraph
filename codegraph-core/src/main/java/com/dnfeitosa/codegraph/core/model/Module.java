@@ -2,7 +2,6 @@ package com.dnfeitosa.codegraph.core.model;
 
 import com.dnfeitosa.coollections.Filter;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
@@ -12,20 +11,13 @@ import static java.lang.String.format;
 public class Module {
 
 	private final String name;
-	private final String location;
     private final String organization;
     private final List<Jar> dependencies;
 	private final Set<ArtifactType> exportTypes;
 	private Application application;
 
-    @Deprecated
-	public Module(String name) {
-		this(name, null, null, Collections.<Jar> emptyList(), Collections.<ArtifactType> emptySet());
-	}
-
-	public Module(String name, String location, String organization, List<Jar> dependencies, Set<ArtifactType> exportTypes) {
+    public Module(String name, String organization, List<Jar> dependencies, Set<ArtifactType> exportTypes) {
 		this.name = name;
-		this.location = location;
         this.organization = organization;
         this.dependencies = dependencies;
 		this.exportTypes = exportTypes;
@@ -52,11 +44,7 @@ public class Module {
         return $(dependencies).filter(filter);
     }
 
-	public String getLocation() {
-		return location;
-	}
-
-	public Set<ArtifactType> getExportTypes() {
+    public Set<ArtifactType> getExportTypes() {
 		return exportTypes;
 	}
 

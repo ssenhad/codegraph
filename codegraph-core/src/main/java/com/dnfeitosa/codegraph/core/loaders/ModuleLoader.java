@@ -20,6 +20,6 @@ public class ModuleLoader implements Function<ModuleDescriptor, Module> {
 		String organization = descriptor.getOrganization();
 		List<Jar> dependencies = descriptor.getDependencies();
 		Set<ArtifactType> exportTypes = descriptor.getExportTypes();
-		return new Module(moduleName, location, organization, dependencies, exportTypes);
+		return new Module(moduleName, organization, dependencies, exportTypes);
 	}
 }

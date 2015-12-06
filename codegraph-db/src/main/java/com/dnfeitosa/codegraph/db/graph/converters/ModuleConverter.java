@@ -81,7 +81,7 @@ public class ModuleConverter {
 		List<Jar> dependencies = jarConverter.fromNodes(node.getDependencies());
 
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
-        Module module = new Module(node.getName(), node.getOrganization(), null, dependencies, artifacts);
+        Module module = new Module(node.getName(), null, dependencies, artifacts);
         return module;
 	}
 }

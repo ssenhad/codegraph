@@ -1,5 +1,5 @@
 <ivy-module version="2.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ant.apache.org/ivy/schemas/ivy.xsd">
-  <info organisation="com.dnfeitosa" module="IvyDescriptorExample" build="${version}" />
+  <info organisation="com.the-organization" module="IvyDescriptorExample" build="${version}" />
 
   <publications>
     <artifact name="IvyDescriptorExample" type="jar" conf="compile" />

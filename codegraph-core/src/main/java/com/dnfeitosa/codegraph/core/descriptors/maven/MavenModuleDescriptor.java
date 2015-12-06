@@ -26,6 +26,11 @@ public class MavenModuleDescriptor implements ModuleDescriptor {
     }
 
     @Override
+    public String getOrganization() {
+        return pomFile.getOrganization();
+    }
+
+    @Override
     public List<Jar> getDependencies() {
         return pomFile.getDependencies();
     }

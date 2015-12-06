@@ -52,6 +52,11 @@ public class IvyFileTest {
 		assertThat(exportTypes, hasItems(new ArtifactType("jar"), new ArtifactType("config")));
 	}
 
+    @Test
+    public void shouldGetTheModuleOrganization() {
+        assertThat(ivyFile.getOrganization(), is("com.the-organization"));
+    }
+
 	private Jar jar(String organization, String name, String version) {
 		return new Jar(organization, name, version);
 	}

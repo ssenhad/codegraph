@@ -13,18 +13,21 @@ public class Module {
 
 	private final String name;
 	private final String location;
-	private final List<Jar> dependencies;
+    private final String organization;
+    private final List<Jar> dependencies;
 	private final Set<ArtifactType> exportTypes;
 	private Application application;
 
+    @Deprecated
 	public Module(String name) {
-		this(name, null, Collections.<Jar> emptyList(), Collections.<ArtifactType> emptySet());
+		this(name, null, null, Collections.<Jar> emptyList(), Collections.<ArtifactType> emptySet());
 	}
 
-	public Module(String name, String location, List<Jar> dependencies, Set<ArtifactType> exportTypes) {
+	public Module(String name, String location, String organization, List<Jar> dependencies, Set<ArtifactType> exportTypes) {
 		this.name = name;
 		this.location = location;
-		this.dependencies = dependencies;
+        this.organization = organization;
+        this.dependencies = dependencies;
 		this.exportTypes = exportTypes;
 	}
 
@@ -36,6 +39,10 @@ public class Module {
 	public String getName() {
 		return this.name;
 	}
+
+    public String getOrganization() {
+        return organization;
+    }
 
 	public List<Jar> getDependencies() {
 		return dependencies;

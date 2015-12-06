@@ -20,7 +20,7 @@ public class ApplicationLoader {
         return new Application(applicationDescriptor.getName(), modules);
     }
 
-    private Module toModule(ModuleDescriptor mod) {
-        return new Module(mod.getName(), null, mod.getDependencies(), mod.getExportTypes());
+    private Module toModule(ModuleDescriptor descriptor) {
+        return new Module(descriptor.getName(), null, descriptor.getOrganization(), descriptor.getDependencies(), descriptor.getExportTypes());
     }
 }

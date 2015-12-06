@@ -27,6 +27,11 @@ public class PomFileTest {
     }
 
     @Test
+    public void shouldReturnTheGroupIdAsTheOrganizationName() {
+        assertThat(pomFile.getOrganization(), is("net.vidageek"));
+    }
+
+    @Test
     public void shouldReturnTheDependencies() {
         assertThat(pomFile.getDependencies(), hasItems(
             jar("org.objenesis", "objenesis", "1.2"),

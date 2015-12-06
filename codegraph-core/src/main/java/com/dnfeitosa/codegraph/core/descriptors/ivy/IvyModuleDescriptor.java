@@ -26,6 +26,11 @@ public class IvyModuleDescriptor implements ModuleDescriptor {
     }
 
     @Override
+    public String getOrganization() {
+        return ivyFile.getOrganization();
+    }
+
+    @Override
     public List<Jar> getDependencies() {
         return ivyFile.getDependencies();
     }

@@ -9,6 +9,7 @@ import java.util.Set;
 public interface ModuleDescriptor {
     String getName();
     String getLocation();
+    String getOrganization();
     List<Jar> getDependencies(); // change to Set
     Set<ArtifactType> getExportTypes();
 }

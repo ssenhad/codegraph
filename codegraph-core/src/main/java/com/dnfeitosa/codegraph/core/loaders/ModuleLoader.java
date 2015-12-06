@@ -14,11 +14,12 @@ import java.util.Set;
 public class ModuleLoader implements Function<ModuleDescriptor, Module> {
 
 	@Override
-	public Module apply(ModuleDescriptor ivyFile) {
-		String moduleName = ivyFile.getName();
-		String location = ivyFile.getLocation();
-		List<Jar> dependencies = ivyFile.getDependencies();
-		Set<ArtifactType> exportTypes = ivyFile.getExportTypes();
-		return new Module(moduleName, location, dependencies, exportTypes);
+	public Module apply(ModuleDescriptor descriptor) {
+		String moduleName = descriptor.getName();
+		String location = descriptor.getLocation();
+		String organization = descriptor.getOrganization();
+		List<Jar> dependencies = descriptor.getDependencies();
+		Set<ArtifactType> exportTypes = descriptor.getExportTypes();
+		return new Module(moduleName, location, organization, dependencies, exportTypes);
 	}
 }

@@ -17,7 +17,7 @@ public class IvyFile {
     private final String location;
     private final XmlFile xml;
 
-	public IvyFile(String path) {
+    public IvyFile(String path) {
         File file = new File(path);
 		this.xml = new XmlFile(file);
         this.location = file.getParent();
@@ -54,4 +54,8 @@ public class IvyFile {
             return new ArtifactType(type);
         };
 	}
+
+    public String getOrganization() {
+        return xml.findAttribute("/ivy-module/info/@organisation").getValue();
+    }
 }

@@ -2,6 +2,7 @@ package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.core.model.Jar;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
@@ -49,6 +50,7 @@ public class ModuleConverter {
 	public ModuleNode toNode(com.dnfeitosa.codegraph.core.model.Module module) {
 		ModuleNode node = new ModuleNode();
 		node.setName(module.getName());
+        node.setOrganization(module.getOrganization());
 		node.setArtifacts(artifactConverter.toNodes(module.getExportTypes()));
 		setDependencies(module, node);
 		return node;
@@ -79,7 +81,7 @@ public class ModuleConverter {
 		List<Jar> dependencies = jarConverter.fromNodes(node.getDependencies());
 
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
-        com.dnfeitosa.codegraph.core.model.Module module = new com.dnfeitosa.codegraph.core.model.Module(node.getName(), null, dependencies, artifacts);
+        Module module = new Module(node.getName(), node.getOrganization(), null, dependencies, artifacts);
         return module;
 	}
 }

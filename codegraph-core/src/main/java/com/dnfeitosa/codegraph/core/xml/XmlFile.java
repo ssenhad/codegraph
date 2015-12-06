@@ -21,10 +21,16 @@ import static org.jdom2.filter.Filters.element;
 public class XmlFile {
 
 	private final Document document;
+    private String defaultNamespacePrefix;
 
-	public XmlFile(File file) {
-		document = buildDocumentFrom(file);
-	}
+    public XmlFile(File file) {
+        this(file, "");
+    }
+
+    public XmlFile(File file, String defaultNamespacePrefix) {
+        this.defaultNamespacePrefix = defaultNamespacePrefix;
+        this.document = buildDocumentFrom(file);
+    }
 
 	public Attribute findAttribute(String expression) {
 		return compile(attribute(), expression).evaluateFirst(document);
@@ -53,7 +59,7 @@ public class XmlFile {
     public Namespace namespace() {
         Namespace namespace = document.getRootElement().getNamespace("");
         if (!namespace.getURI().isEmpty()) {
-            return Namespace.getNamespace("ns", namespace.getURI());
+            return Namespace.getNamespace(defaultNamespacePrefix, namespace.getURI());
         }
         return document.getRootElement().getNamespace();
     }

@@ -1,5 +1,7 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
+import com.dnfeitosa.codegraph.core.model.Application;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.db.graph.nodes.ApplicationNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.junit.Before;
@@ -16,11 +18,12 @@ import static org.junit.Assert.assertThat;
 public class ApplicationNodeConverterTest {
 
 	private final String applicationName = "name";
-	private final String location = "location";
-	private final List<com.dnfeitosa.codegraph.core.model.Module> modules = asList(new com.dnfeitosa.codegraph.core.model.Module(null, null, null, null), new com.dnfeitosa.codegraph.core.model.Module(null, null, null, null));
+	private final List<Module> modules = asList(
+        new Module(null, null, null, null, null),
+        new Module(null, null, null, null, null)
+    );
 
-	private final com.dnfeitosa.codegraph.core.model.Application application = new com.dnfeitosa.codegraph.core.model.Application(
-			applicationName, modules);
+	private final Application application = new Application(applicationName, modules);
 
 	private final ApplicationNode node = new ApplicationNode() {
 		{
@@ -52,7 +55,7 @@ public class ApplicationNodeConverterTest {
 
 	@Test
 	public void shouldConvertANodeToApplication() {
-		com.dnfeitosa.codegraph.core.model.Application application = converter.fromNode(node);
+		Application application = converter.fromNode(node);
 
 		assertThat(application.getName(), is(applicationName));
 		assertThat(application.getModules().size(), is(2));

@@ -38,6 +38,11 @@ public class ApplicationLoaderTest {
             }
 
             @Override
+            public String getOrganization() {
+                return "the organization";
+            }
+
+            @Override
             public List<Jar> getDependencies() {
                 return null;
             }

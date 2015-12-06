@@ -2,6 +2,7 @@ package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.core.model.Jar;
+import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.db.graph.nodes.ApplicationNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
@@ -19,6 +20,7 @@ import static org.junit.Assert.assertThat;
 public class ModuleNodeConverterTest {
 
 	private final String moduleName = "moduleName";
+	private final String organization = "organization";
 	private final List<Jar> dependencies = asList(
         new Jar("apache", "commons-lang", null),
         new Jar("apache", "commons-io", null),
@@ -32,7 +34,7 @@ public class ModuleNodeConverterTest {
 		}
 	};
 
-	private final com.dnfeitosa.codegraph.core.model.Module module = new com.dnfeitosa.codegraph.core.model.Module(moduleName, null, dependencies, exportTypes);
+	private final Module module = new Module(moduleName, null, organization, dependencies, exportTypes);
 
 	private final ModuleNode moduleNodeNode = new ModuleNode() {
 		{
@@ -72,6 +74,7 @@ public class ModuleNodeConverterTest {
 		ModuleNode node = converter.toNode(module);
 
 		assertThat(node.getName(), is(moduleName));
+		assertThat(node.getOrganization(), is(organization));
 		assertThat(node.getArtifacts().size(), is(2));
 		assertThat(node.getDependencies().size(), is(4));
 	}

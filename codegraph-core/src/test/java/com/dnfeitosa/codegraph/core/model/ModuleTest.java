@@ -22,7 +22,10 @@ public class ModuleTest {
 
 	@Before
 	public void setUp() {
-		module = new Module("aModule", "location", asList(commonsLang, springCore), asSet(new ArtifactType("jar"), new ArtifactType("config")));
+		module = new Module("aModule", "location", "organization",
+            asList(commonsLang, springCore),
+            asSet(new ArtifactType("dep"), new ArtifactType("config"))
+        );
 	}
 
 	@Test
@@ -42,8 +45,7 @@ public class ModuleTest {
 
     @Test
     public void shouldReturnTheModuleDependenciesByFilter() {
-        List<Jar> dependencies = module.getDependencies(jar -> "apache".equals(jar.getOrganization()));
-
+        List<Jar> dependencies = module.getDependencies(dep -> "apache".equals(dep.getOrganization()));
 
         assertThat(dependencies.size(), is(1));
         assertThat(dependencies.get(0), sameInstance(commonsLang));
@@ -51,7 +53,7 @@ public class ModuleTest {
 
 	@Test
 	public void shouldTellWhetherAModuleExportsAnArtifactType() {
-		assertTrue(module.exports(new ArtifactType("jar")));
+		assertTrue(module.exports(new ArtifactType("dep")));
 		assertTrue(module.exports(new ArtifactType("config")));
 		assertFalse(module.exports(new ArtifactType("webapp")));
 	}

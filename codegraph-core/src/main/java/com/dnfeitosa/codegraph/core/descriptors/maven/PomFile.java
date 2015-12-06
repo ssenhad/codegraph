@@ -18,7 +18,7 @@ public class PomFile {
     private final XmlFile xml;
 
     public PomFile(String path) {
-        xml = new XmlFile(new File(path));
+        xml = new XmlFile(new File(path), "ns");
     }
 
     public String getModuleName() {
@@ -43,5 +43,9 @@ public class PomFile {
         Set<ArtifactType> exportTypes = new HashSet<>();
         exportTypes.add(new ArtifactType(xml.findElement("/ns:project/ns:packaging").getText()));
         return exportTypes;
+    }
+
+    public String getOrganization() {
+        return xml.findElement("/ns:project/ns:groupId").getText();
     }
 }

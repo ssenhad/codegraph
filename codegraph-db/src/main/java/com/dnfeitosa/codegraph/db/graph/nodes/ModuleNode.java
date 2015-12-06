@@ -22,7 +22,7 @@ public class ModuleNode {
 	private String name;
 
 	@RelatedTo(direction = OUTGOING, type = "DEPENDS_ON")
-	private Set<JarNode> dependencies;
+	private Set<ModuleNode> dependencies;
 
 	@RelatedTo(direction = OUTGOING, type = "EXPORTS")
 	private Set<ArtifactNode> artifactNodes;
@@ -33,7 +33,26 @@ public class ModuleNode {
     @RelatedTo(direction = INCOMING, type = "EXPORTS")
     private ApplicationNode applicationNode;
 
-	public Long getId() {
+    private String organization;
+    private String version;
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public Long getId() {
 		return id;
 	}
 
@@ -49,11 +68,11 @@ public class ModuleNode {
 		this.name = name;
 	}
 
-	public Set<JarNode> getDependencies() {
+	public Set<ModuleNode> getDependencies() {
 		return dependencies;
 	}
 
-	public void setDependencies(Set<JarNode> dependencies) {
+	public void setDependencies(Set<ModuleNode> dependencies) {
 		this.dependencies = dependencies;
 	}
 

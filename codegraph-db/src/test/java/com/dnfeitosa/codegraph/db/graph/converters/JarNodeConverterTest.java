@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.db.graph.converters;
 
 import com.dnfeitosa.codegraph.core.model.Jar;
-import com.dnfeitosa.codegraph.db.graph.nodes.JarNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -15,7 +15,7 @@ public class JarNodeConverterTest {
 	private final String version = "version";
 
 	private final Jar jar = new Jar(organization, name, version);
-	private final JarNode node = new JarNode() {
+	private final ModuleNode node = new ModuleNode() {
 		{
 			setOrganization(organization);
 			setName(name);
@@ -32,7 +32,7 @@ public class JarNodeConverterTest {
 
 	@Test
 	public void shouldConvertAJarToNode() {
-		JarNode node = converter.toNode(jar);
+		ModuleNode node = converter.toNode(jar);
 
 		assertThat(node.getOrganization(), is(organization));
 		assertThat(node.getName(), is(name));

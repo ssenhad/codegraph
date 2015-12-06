@@ -4,7 +4,6 @@ import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.db.graph.nodes.ApplicationNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ArtifactNode;
-import com.dnfeitosa.codegraph.db.graph.nodes.JarNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import org.junit.Before;
 import org.junit.Test;
@@ -52,10 +51,10 @@ public class ModuleNodeConverterTest {
                     }});
                 }
             });
-            setDependencies(new HashSet<JarNode>() {
+            setDependencies(new HashSet<ModuleNode>() {
                 {
-                    add(new JarNode());
-                    add(new JarNode());
+                    add(new ModuleNode());
+                    add(new ModuleNode());
                 }
             });
 		}

@@ -24,7 +24,9 @@ public interface BaseModuleRepository extends GraphRepository<ModuleNode>, Trave
 	@Query(IMMEDIATE_IMPACT_QUERY)
 	List<ImpactResult> immediateImpactOf(String moduleName);
 
-    @Query("MATCH p=shortestPath((module:Module {name: {0}})-[DEPENDS_ON*]->(dependency:Module)) " +
+    @Query(" MATCH (module:Module {name: {0}}) RETURN module as dependency " +
+            " UNION " +
+            "MATCH p=shortestPath((module:Module {name: {0}})-[DEPENDS_ON*]->(dependency:Module)) " +
             "RETURN distinct dependency ")
     Set<ModuleNode> dependenciesOf(String name);
 

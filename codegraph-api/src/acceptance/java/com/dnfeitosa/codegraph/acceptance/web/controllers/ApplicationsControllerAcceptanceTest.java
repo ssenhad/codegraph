@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.acceptance.web.controllers;
 
-import com.dnfeitosa.codegraph.acceptance.support.DatabaseDependentTest;
+import com.dnfeitosa.codegraph.acceptance.support.DatabaseDependentAcceptanceTest;
 import com.dnfeitosa.codegraph.web.controllers.ApplicationsController;
 import com.dnfeitosa.codegraph.web.resources.ApplicationResource;
 import org.junit.Test;
@@ -13,7 +13,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.Assert.assertThat;
 
-public class ApplicationsControllerTest extends DatabaseDependentTest {
+public class ApplicationsControllerAcceptanceTest extends DatabaseDependentAcceptanceTest {
 
     @Autowired
     private ApplicationsController controller;

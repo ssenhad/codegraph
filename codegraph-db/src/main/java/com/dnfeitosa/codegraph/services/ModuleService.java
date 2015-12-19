@@ -1,44 +1,67 @@
 package com.dnfeitosa.codegraph.services;
 
-import com.dnfeitosa.codegraph.core.model.ImpactZone;
+import com.dnfeitosa.codegraph.core.model.Dependency;
+import com.dnfeitosa.codegraph.core.model.DependencyGraph;
+import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.db.graph.converters.ApplicationConverter;
-import com.dnfeitosa.codegraph.db.graph.converters.ImpactConverter;
 import com.dnfeitosa.codegraph.db.graph.converters.ModuleConverter;
-import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
 import com.dnfeitosa.codegraph.db.graph.repositories.ModuleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
-import java.util.List;
+import java.util.Map;
+import java.util.Set;
+
+import static java.util.stream.Collectors.toMap;
+import static java.util.stream.Collectors.toSet;
 
 @Repository
 public class ModuleService {
 
 	private final ModuleRepository moduleRepository;
     private final ModuleConverter moduleConverter;
-    private final ImpactConverter impactZoneConverter;
     private ApplicationConverter applicationConverter;
 
     @Autowired
-    public ModuleService(ModuleRepository moduleRepository, ModuleConverter moduleConverter, ImpactConverter impactConverter,
-            ApplicationConverter applicationConverter) {
+    public ModuleService(ModuleRepository moduleRepository, ModuleConverter moduleConverter,
+                         ApplicationConverter applicationConverter) {
         this.moduleRepository = moduleRepository;
         this.moduleConverter = moduleConverter;
-        this.impactZoneConverter = impactConverter;
         this.applicationConverter = applicationConverter;
     }
 
-	public ImpactZone getImpactZone(Module module) {
-		List<ImpactResult> fullImpact = moduleRepository.fullImpactOf(module.getName());
-		return new ImpactZone(module, impactZoneConverter.fromNodes(fullImpact));
-	}
-
 	public Module find(String name) {
         ModuleNode moduleNodeNode = moduleRepository.findByName(name);
-        Module module = moduleConverter.fromNode(moduleNodeNode);
-//        module.setApplication(applicationConverter.fromNode(moduleNodeNode.getApplication()));
-        return module;
-	}
+        return moduleConverter.fromNode(moduleNodeNode);
+    }
+
+    public DependencyGraph loadDependenciesOf(String moduleName) {
+        Module root = find(moduleName);
+        Set<ModuleNode> moduleNodes = moduleRepository.dependenciesOf(moduleName);
+
+        Map<Long, Module> nodesById = moduleNodes.stream()
+                .collect(toMap(ModuleNode::getId, node -> {
+                    Module module = moduleConverter.fromNode(node);
+                    if (node.getApplication() != null) {
+                        module.setApplication(applicationConverter.fromNode(node.getApplication()));
+                    }
+                    return module;
+                }));
+
+        Set<Dependency> relationships = moduleNodes.stream()
+                .distinct()
+                .flatMap(module -> {
+                    return module.getDependencies().stream().map(dep -> {
+                        Module dependency = nodesById.get(dep.getId());
+
+                        Jar jar = new Jar(dependency.getOrganization(), dependency.getName(), null);
+                        return new Dependency(nodesById.get(module.getId()), jar);
+                    });
+                })
+                .collect(toSet());
+
+        return new DependencyGraph(root, relationships);
+    }
 }

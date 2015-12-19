@@ -5,7 +5,6 @@ import com.dnfeitosa.codegraph.db.graph.repositories.ModuleRepository;
 import org.junit.Before;
 import org.junit.Test;
 
-
 import static org.junit.Assert.assertNull;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
@@ -18,7 +17,7 @@ public class ModuleServiceTest {
     @Before
     public void setUp() {
         moduleRepository = mock(ModuleRepository.class);
-        moduleService = new ModuleService(moduleRepository, new ModuleConverter(), null, null);
+        moduleService = new ModuleService(moduleRepository, new ModuleConverter(), null);
     }
 
     @Test

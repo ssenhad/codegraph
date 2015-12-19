@@ -2,31 +2,39 @@ package com.dnfeitosa.codegraph.db.graph.repositories;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.ImpactResult;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
-import org.springframework.data.neo4j.annotation.Query;
-import org.springframework.data.neo4j.repository.GraphRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Set;
 
 @Repository
-public interface ModuleRepository extends GraphRepository<ModuleNode> {
+public class ModuleRepository {
 
-	static final String IMMEDIATE_IMPACT_QUERY = " MATCH (module:Module {name: {0}})<-[:DEPENDS_ON]-(m:Module) "
-			+ " RETURN DISTINCT module as impactor, m as impacted ";
+    private BaseModuleRepository baseModuleRepository;
 
-	@Query(IMMEDIATE_IMPACT_QUERY + " UNION "
-			+ " MATCH (module:Module {name: {0}})<-[:DEPENDS_ON]-(m:Module)<-[:DEPENDS_ON*]-(mod:Module) "
-			+ " RETURN DISTINCT m as impactor, mod as impacted")
-	List<ImpactResult> fullImpactOf(String moduleName);
+    @Autowired
+    public ModuleRepository(BaseModuleRepository baseModuleRepository) {
+        this.baseModuleRepository = baseModuleRepository;
+    }
 
-	@Query(IMMEDIATE_IMPACT_QUERY)
-	List<ImpactResult> immediateImpactOf(String moduleName);
+     public ModuleNode findByName(String module) {
+        return baseModuleRepository.findByName(module);
+    }
 
-	@Query("MATCH p=shortestPath((module:Module {name: {0}})-[:DEPENDS_ON]->(mod:Module)) "
-		 + "RETURN distinct mod")
-	List<ModuleNode> dependenciesOf(String moduleName);
+    public Set<ModuleNode> dependenciesOf(String name) {
+        return baseModuleRepository.dependenciesOf(name);
+    }
 
-    @Query("MATCH (module:Module { name: {0} }) return module")
-    ModuleNode findByName(String module);
+    public List<ImpactResult> immediateImpactOf(String moduleName) {
+        return baseModuleRepository.immediateImpactOf(moduleName);
+    }
+
+    public List<ImpactResult> fullImpactOf(String moduleName) {
+        return baseModuleRepository.fullImpactOf(moduleName);
+    }
+
+    public ModuleNode save(ModuleNode moduleNode) {
+        return baseModuleRepository.save(moduleNode);
+    }
 }
-

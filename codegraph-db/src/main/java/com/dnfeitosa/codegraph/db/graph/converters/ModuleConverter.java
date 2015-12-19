@@ -8,12 +8,12 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.stream.Collectors;
 
 import static com.dnfeitosa.coollections.Coollections.notNull;
+import static java.util.stream.Collectors.toList;
+import static java.util.stream.Collectors.toSet;
 
 @Component
 public class ModuleConverter {
@@ -22,6 +22,7 @@ public class ModuleConverter {
 
 	private final JarConverter jarConverter;
 	private final ArtifactConverter artifactConverter;
+	private final ApplicationConverter applicationConverter;
 
     public ModuleConverter() {
         this(new JarConverter(), new ArtifactConverter());
@@ -30,24 +31,22 @@ public class ModuleConverter {
     ModuleConverter(JarConverter jarConverter, ArtifactConverter artifactConverter) {
         this.jarConverter = jarConverter;
 		this.artifactConverter = artifactConverter;
+        this.applicationConverter = new ApplicationConverter(this);
     }
 
-	public Set<ModuleNode> toNodes(Collection<com.dnfeitosa.codegraph.core.model.Module> modules) {
-		Set<ModuleNode> set = new HashSet<>();
-		for (com.dnfeitosa.codegraph.core.model.Module module : modules) {
-			set.add(toNode(module));
-		}
-		return set;
+	public Set<ModuleNode> toNodes(Collection<Module> modules) {
+        return modules.stream()
+            .map(this::toNode)
+            .collect(toSet());
 	}
 
-	public List<com.dnfeitosa.codegraph.core.model.Module> fromNodes(Set<ModuleNode> nodes) {
-        return nodes
-            .parallelStream()
+	public List<Module> fromNodes(Set<ModuleNode> nodes) {
+        return notNull(nodes).stream()
             .map(this::fromNode)
-            .collect(Collectors.toList());
+            .collect(toList());
 	}
 
-	public ModuleNode toNode(com.dnfeitosa.codegraph.core.model.Module module) {
+	public ModuleNode toNode(Module module) {
 		ModuleNode node = new ModuleNode();
 		node.setName(module.getName());
         node.setOrganization(module.getOrganization());
@@ -56,32 +55,20 @@ public class ModuleConverter {
 		return node;
 	}
 
-	private void setDependencies(com.dnfeitosa.codegraph.core.model.Module module, ModuleNode node) {
+	private void setDependencies(Module module, ModuleNode node) {
         Set<ModuleNode> jarNodes = jarConverter.toNodes(module.getDependencies());
         node.setDependencies(jarNodes);
 	}
 
-	private Set<ModuleNode> toModules(List<Jar> dependencies) {
-		Set<ModuleNode> moduleNodes = new HashSet<>();
-		for (Jar dependency : notNull(dependencies)) {
-			ModuleNode moduleNode = new ModuleNode();
-			moduleNode.setName(dependency.getName());
-			moduleNodes.add(moduleNode);
-		}
-		return moduleNodes;
-	}
-
-	public com.dnfeitosa.codegraph.core.model.Module fromNode(ModuleNode node) {
+	public Module fromNode(ModuleNode node) {
         if (node == null) {
             return null;
         }
 
-        LOGGER.trace(String.format("Converting node to module '%s'.", node.getName()));
-
 		List<Jar> dependencies = jarConverter.fromNodes(node.getDependencies());
 
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
-        Module module = new Module(node.getName(), null, dependencies, artifacts);
-        return module;
+        String organization = null;
+        return new Module(node.getName(), organization, dependencies, artifacts);
 	}
 }

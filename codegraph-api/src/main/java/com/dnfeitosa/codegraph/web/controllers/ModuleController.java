@@ -40,5 +40,4 @@ public class ModuleController {
         }
         return ok(resourceBuilders.toResource(module, applicationName));
     }
-
 }

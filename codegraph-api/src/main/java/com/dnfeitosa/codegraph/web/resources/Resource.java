@@ -1,4 +1,4 @@
-package com.dnfeitosa.codegraph.web.resources.Resource;
+package com.dnfeitosa.codegraph.web.resources;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 

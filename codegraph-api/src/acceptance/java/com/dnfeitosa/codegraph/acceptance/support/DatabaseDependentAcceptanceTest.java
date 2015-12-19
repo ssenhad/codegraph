@@ -7,10 +7,13 @@ import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.HashMap;
 
 import static com.dnfeitosa.coollections.Coollections.asSet;
 import static java.util.Arrays.asList;
@@ -20,13 +23,17 @@ import static java.util.Arrays.asList;
 @ActiveProfiles("acceptance")
 @Transactional
 @Ignore
-public class DatabaseDependentTest {
+public class DatabaseDependentAcceptanceTest {
 
     @Autowired
     protected ApplicationRepository applicationRepository;
 
+    @Autowired
+    protected Neo4jTemplate neo4jTemplate;
+
     @Before
     public void setUp() {
+        neo4jTemplate.query(" MATCH (n) OPTIONAL MATCH (n)-[r]-() DELETE n, r", new HashMap<>());
         ApplicationNode vraptor = createVraptor();
         ApplicationNode mirror = createMirror();
 
@@ -36,6 +43,23 @@ public class DatabaseDependentTest {
     private ApplicationNode createMirror() {
         ModuleNode module = new ModuleNode();
         module.setName("mirror");
+        module.setDependencies(asSet());
+
+        ModuleNode objenesis = new ModuleNode();
+        objenesis.setName("objenesis");
+        objenesis.setOrganization("org.objenesis");
+        objenesis.setVersion("1.2");
+
+        ModuleNode cglib = new ModuleNode();
+        cglib.setName("cglib-nodep");
+        cglib.setOrganization("cglib");
+        cglib.setVersion("2.1_3");
+
+        ModuleNode junit = new ModuleNode();
+        junit.setName("junit");
+        junit.setOrganization("junit");
+        junit.setVersion("4.7");
+        module.setDependencies(asSet(objenesis, cglib, junit));
 
         ApplicationNode application = new ApplicationNode();
         application.setName("mirror");

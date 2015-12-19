@@ -1,34 +1,31 @@
 package com.dnfeitosa.codegraph.web.resources;
 
-import java.util.List;
+import java.util.Set;
 
-public class DependenciesResource {
+import static java.lang.String.format;
+
+public class DependenciesResource implements Resource {
 
 	private ModuleResource module;
-	private List<DependencyResource> direct;
-	private List<DependencyResource> transitive;
+    private Set<Resource> dependencies;
 
-	public ModuleResource getModule() {
-		return module;
-	}
+    public DependenciesResource(ModuleResource module, Set<Resource> dependencies) {
+        this.module = module;
+        this.dependencies = dependencies;
+    }
 
-	public void setModule(ModuleResource module) {
-		this.module = module;
-	}
+    public ModuleResource getModule() {
+        return module;
+    }
 
-	public List<DependencyResource> getDirect() {
-		return direct;
-	}
+    public Set<Resource> getDependencies() {
+        return dependencies;
+    }
 
-	public void setDirect(List<DependencyResource> direct) {
-		this.direct = direct;
-	}
-
-	public List<DependencyResource> getTransitive() {
-		return transitive;
-	}
-
-	public void setTransitive(List<DependencyResource> transitive) {
-		this.transitive = transitive;
-	}
+    @Override
+    public String getUri() {
+        return format("/applications/%s/modules/%s/dependencies",
+                module.getApplication().getName(),
+                module.getName());
+    }
 }

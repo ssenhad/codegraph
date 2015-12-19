@@ -1,6 +1,23 @@
 package com.dnfeitosa.codegraph.indexer;
 
-import static com.dnfeitosa.coollections.Coollections.$;
+import com.dnfeitosa.codegraph.core.concurrency.Executor;
+import com.dnfeitosa.codegraph.core.concurrency.ParallelProcessor;
+import com.dnfeitosa.codegraph.core.concurrency.ResultHandler;
+import com.dnfeitosa.codegraph.core.loaders.classes.ApplicationClassLoader;
+import com.dnfeitosa.codegraph.core.loaders.finders.ApplicationsFinder;
+import com.dnfeitosa.codegraph.core.loaders.finders.code.ClassFile;
+import com.dnfeitosa.codegraph.db.graph.nodes.ClassNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
+import com.dnfeitosa.codegraph.db.graph.repositories.ClassRepository;
+import com.dnfeitosa.codegraph.db.graph.repositories.ModuleRepository;
+import com.dnfeitosa.coollections.Coollections;
+import com.dnfeitosa.coollections.Function;
+import org.apache.log4j.Logger;
+import org.neo4j.graphdb.GraphDatabaseService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.data.neo4j.support.Neo4jTemplate;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -10,25 +27,8 @@ import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 
-import com.dnfeitosa.codegraph.core.concurrency.Executor;
-import com.dnfeitosa.codegraph.core.concurrency.ResultHandler;
-import com.dnfeitosa.codegraph.db.graph.nodes.ClassNode;
-import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
-import com.dnfeitosa.codegraph.db.graph.repositories.ModuleRepository;
-import com.dnfeitosa.codegraph.core.loaders.classes.ApplicationClassLoader;
-import com.dnfeitosa.codegraph.core.loaders.finders.ApplicationsFinder;
-import com.dnfeitosa.codegraph.core.loaders.finders.code.ClassFile;
-import org.apache.log4j.Logger;
-import org.neo4j.graphdb.GraphDatabaseService;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
-import org.springframework.data.neo4j.support.Neo4jTemplate;
-import org.springframework.stereotype.Service;
-
-import com.dnfeitosa.coollections.Coollections;
-import com.dnfeitosa.coollections.Function;
-import com.dnfeitosa.codegraph.core.concurrency.ParallelProcessor;
-import com.dnfeitosa.codegraph.db.graph.repositories.ClassRepository;
+import static com.dnfeitosa.coollections.Coollections.$;
+import static java.util.Collections.emptyList;
 
 @Service
 public class ClassesIndexer {
@@ -113,7 +113,7 @@ public class ClassesIndexer {
 			@Override
 			public Void execute(ModuleNode moduleNode) {
 				LOGGER.info(String.format("Resolving class imports for '%s' classes.", moduleNode.getName()));
-				List<ModuleNode> dependencies = moduleRepository.dependenciesOf(moduleNode.getName());
+				List<ModuleNode> dependencies = emptyList();//moduleRepository.dependenciesOf(moduleNode.getName());
 
 				for (ClassNode clazz : moduleNode.getClassNodes()) {
 					for (ClassNode import_ : Coollections.notNull(clazz.getImports())) {

@@ -1,10 +1,11 @@
 package com.dnfeitosa.codegraph.web.resources;
 
-public class JarResource {
+
+public class JarResource implements Resource {
 
 	private String name;
 	private String version;
-	private boolean fromOrg;
+    private String organization;
 
 	public String getName() {
 		return name;
@@ -22,11 +23,16 @@ public class JarResource {
 		this.version = version;
 	}
 
-	public boolean isFromOrg() {
-		return fromOrg;
-	}
+    public String getOrganization() {
+        return organization;
+    }
 
-	public void setFromOrg(boolean fromOrg) {
-		this.fromOrg = fromOrg;
-	}
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    @Override
+    public String getUri() {
+        return null;
+    }
 }

@@ -1,9 +1,14 @@
 package com.dnfeitosa.coollections.decorators;
 
+import com.dnfeitosa.coollections.Filter;
+import com.dnfeitosa.coollections.Function;
+import com.dnfeitosa.coollections.Injector;
+import com.dnfeitosa.coollections.operations.Mappable;
+import com.dnfeitosa.coollections.operations.Mapper;
+
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -11,12 +16,6 @@ import java.util.List;
 import java.util.ListIterator;
 import java.util.Map;
 import java.util.Set;
-
-import com.dnfeitosa.coollections.Filter;
-import com.dnfeitosa.coollections.Function;
-import com.dnfeitosa.coollections.Injector;
-import com.dnfeitosa.coollections.operations.Mappable;
-import com.dnfeitosa.coollections.operations.Mapper;
 
 public class CoolList<T> implements List<T>, Mappable<CoolList<?>, T> {
 
@@ -169,7 +168,7 @@ public class CoolList<T> implements List<T>, Mappable<CoolList<?>, T> {
 				results.add(value);
 			}
 		}
-		return new CoolList<T>(results);
+		return new CoolList<>(results);
 	}
 
 	public T find(Filter<T> filter) {
@@ -189,7 +188,7 @@ public class CoolList<T> implements List<T>, Mappable<CoolList<?>, T> {
 	}
 
 	public <K> Map<K, T> mapBy(Function<T, K> mapper) {
-		Map<K, T> map = new HashMap<K, T>(list.size());
+		Map<K, T> map = new HashMap<>(list.size());
 		for (T value : list) {
 			map.put(mapper.apply(value), value);
 		}
@@ -208,12 +207,7 @@ public class CoolList<T> implements List<T>, Mappable<CoolList<?>, T> {
 
 	public <V extends Comparable<? super V>> CoolList<T> sortBy(final Function<T, V> function) {
 		List<T> copy = new ArrayList<T>(list);
-		Collections.sort(copy, new Comparator<T>() {
-			@Override
-			public int compare(T a, T b) {
-				return function.apply(a).compareTo(function.apply(b));
-			}
-		});
+		Collections.sort(copy, (a, b) -> function.apply(a).compareTo(function.apply(b)));
 		return new CoolList<T>(copy);
 	}
 

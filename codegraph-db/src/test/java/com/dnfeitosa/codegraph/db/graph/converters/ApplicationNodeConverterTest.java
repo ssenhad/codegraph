@@ -19,8 +19,8 @@ public class ApplicationNodeConverterTest {
 
 	private final String applicationName = "name";
 	private final List<Module> modules = asList(
-        new Module(null, null, null, null),
-        new Module(null, null, null, null)
+        new Module("module-1", null, null, null),
+        new Module("module-2", null, null, null)
     );
 
 	private final Application application = new Application(applicationName, modules);
@@ -31,8 +31,8 @@ public class ApplicationNodeConverterTest {
 			setName(applicationName);
 			setModules(new HashSet<ModuleNode>() {
 				{
-					add(new ModuleNode());
-					add(new ModuleNode());
+					add(new ModuleNode() {{ setName("module-1"); }});
+					add(new ModuleNode() {{ setName("module-2"); }});
 				}
 			});
 		}

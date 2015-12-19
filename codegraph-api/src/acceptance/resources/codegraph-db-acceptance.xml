@@ -6,6 +6,10 @@
         http://www.springframework.org/schema/beans/spring-beans.xsd">
 
     <beans profile="acceptance">
-        <bean id="graphDatabaseService" class="org.neo4j.test.ImpermanentGraphDatabase" />
+        <!--<bean id="graphDatabaseService" class="org.neo4j.test.ImpermanentGraphDatabase" />-->
+        <bean id="graphDatabaseService" class="org.springframework.data.neo4j.rest.SpringRestGraphDatabase">
+            <constructor-arg index="0" value="http://localhost:7476/db/data"/>
+            <!--             <constructor-arg index="0" value="http://10.9.53.64:7474/db/data"/> -->
+        </bean>
     </beans>
 </beans>

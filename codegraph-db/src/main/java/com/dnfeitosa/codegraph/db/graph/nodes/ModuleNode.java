@@ -1,6 +1,7 @@
 package com.dnfeitosa.codegraph.db.graph.nodes;
 
 import org.springframework.data.annotation.TypeAlias;
+import org.springframework.data.neo4j.annotation.Fetch;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -18,8 +19,8 @@ public class ModuleNode {
 	@GraphId
 	private Long id;
 
-	@Indexed(unique = true)
-	private String name;
+    @Indexed(unique = true)
+    private String name;
 
 	@RelatedTo(direction = OUTGOING, type = "DEPENDS_ON")
 	private Set<ModuleNode> dependencies;
@@ -30,6 +31,7 @@ public class ModuleNode {
 	@RelatedTo(direction = OUTGOING, type = "HOLDS")
 	private Set<ClassNode> classNodes;
 
+    @Fetch
     @RelatedTo(direction = INCOMING, type = "EXPORTS")
     private ApplicationNode applicationNode;
 
@@ -98,5 +100,24 @@ public class ModuleNode {
 
     public void setApplication(ApplicationNode applicationNode) {
         this.applicationNode = applicationNode;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        ModuleNode that = (ModuleNode) o;
+
+        if (id != null ? !id.equals(that.id) : that.id != null) return false;
+        return !(name != null ? !name.equals(that.name) : that.name != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id != null ? id.hashCode() : 0;
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
 }

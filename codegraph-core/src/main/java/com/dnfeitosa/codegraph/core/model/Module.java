@@ -58,7 +58,7 @@ public class Module {
 
 	@Override
 	public String toString() {
-		return format("Module{name='%s', application='%s'}", name, application.getName());
+		return format("Module{name: '%s', application: '%s'}", name, application.getName());
 	}
 
     @Deprecated

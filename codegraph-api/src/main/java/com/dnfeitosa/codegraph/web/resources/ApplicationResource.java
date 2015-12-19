@@ -1,7 +1,5 @@
 package com.dnfeitosa.codegraph.web.resources;
 
-import com.dnfeitosa.codegraph.web.resources.Resource.Resource;
-
 import java.util.List;
 
 import static java.lang.String.format;

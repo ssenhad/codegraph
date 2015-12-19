@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.acceptance.web.controllers;
 
-import com.dnfeitosa.codegraph.acceptance.support.DatabaseDependentTest;
+import com.dnfeitosa.codegraph.acceptance.support.DatabaseDependentAcceptanceTest;
 import com.dnfeitosa.codegraph.web.controllers.ModuleController;
 import com.dnfeitosa.codegraph.web.resources.ModuleResource;
 import org.junit.Ignore;
@@ -12,7 +12,7 @@ import org.springframework.http.ResponseEntity;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-public class ModuleControllerTest extends DatabaseDependentTest {
+public class ModuleControllerAcceptanceTest extends DatabaseDependentAcceptanceTest {
 
     @Autowired
     private ModuleController moduleController;
@@ -39,5 +39,4 @@ public class ModuleControllerTest extends DatabaseDependentTest {
 
         assertThat(response.getStatusCode(), is(HttpStatus.NOT_FOUND));
     }
-
 }

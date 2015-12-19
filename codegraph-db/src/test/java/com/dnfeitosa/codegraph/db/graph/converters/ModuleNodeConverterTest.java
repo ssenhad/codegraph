@@ -36,7 +36,7 @@ public class ModuleNodeConverterTest {
 
 	private final Module module = new Module(moduleName, organization, dependencies, exportTypes);
 
-	private final ModuleNode moduleNodeNode = new ModuleNode() {
+	private final ModuleNode nodeNode = new ModuleNode() {
 		{
 			setId(1L);
 			setName(moduleName);
@@ -55,8 +55,8 @@ public class ModuleNodeConverterTest {
             });
             setDependencies(new HashSet<ModuleNode>() {
                 {
-                    add(new ModuleNode());
-                    add(new ModuleNode());
+                    add(new ModuleNode() {{ setName("module-1"); }});
+                    add(new ModuleNode() {{ setName("module-2"); }});
                 }
             });
 		}
@@ -81,7 +81,7 @@ public class ModuleNodeConverterTest {
 
 	@Test
 	public void shouldConvertANodeToModule() {
-		com.dnfeitosa.codegraph.core.model.Module module = converter.fromNode(moduleNodeNode);
+		com.dnfeitosa.codegraph.core.model.Module module = converter.fromNode(nodeNode);
 
 		assertThat(module.getName(), is(moduleName));
 		assertThat(module.getDependencies().size(), is(2));

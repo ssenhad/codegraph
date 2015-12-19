@@ -33,7 +33,7 @@ public class GraphModuleNodeRepositoryTest {
 	private ApplicationRepository applicationRepository;
 
 	@Autowired
-	private ModuleRepository moduleRepository;
+	private BaseModuleRepository moduleRepository;
 
 	@Before
 	public void setUp() {

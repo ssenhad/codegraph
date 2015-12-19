@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.web.resources;
 
-import com.dnfeitosa.codegraph.web.resources.Resource.Resource;
+import java.util.List;
 
 import static java.lang.String.format;
 
@@ -29,5 +29,9 @@ public class ModuleResource implements Resource {
     @Override
     public String getUri() {
         return format("/applications/%s/modules/%s", application.getName(), name);
+    }
+
+    public List<DependencyResource> getDependencies() {
+        return null;
     }
 }

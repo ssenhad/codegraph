@@ -9,6 +9,7 @@ import java.util.List;
 import java.util.Set;
 
 import static com.dnfeitosa.coollections.Coollections.notNull;
+import static java.lang.String.format;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
@@ -36,18 +37,11 @@ public class JarConverter {
 		node.setOrganization(jar.getOrganization());
 		node.setName(jar.getName());
 		node.setVersion(jar.getVersion());
-//        node.prepare();
 		return node;
-//		JarNode node = new JarNode();
-//		node.setOrganization(jar.getOrganization());
-//		node.setName(jar.getName());
-//		node.setVersion(jar.getVersion());
-//        node.prepare();
-//		return node;
 	}
 
 	public Jar fromNode(ModuleNode node) {
-		LOGGER.trace(String.format("Converting node to jar '%s'", node.getName()));
+		LOGGER.trace(format("Converting node to jar '%s'", node.getName()));
 
 		return new Jar(node.getOrganization(), node.getName(), node.getVersion());
 	}

@@ -8,7 +8,7 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-public class JarNodeConverterTest {
+public class JarConverterTest {
 
 	private final String organization = "organization";
 	private final String name = "name";

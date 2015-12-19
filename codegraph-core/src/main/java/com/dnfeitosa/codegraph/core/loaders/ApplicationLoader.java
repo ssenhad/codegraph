@@ -21,6 +21,6 @@ public class ApplicationLoader {
     }
 
     private Module toModule(ModuleDescriptor descriptor) {
-        return new Module(descriptor.getName(), descriptor.getOrganization(), descriptor.getDependencies(), descriptor.getExportTypes());
+        return new Module(descriptor.getName(), descriptor.getOrganization(), null, descriptor.getDependencies(), descriptor.getExportTypes());
     }
 }

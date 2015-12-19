@@ -25,7 +25,7 @@ public class DependenciesResource implements Resource {
     @Override
     public String getUri() {
         return format("/applications/%s/modules/%s/dependencies",
-                module.getApplication().getName(),
+                module.getParent().getName(),
                 module.getName());
     }
 }

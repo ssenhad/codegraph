@@ -1,37 +1,27 @@
 package com.dnfeitosa.codegraph.web.resources;
 
-import java.util.List;
-
 import static java.lang.String.format;
 
 public class ModuleResource implements Resource {
 
-    private final ApplicationResource application;
-	private String name;
+    private final ApplicationResource parent;
+	private final String name;
 
     public ModuleResource(ApplicationResource application, String name) {
-        this.application = application;
+        this.parent = application;
         this.name = name;
     }
 
-    public ApplicationResource getApplication() {
-        return application;
+    public ApplicationResource getParent() {
+        return parent;
     }
 
     public String getName() {
 		return name;
 	}
 
-	public void setName(String name) {
-		this.name = name;
-	}
-
     @Override
     public String getUri() {
-        return format("/applications/%s/modules/%s", application.getName(), name);
-    }
-
-    public List<DependencyResource> getDependencies() {
-        return null;
+        return format("/applications/%s/modules/%s", parent.getName(), name);
     }
 }

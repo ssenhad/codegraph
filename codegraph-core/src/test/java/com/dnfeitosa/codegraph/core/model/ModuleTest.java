@@ -23,7 +23,7 @@ public class ModuleTest {
 	@Before
 	public void setUp() {
 		module = new Module("aModule", "organization",
-            asList(commonsLang, springCore),
+                null, asList(commonsLang, springCore),
             asSet(new ArtifactType("dep"), new ArtifactType("config"))
         );
 	}

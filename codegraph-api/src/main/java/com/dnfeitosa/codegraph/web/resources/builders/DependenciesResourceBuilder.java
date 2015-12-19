@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Collector;
+
+import static java.util.stream.Collectors.toSet;
 
 @Component
 public class DependenciesResourceBuilder {
@@ -27,6 +29,7 @@ public class DependenciesResourceBuilder {
 
     public GraphResource<ModuleResource> build(String applicationName, String moduleName, DependencyGraph dependencyGraph) {
         ModuleResource root = resourceBuilders.toResource(dependencyGraph.getRoot(), applicationName);
+        Collector<? super EdgeResource<ModuleResource, Resource>, Object, Set<EdgeResource<Resource, Resource>>> asdf;
         Set<EdgeResource<Resource, Resource>> edges = dependencyGraph.getDependencies().stream().map(dependency -> {
             Module dependent = dependency.getDependent();
             String name = "buggy-relationship";
@@ -36,7 +39,7 @@ public class DependenciesResourceBuilder {
             ModuleResource dependentResource = resourceBuilders.toResource(dependent, name);
             Resource dependencyResource = getModuleResource(dependency.getJar());
             return new EdgeResource<Resource, Resource>(dependentResource, dependencyResource);
-        }).collect(Collectors.toSet());
+        }).collect(toSet());
 
         return new GraphResource<>(root, edges, "dependency-graph");
     }

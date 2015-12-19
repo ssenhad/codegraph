@@ -113,7 +113,7 @@ public class ApplicationNodeServiceTest {
 	}
 
 	private Module module(String name, List<Jar> dependencies, Set<ArtifactType> artifactTypes) {
-		return new Module(name, "organization", dependencies, artifactTypes);
+		return new Module(name, "organization", null, dependencies, artifactTypes);
 	}
 
 	private Jar jar(String organization, String name, String version) {

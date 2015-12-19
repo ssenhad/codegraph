@@ -50,14 +50,18 @@ public class ModuleConverter {
 		ModuleNode node = new ModuleNode();
 		node.setName(module.getName());
         node.setOrganization(module.getOrganization());
-		node.setArtifacts(artifactConverter.toNodes(module.getExportTypes()));
-		setDependencies(module, node);
+        node.setVersion(module.getVersion());
+        setArtifacts(module, node);
+        setDependencies(module, node);
 		return node;
 	}
 
-	private void setDependencies(Module module, ModuleNode node) {
-        Set<ModuleNode> jarNodes = jarConverter.toNodes(module.getDependencies());
-        node.setDependencies(jarNodes);
+    private void setArtifacts(Module module, ModuleNode node) {
+        node.setArtifacts(artifactConverter.toNodes(module.getExportTypes()));
+    }
+
+    private void setDependencies(Module module, ModuleNode node) {
+        node.setDependencies(jarConverter.toNodes(module.getDependencies()));
 	}
 
 	public Module fromNode(ModuleNode node) {
@@ -65,10 +69,11 @@ public class ModuleConverter {
             return null;
         }
 
+        String name = node.getName();
+        String organization = node.getOrganization();
+        String version = node.getVersion();
 		List<Jar> dependencies = jarConverter.fromNodes(node.getDependencies());
-
 		Set<ArtifactType> artifacts = artifactConverter.fromNodes(node.getArtifacts());
-        String organization = null;
-        return new Module(node.getName(), organization, dependencies, artifacts);
+        return new Module(name, organization, version, dependencies, artifacts);
 	}
 }

@@ -3,6 +3,7 @@ package com.dnfeitosa.codegraph.core.model;
 import com.dnfeitosa.coollections.Filter;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 import static com.dnfeitosa.coollections.Coollections.$;
@@ -12,13 +13,15 @@ public class Module {
 
 	private final String name;
     private final String organization;
+    private final String version;
     private final List<Jar> dependencies;
 	private final Set<ArtifactType> exportTypes;
 	private Application application;
 
-    public Module(String name, String organization, List<Jar> dependencies, Set<ArtifactType> exportTypes) {
+    public Module(String name, String organization, String version, List<Jar> dependencies, Set<ArtifactType> exportTypes) {
 		this.name = name;
         this.organization = organization;
+        this.version = version;
         this.dependencies = dependencies;
 		this.exportTypes = exportTypes;
 	}
@@ -49,7 +52,7 @@ public class Module {
 	}
 
 	public boolean dependsOn(final String dependencyName) {
-		return findDependency(dependencyName) != null;
+        return findDependency(dependencyName).isPresent();
 	}
 
 	public boolean exports(ArtifactType artifactType) {
@@ -66,7 +69,13 @@ public class Module {
 		this.application = application;
 	}
 
-	private Jar findDependency(final String dependencyName) {
-		return $(getDependencies()).find(dependency -> dependency.getName().equals(dependencyName));
+	private Optional<Jar> findDependency(final String dependencyName) {
+        return getDependencies().stream()
+                .filter(dependency -> dependency.getName().equals(dependencyName))
+                .findFirst();
 	}
+
+    public String getVersion() {
+        return version;
+    }
 }

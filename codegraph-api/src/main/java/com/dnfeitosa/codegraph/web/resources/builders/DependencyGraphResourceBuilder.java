@@ -1,5 +1,6 @@
 package com.dnfeitosa.codegraph.web.resources.builders;
 
+import com.dnfeitosa.codegraph.core.model.Dependency;
 import com.dnfeitosa.codegraph.core.model.DependencyGraph;
 import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.core.model.Module;
@@ -13,44 +14,47 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.Set;
-import java.util.stream.Collector;
 
 import static java.util.stream.Collectors.toSet;
 
 @Component
-public class DependenciesResourceBuilder {
+public class DependencyGraphResourceBuilder {
 
     private ResourceBuilders resourceBuilders;
 
     @Autowired
-    public DependenciesResourceBuilder(ResourceBuilders resourceBuilders) {
+    public DependencyGraphResourceBuilder(ResourceBuilders resourceBuilders) {
         this.resourceBuilders = resourceBuilders;
     }
 
-    public GraphResource<ModuleResource> build(String applicationName, String moduleName, DependencyGraph dependencyGraph) {
+    public GraphResource<ModuleResource> build(String applicationName, DependencyGraph dependencyGraph) {
         ModuleResource root = resourceBuilders.toResource(dependencyGraph.getRoot(), applicationName);
-        Collector<? super EdgeResource<ModuleResource, Resource>, Object, Set<EdgeResource<Resource, Resource>>> asdf;
-        Set<EdgeResource<Resource, Resource>> edges = dependencyGraph.getDependencies().stream().map(dependency -> {
-            Module dependent = dependency.getDependent();
-            String name = "buggy-relationship";
-            if (dependent.getApplication() != null) {
-                name = dependent.getApplication().getName();
-            }
-            ModuleResource dependentResource = resourceBuilders.toResource(dependent, name);
-            Resource dependencyResource = getModuleResource(dependency.getJar());
-            return new EdgeResource<Resource, Resource>(dependentResource, dependencyResource);
-        }).collect(toSet());
+        Set<EdgeResource<Resource, Resource>> edges = dependencyGraph.getDependencies().stream()
+                .map(dependency -> toEdgeResource(dependency))
+                .collect(toSet());
 
         return new GraphResource<>(root, edges, "dependency-graph");
     }
 
-    private Resource getModuleResource(Jar dep) {
-        Module module = dep.getModule();
+    private EdgeResource<Resource, Resource> toEdgeResource(Dependency dependency) {
+        Module dependent = dependency.getDependent();
+        // To be fixed as part of issue #12
+        String name = "buggy-relationship";
+        if (dependent.getApplication() != null) {
+            name = dependent.getApplication().getName();
+        }
+        ModuleResource dependentResource = resourceBuilders.toResource(dependent, name);
+        Resource dependencyResource = getModuleResource(dependency.getJar());
+        return new EdgeResource<>(dependentResource, dependencyResource);
+    }
+
+    private Resource getModuleResource(Jar dependency) {
+        Module module = dependency.getModule();
         if (module == null) {
             JarResource jarResource = new JarResource();
-            jarResource.setName(dep.getName());
-            jarResource.setVersion(dep.getVersion());
-            jarResource.setOrganization(dep.getOrganization());
+            jarResource.setName(dependency.getName());
+            jarResource.setVersion(dependency.getVersion());
+            jarResource.setOrganization(dependency.getOrganization());
             return jarResource;
         }
         String appName = null;

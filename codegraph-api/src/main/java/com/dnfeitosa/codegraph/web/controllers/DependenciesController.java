@@ -5,7 +5,7 @@ import com.dnfeitosa.codegraph.services.ModuleService;
 import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
 import com.dnfeitosa.codegraph.web.resources.GraphResource;
 import com.dnfeitosa.codegraph.web.resources.ModuleResource;
-import com.dnfeitosa.codegraph.web.resources.builders.DependenciesResourceBuilder;
+import com.dnfeitosa.codegraph.web.resources.builders.DependencyGraphResourceBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
@@ -19,11 +19,11 @@ import static com.dnfeitosa.codegraph.web.Responses.ok;
 public class DependenciesController {
 
     private ModuleService moduleService;
-    private DependenciesResourceBuilder resourceBuilder;
+    private DependencyGraphResourceBuilder resourceBuilder;
     private ResourceBuilders resourceBuilders;
 
     @Autowired
-    public DependenciesController(ModuleService moduleService, DependenciesResourceBuilder resourceBuilder) {
+    public DependenciesController(ModuleService moduleService, DependencyGraphResourceBuilder resourceBuilder) {
         this.moduleService = moduleService;
         this.resourceBuilder = resourceBuilder;
     }
@@ -41,7 +41,7 @@ public class DependenciesController {
     private ResponseEntity<GraphResource<ModuleResource>> respondWith(
             String applicationName, String moduleName, DependencyGraph dependencyGraph) {
 
-        GraphResource<ModuleResource> resource = resourceBuilder.build(applicationName, moduleName, dependencyGraph);
+        GraphResource<ModuleResource> resource = resourceBuilder.build(applicationName, dependencyGraph);
         return ok(resource);
     }
 }

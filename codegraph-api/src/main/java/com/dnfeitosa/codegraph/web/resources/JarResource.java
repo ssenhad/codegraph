@@ -33,6 +33,6 @@ public class JarResource implements Resource {
 
     @Override
     public String getUri() {
-        return null;
+        return name;
     }
 }

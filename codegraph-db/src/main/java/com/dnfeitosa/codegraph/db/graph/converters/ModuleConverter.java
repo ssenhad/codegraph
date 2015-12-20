@@ -4,7 +4,6 @@ import com.dnfeitosa.codegraph.core.model.ArtifactType;
 import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
-import org.apache.log4j.Logger;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;
@@ -18,11 +17,8 @@ import static java.util.stream.Collectors.toSet;
 @Component
 public class ModuleConverter {
 
-	private static final Logger LOGGER = Logger.getLogger(ModuleConverter.class);
-
 	private final JarConverter jarConverter;
 	private final ArtifactConverter artifactConverter;
-	private final ApplicationConverter applicationConverter;
 
     public ModuleConverter() {
         this(new JarConverter(), new ArtifactConverter());
@@ -31,7 +27,6 @@ public class ModuleConverter {
     ModuleConverter(JarConverter jarConverter, ArtifactConverter artifactConverter) {
         this.jarConverter = jarConverter;
 		this.artifactConverter = artifactConverter;
-        this.applicationConverter = new ApplicationConverter(this);
     }
 
 	public Set<ModuleNode> toNodes(Collection<Module> modules) {

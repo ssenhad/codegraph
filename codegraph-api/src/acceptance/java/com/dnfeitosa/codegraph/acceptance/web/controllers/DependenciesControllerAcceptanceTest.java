@@ -44,6 +44,7 @@ public class DependenciesControllerAcceptanceTest extends DatabaseDependentAccep
 
         ModuleResource root = graphResource.getRoot();
         assertThat(root.getName(), is("A1"));
+        assertThat(root.getParent().getName(), is("a"));
         assertThat(root.getUri(), is("/applications/a/modules/A1"));
 
         assertThat(graphResource.getEdges().size(), is(9));

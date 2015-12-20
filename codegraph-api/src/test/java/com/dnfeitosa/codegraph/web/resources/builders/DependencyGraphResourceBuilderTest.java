@@ -5,7 +5,7 @@ import com.dnfeitosa.codegraph.core.model.Dependency;
 import com.dnfeitosa.codegraph.core.model.DependencyGraph;
 import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.core.model.Module;
-import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
+import com.dnfeitosa.codegraph.web.components.ModuleResourceBuilder;
 import com.dnfeitosa.codegraph.web.resources.EdgeResource;
 import com.dnfeitosa.codegraph.web.resources.GraphResource;
 import com.dnfeitosa.codegraph.web.resources.JarResource;
@@ -27,13 +27,14 @@ import static org.junit.Assert.assertThat;
 
 public class DependencyGraphResourceBuilderTest {
 
-    private final Module rootModule = module("rootModule", "D");
+    private final String applicationName = "applicationName";
+    private final Module rootModule = module("rootModule", applicationName);
 
     private DependencyGraphResourceBuilder resourceBuilder;
 
     @Before
     public void setUp() {
-        resourceBuilder = new DependencyGraphResourceBuilder(new ResourceBuilders());
+        resourceBuilder = new DependencyGraphResourceBuilder(new ModuleResourceBuilder());
     }
 
     @Test
@@ -47,9 +48,12 @@ public class DependencyGraphResourceBuilderTest {
         );
 
         DependencyGraph dependencyGraph = new DependencyGraph(rootModule, dependencies);
-        GraphResource<ModuleResource> graphResource = resourceBuilder.build("applicationName", dependencyGraph);
+
+        GraphResource<ModuleResource> graphResource = resourceBuilder.build(dependencyGraph);
 
         assertThat(graphResource.getRoot().getName(), is("rootModule"));
+        assertThat(graphResource.getRoot().getParent().getName(), is(applicationName));
+
         assertThat(graphResource.getUri(), is("/applications/applicationName/modules/rootModule/dependency-graph"));
 
         List<EdgeResource<Resource, Resource>> edges = sortedResources(graphResource.getEdges());
@@ -78,7 +82,6 @@ public class DependencyGraphResourceBuilderTest {
         ModuleResource startNode = (ModuleResource) edge.getStartNode();
         JarResource endNode = (JarResource) edge.getEndNode();
         assertThat(startNode.getName(), is(dependentName));
-        assertThat(startNode.getParent().getName(), is(applicationName));
         assertThat(endNode.getName(), is(dependencyName));
     }
 

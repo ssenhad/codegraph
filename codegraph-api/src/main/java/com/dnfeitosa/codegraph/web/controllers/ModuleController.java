@@ -2,7 +2,7 @@ package com.dnfeitosa.codegraph.web.controllers;
 
 import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.services.ModuleService;
-import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
+import com.dnfeitosa.codegraph.web.components.ModuleResourceBuilder;
 import com.dnfeitosa.codegraph.web.resources.ModuleResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -18,12 +18,12 @@ import static com.dnfeitosa.codegraph.web.Responses.ok;
 public class ModuleController {
 
     private final ModuleService moduleService;
-    private final ResourceBuilders resourceBuilders;
+    private final ModuleResourceBuilder moduleResourceBuilder;
 
     @Autowired
-    public ModuleController(ModuleService moduleService, ResourceBuilders resourceBuilders) {
+    public ModuleController(ModuleService moduleService, ModuleResourceBuilder moduleResourceBuilder) {
         this.moduleService = moduleService;
-        this.resourceBuilders = resourceBuilders;
+        this.moduleResourceBuilder = moduleResourceBuilder;
     }
 
     @RequestMapping("/applications/{applicationName}/modules/{moduleName}")
@@ -38,6 +38,6 @@ public class ModuleController {
         if (module == null) {
             return notFound();
         }
-        return ok(resourceBuilders.toResource(module, applicationName));
+        return ok(moduleResourceBuilder.toResource(module, applicationName));
     }
 }

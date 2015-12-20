@@ -2,7 +2,6 @@ package com.dnfeitosa.codegraph.web.controllers;
 
 import com.dnfeitosa.codegraph.core.model.DependencyGraph;
 import com.dnfeitosa.codegraph.services.ModuleService;
-import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
 import com.dnfeitosa.codegraph.web.resources.GraphResource;
 import com.dnfeitosa.codegraph.web.resources.ModuleResource;
 import com.dnfeitosa.codegraph.web.resources.builders.DependencyGraphResourceBuilder;
@@ -20,7 +19,6 @@ public class DependenciesController {
 
     private ModuleService moduleService;
     private DependencyGraphResourceBuilder resourceBuilder;
-    private ResourceBuilders resourceBuilders;
 
     @Autowired
     public DependenciesController(ModuleService moduleService, DependencyGraphResourceBuilder resourceBuilder) {
@@ -35,13 +33,10 @@ public class DependenciesController {
             @PathVariable("moduleName") String moduleName) {
 
         DependencyGraph dependencyGraph = moduleService.loadDependenciesOf(moduleName);
-        return respondWith(applicationName, moduleName, dependencyGraph);
+        return respondWith(dependencyGraph);
     }
 
-    private ResponseEntity<GraphResource<ModuleResource>> respondWith(
-            String applicationName, String moduleName, DependencyGraph dependencyGraph) {
-
-        GraphResource<ModuleResource> resource = resourceBuilder.build(applicationName, dependencyGraph);
-        return ok(resource);
+    private ResponseEntity<GraphResource<ModuleResource>> respondWith(DependencyGraph dependencyGraph) {
+        return ok(resourceBuilder.build(dependencyGraph));
     }
 }

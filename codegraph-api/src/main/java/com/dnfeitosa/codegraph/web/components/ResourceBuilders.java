@@ -1,7 +1,6 @@
 package com.dnfeitosa.codegraph.web.components;
 
 import com.dnfeitosa.codegraph.core.model.Application;
-import com.dnfeitosa.codegraph.core.model.Module;
 import com.dnfeitosa.codegraph.web.resources.ApplicationResource;
 import com.dnfeitosa.codegraph.web.resources.ModuleResource;
 import org.springframework.stereotype.Component;
@@ -24,9 +23,4 @@ public class ResourceBuilders {
                 .map(module -> new ModuleResource(new ApplicationResource(application.getName()), module.getName()))
                 .collect(Collectors.toList());
 	}
-
-    public ModuleResource toResource(final Module module, String applicationName) {
-        ApplicationResource application = new ApplicationResource(applicationName);
-        return new ModuleResource(application, module.getName());
-    }
 }

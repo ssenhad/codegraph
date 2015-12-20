@@ -4,7 +4,7 @@ import com.dnfeitosa.codegraph.core.model.Dependency;
 import com.dnfeitosa.codegraph.core.model.DependencyGraph;
 import com.dnfeitosa.codegraph.core.model.Jar;
 import com.dnfeitosa.codegraph.core.model.Module;
-import com.dnfeitosa.codegraph.web.components.ResourceBuilders;
+import com.dnfeitosa.codegraph.web.components.ModuleResourceBuilder;
 import com.dnfeitosa.codegraph.web.resources.EdgeResource;
 import com.dnfeitosa.codegraph.web.resources.GraphResource;
 import com.dnfeitosa.codegraph.web.resources.JarResource;
@@ -20,15 +20,15 @@ import static java.util.stream.Collectors.toSet;
 @Component
 public class DependencyGraphResourceBuilder {
 
-    private ResourceBuilders resourceBuilders;
+    private ModuleResourceBuilder moduleResourceBuilder;
 
     @Autowired
-    public DependencyGraphResourceBuilder(ResourceBuilders resourceBuilders) {
-        this.resourceBuilders = resourceBuilders;
+    public DependencyGraphResourceBuilder(ModuleResourceBuilder moduleResourceBuilder) {
+        this.moduleResourceBuilder = moduleResourceBuilder;
     }
 
-    public GraphResource<ModuleResource> build(String applicationName, DependencyGraph dependencyGraph) {
-        ModuleResource root = resourceBuilders.toResource(dependencyGraph.getRoot(), applicationName);
+    public GraphResource<ModuleResource> build(DependencyGraph dependencyGraph) {
+        ModuleResource root = moduleResourceBuilder.toResource(dependencyGraph.getRoot());
         Set<EdgeResource<Resource, Resource>> edges = dependencyGraph.getDependencies().stream()
                 .map(dependency -> toEdgeResource(dependency))
                 .collect(toSet());
@@ -43,7 +43,7 @@ public class DependencyGraphResourceBuilder {
         if (dependent.getApplication() != null) {
             name = dependent.getApplication().getName();
         }
-        ModuleResource dependentResource = resourceBuilders.toResource(dependent, name);
+        ModuleResource dependentResource = moduleResourceBuilder.toResource(dependent, name);
         Resource dependencyResource = getModuleResource(dependency.getJar());
         return new EdgeResource<>(dependentResource, dependencyResource);
     }
@@ -61,6 +61,6 @@ public class DependencyGraphResourceBuilder {
         if (module.getApplication() != null) {
             appName = module.getApplication().getName();
         }
-        return  resourceBuilders.toResource(module, appName);
+        return  moduleResourceBuilder.toResource(module, appName);
     }
 }

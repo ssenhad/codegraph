@@ -39,14 +39,15 @@ public class ModuleConverterTest {
 
 	private final Module module = new Module(moduleName, organization, version, dependencies, exportTypes);
 
-	private final ModuleNode moduleNode = new ModuleNode() {
+    private String applicationName = "applicationName";
+    private final ModuleNode moduleNode = new ModuleNode() {
 		{
 			setId(1L);
 			setName(moduleName);
             setOrganization(organization);
             setVersion(version);
             setApplication(new ApplicationNode() {{
-                setName("applicationName");
+                setName(applicationName);
             }});
 			setArtifacts(new HashSet<ArtifactNode>() {
                 {
@@ -69,7 +70,7 @@ public class ModuleConverterTest {
 
 	private ModuleConverter converter;
 
-	@Before
+    @Before
 	public void setUp() {
 		converter = new ModuleConverter(new JarConverter(), new ArtifactConverter());
 	}

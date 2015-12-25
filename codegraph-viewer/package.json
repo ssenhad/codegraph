@@ -3,6 +3,7 @@
   "description": "Visualize and navigate through your application's dependencies and other applications connections.",
   "repository": "https://github.com/dnfeitosa/codegraph",
   "devDependencies": {
+    "bower": "~1.3",
     "grunt": "~0.4",
     "grunt-karma": "~0.12",
     "jasmine-core": "~2.3",

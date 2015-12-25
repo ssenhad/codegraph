@@ -31,4 +31,8 @@ angular.module('CodeGraph.api')
         this.modules = function (application) {
             return this.get('api/applications/{name}'.apply({ name: application }));
         }
+
+        this.dependencyGraph = function (application, module) {
+            return this.get('api/applications/{application}/modules/{module}/dependency-graph'.apply({ application: application, module:module }))
+        }
     });

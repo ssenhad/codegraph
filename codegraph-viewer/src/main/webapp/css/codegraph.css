@@ -2,14 +2,69 @@ body {
     padding-top: 60px;
 }
 
-.preloader {
-    padding-top: 200px;
-    text-align: center;
-}
 
 .canvas {
     border: solid 1px black;
     height: 90%;
+}
+
+.modules {
+    width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.modules .module {
+    padding: 3px;
+}
+
+.loading {
+    padding-top: 150px;
+}
+
+.loading .message {
+    margin-top: 15px;
+}
+
+#view-area {
+    border: solid 1px #e4e4e4;
+    height: 600px;
+    padding: 10px;
+}
+
+.modules {
+    margin: 0;
+    background-color: #e9e9e9;
+    width: 100%;
+}
+
+.modules .module .name {
+    font-weight: bold;
+}
+
+.modules .module {
+    border-bottom: solid 1px #d9d9d9;
+    padding: 5px;
+}
+
+.modules .module .controls {
+    font-size: 0.9em;
+    font-style: italic;
+}
+.modules .module .controls span {
+    cursor: pointer;
+}
+
+.organizations {
+    width: 100%;
+    margin-bottom: 10px;
+}
+.organizations .org {
+    display: inline-block;
+    padding-right: 5px;
+    padding-left: 5px;
+    margin-right: 3px;
+    margin-left: 3px;
 }
 
 

@@ -11,10 +11,15 @@ module.exports = function (grunt) {
             unit: {
                 singleRun: false,
                 autoWatch: true
+            },
+            test: {
+                singleRun: true,
+                autoWatch: false
             }
         }
     });
 
-    grunt.registerTask('default', ['test'])
-    grunt.registerTask('test', ['karma:unit'])
+    grunt.registerTask('default', ['dev'])
+    grunt.registerTask('dev', ['karma:unit'])
+    grunt.registerTask('test', ['karma:test'])
 };

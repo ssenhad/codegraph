@@ -1,3 +1,29 @@
+plugins {
+  id 'com.moowork.grunt' version '0.11'
+}
+
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'java'
+
+
+grunt {
+  workDir = file("${project.projectDir}")
+  colors = true
+  bufferOutput = false
+}
+
+node {
+  version = '0.10.22'
+  download = true
+}
+
+task bowerInstall(type: NpmTask, dependsOn: [ npmInstall ]) {
+  args = ['run', 'bowerInstall']
+}
+
+task gruntTest(type: GruntTask, dependsOn: [ bowerInstall, installGrunt ]) {
+  args = ['test']
+}
+
+check.dependsOn gruntTest

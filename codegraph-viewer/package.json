@@ -11,5 +11,8 @@
     "karma-jasmine": "~0.3",
     "karma-phantomjs-launcher": "~0.2",
     "load-grunt-tasks": "~3.3"
+  },
+  "scripts": {
+    "bowerInstall": "bower install"
   }
 }

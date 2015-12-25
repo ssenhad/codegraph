@@ -53,23 +53,29 @@ angular.module('CodeGraph.application')
             return function () { return value; }
         }
 
-        var hiddenOrgs = [];
-        $scope.hiddenOrgs = hiddenOrgs;
+        $scope.hiddenOrgs = [];
+        $scope.showAll = function () {
+            $scope.hiddenOrgs = [];
+            $scope.render();
+        };
+        $scope.hideAll = function () {
+            $scope.hiddenOrgs = $scope.graph.organizations();
+            $scope.render();
+        };
         $scope.toggleView = function (organization) {
-            console.log(organization);
-            if (hiddenOrgs.contains(organization)) {
-                hiddenOrgs.remove(organization);
+            if ($scope.hiddenOrgs.contains(organization)) {
+                $scope.hiddenOrgs.remove(organization);
             } else {
-                hiddenOrgs.push(organization);
+                $scope.hiddenOrgs.push(organization);
             }
             $scope.render();
         };
         var nodeFilterByOrg = function (node) {
-            return !hiddenOrgs.contains(node.organization);
+            return !$scope.hiddenOrgs.contains(node.organization);
         };
 
         var edgeFilterByOrg = function (edge) {
-            return !hiddenOrgs.contains(edge.startNode.organization) && !hiddenOrgs.contains(edge.endNode.organization);
+            return !$scope.hiddenOrgs.contains(edge.startNode.organization) && !$scope.hiddenOrgs.contains(edge.endNode.organization);
         };
 
         // Set up zoom support
@@ -83,7 +89,16 @@ angular.module('CodeGraph.application')
         var render = new dagreD3.render();
         $scope.render = function () {
             var graphlib = $scope.graph.asGraphlibGraph(nodeFilterByOrg, edgeFilterByOrg);
-            render(d3.select('svg g'), graphlib);
+            _graph = graphlib;
+            render(svgGroup, graphlib);
+
+            svg.selectAll('.edgePath').on('click', function (edge, a, b) {
+                console.log(edge, a, b);
+            });
+
+            svg.selectAll('.node').on('click', function (node, a, b) {
+                console.log(node, a, b);
+            });
         };
 
         $scope.showGraph = function (applicationName, moduleName) {

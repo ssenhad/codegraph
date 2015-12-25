@@ -67,6 +67,14 @@ body {
     margin-left: 3px;
 }
 
+.node {
+    cursor: default;
+}
+
+.organizations .controls span {
+    cursor: pointer;
+}
+
 
 /** ------------------------ */
 text {
@@ -76,12 +84,12 @@ text {
 }
 
 .node rect {
-    stroke: #999;
+    stroke: #000000;
     fill: #fff;
-    stroke-width: 1.5px;
+    stroke-width: 1px;
 }
 
 .edgePath path {
-    stroke: #333;
-    stroke-width: 1.5px;
+    stroke: #000000;
+    stroke-width: 1px;
 }

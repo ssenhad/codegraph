@@ -18,7 +18,12 @@
                 <div class="message">Hang tight. This may take a while.</div>
             </div>
             <div class="organizations" ng-show="rendered">
-                <b>Organizations:</b>
+                <div>
+                    <b>Organizations</b>
+                    <span class="small controls">
+                        <span ng-click="hideAll()">Hide all</span> | <span ng-click="showAll()">Show all</span>
+                    </span>
+                </div>
                 <span class="org label" ng-class="{'label-default': hiddenOrgs.contains(organization), 'label-success': !hiddenOrgs.contains(organization)}" ng-repeat="organization in graph.organizations() | orderBy: organization" ng-click="toggleView(organization)">{{organization}}</span>
             </div>
             <div>

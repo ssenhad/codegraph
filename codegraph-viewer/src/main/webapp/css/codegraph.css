@@ -51,6 +51,7 @@ body {
     font-size: 0.9em;
     font-style: italic;
 }
+
 .modules .module .controls span {
     cursor: pointer;
 }
@@ -59,6 +60,7 @@ body {
     width: 100%;
     margin-bottom: 10px;
 }
+
 .organizations .org {
     display: inline-block;
     padding-right: 5px;

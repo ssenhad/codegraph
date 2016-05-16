@@ -2,6 +2,11 @@ package com.dnfeitosa.codegraph.acceptance.support;
 
 import com.dnfeitosa.codegraph.db.graph.nodes.ApplicationNode;
 import com.dnfeitosa.codegraph.db.graph.nodes.ModuleNode;
+import com.dnfeitosa.codegraph.db.graph.nodes.builders.ApplicationNodeBuilder;
+import com.dnfeitosa.codegraph.db.graph.nodes.builders.ApplicationNodeBuilders;
+import com.dnfeitosa.codegraph.db.graph.nodes.builders.Builders;
+import com.dnfeitosa.codegraph.db.graph.nodes.builders.ModuleNodeBuilder;
+import com.dnfeitosa.codegraph.db.graph.nodes.builders.ModuleNodeBuilders;
 import com.dnfeitosa.codegraph.db.graph.repositories.ApplicationRepository;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -24,6 +29,8 @@ import static java.util.Arrays.asList;
 @Transactional
 @Ignore
 public class DatabaseDependentAcceptanceTest {
+
+    private Builders builders = new Builders();
 
     @Autowired
     protected ApplicationRepository applicationRepository;
@@ -80,5 +87,21 @@ public class DatabaseDependentAcceptanceTest {
         vraptor.setModules(asSet(core, site));
 
         return vraptor;
+    }
+
+    protected ApplicationNodeBuilder application(String name) {
+        return builders.application(name);
+    }
+
+    protected ModuleNodeBuilder module(String name) {
+        return builders.module(name);
+    }
+
+    protected ModuleNodeBuilders modules(String... names) {
+        return builders.modules(names);
+    }
+
+    protected ApplicationNodeBuilders applications(String... names) {
+        return builders.applications(names);
     }
 }

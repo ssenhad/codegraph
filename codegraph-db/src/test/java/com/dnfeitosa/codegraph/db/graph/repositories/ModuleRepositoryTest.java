@@ -41,6 +41,7 @@ public class ModuleRepositoryTest extends DatabaseDependentTest {
         application("e").exports(modules("E1", "E2", "E3"));
 
         applications("a", "b", "c", "d", "e").each(app -> applicationRepository.save(app.node()));
+    }
 
     @Test
     public void shouldReturnTheDependenciesOfAModule() {
@@ -59,6 +60,19 @@ public class ModuleRepositoryTest extends DatabaseDependentTest {
         assertIsModuleWithDependencies(nodes.get(6), "junit", null, modules());
         assertIsModuleWithDependencies(nodes.get(7), "log4j", null, modules());
     }
+
+    @Test
+    public void shouldReturnTheDependentsOfAModule() {
+        List<ModuleNode> nodes = moduleRepository.dependentsOf("D1").stream()
+                .sorted(comparing(node -> node.getName()))
+                .collect(toList());
+
+        assertThat(nodes.size(), is(5));
+        assertThat(nodes.get(0).getName(), is("A1"));
+        assertThat(nodes.get(1).getName(), is("A2"));
+        assertThat(nodes.get(2).getName(), is("B1"));
+        assertThat(nodes.get(3).getName(), is("C1"));
+        assertThat(nodes.get(4).getName(), is("D1"));
     }
 
     private void assertIsModuleWithDependencies(ModuleNode moduleNode, String expectedName, ApplicationNodeBuilder expectedApplication,

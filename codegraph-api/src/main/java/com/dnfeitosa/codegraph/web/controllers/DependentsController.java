@@ -10,33 +10,25 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import static com.dnfeitosa.codegraph.web.Responses.ok;
 
 @Controller
-public class DependenciesController {
+public class DependentsController {
 
     private ModuleService moduleService;
     private DependencyGraphResourceBuilder resourceBuilder;
 
     @Autowired
-    public DependenciesController(ModuleService moduleService, DependencyGraphResourceBuilder resourceBuilder) {
+    public DependentsController(ModuleService moduleService, DependencyGraphResourceBuilder resourceBuilder) {
         this.moduleService = moduleService;
         this.resourceBuilder = resourceBuilder;
     }
 
-    @RequestMapping("/applications/{applicationName}/modules/{moduleName}/dependency-graph")
-    @ResponseBody
-    public ResponseEntity<GraphResource<ModuleResource>> dependencies(
-            @PathVariable("applicationName") String applicationName,
-            @PathVariable("moduleName") String moduleName) {
-
-        DependencyGraph dependencyGraph = moduleService.loadDependenciesOf(moduleName);
-        return respondWith(dependencyGraph);
-    }
-
-    private ResponseEntity<GraphResource<ModuleResource>> respondWith(DependencyGraph dependencyGraph) {
-        return ok(resourceBuilder.build(dependencyGraph, "dependency-graph"));
+    @RequestMapping("/applications/{applicationName}/modules/{moduleName}/dependents-graph")
+    public ResponseEntity<GraphResource<ModuleResource>> dependents(@PathVariable("applicationName") String applicationName,
+                                                                    @PathVariable("moduleName") String moduleName) {
+        DependencyGraph dependencyGraph = moduleService.loadDependentsOf(moduleName);
+        return ok(resourceBuilder.build(dependencyGraph, "dependents-graph"));
     }
 }

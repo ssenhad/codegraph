@@ -32,4 +32,10 @@ public interface BaseModuleRepository extends GraphRepository<ModuleNode>, Trave
 
     @Query("MATCH (module:Module {name: {0}}) RETURN module")
     ModuleNode findByName(String module);
+
+    @Query(" MATCH (module:Module {name: {0}}) RETURN module as dependent " +
+            " UNION " +
+            "MATCH p=shortestPath((module:Module {name: {0}})<-[DEPENDS_ON]-(dependent:Module)) " +
+            "RETURN distinct dependent ")
+    Set<ModuleNode> dependentsOf(String moduleName);
 }

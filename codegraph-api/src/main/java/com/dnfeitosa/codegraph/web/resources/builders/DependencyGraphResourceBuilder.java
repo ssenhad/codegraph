@@ -27,13 +27,13 @@ public class DependencyGraphResourceBuilder {
         this.moduleResourceBuilder = moduleResourceBuilder;
     }
 
-    public GraphResource<ModuleResource> build(DependencyGraph dependencyGraph) {
+    public GraphResource<ModuleResource> build(DependencyGraph dependencyGraph, String name) {
         ModuleResource root = moduleResourceBuilder.toResource(dependencyGraph.getRoot());
         Set<EdgeResource<Resource, Resource>> edges = dependencyGraph.getDependencies().stream()
                 .map(dependency -> toEdgeResource(dependency))
                 .collect(toSet());
 
-        return new GraphResource<>(root, edges, "dependency-graph");
+        return new GraphResource<>(root, edges, name);
     }
 
     private EdgeResource<Resource, Resource> toEdgeResource(Dependency dependency) {

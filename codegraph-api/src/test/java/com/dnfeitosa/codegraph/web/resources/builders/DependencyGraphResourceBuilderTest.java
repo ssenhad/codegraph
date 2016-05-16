@@ -49,7 +49,7 @@ public class DependencyGraphResourceBuilderTest {
 
         DependencyGraph dependencyGraph = new DependencyGraph(rootModule, dependencies);
 
-        GraphResource<ModuleResource> graphResource = resourceBuilder.build(dependencyGraph);
+        GraphResource<ModuleResource> graphResource = resourceBuilder.build(dependencyGraph, "dependency-graph");
 
         assertThat(graphResource.getRoot().getName(), is("rootModule"));
         assertThat(graphResource.getRoot().getParent().getName(), is(applicationName));

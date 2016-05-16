@@ -37,4 +37,8 @@ public class ModuleRepository {
     public ModuleNode save(ModuleNode moduleNode) {
         return baseModuleRepository.save(moduleNode);
     }
+
+    public Set<ModuleNode> dependentsOf(String moduleName) {
+        return baseModuleRepository.dependentsOf(moduleName);
+    }
 }

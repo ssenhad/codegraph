@@ -66,4 +66,29 @@ public class ModuleService {
         }
         return module;
     }
+
+    public DependencyGraph loadDependentsOf(String moduleName) {
+        Module root = nodeToModuleWithApplication(moduleRepository.findByName(moduleName));
+        Set<ModuleNode> moduleNodes = moduleRepository.dependentsOf(moduleName);
+
+        Map<Long, Module> nodesById = moduleNodes.stream()
+                .collect(toMap(ModuleNode::getId, this::nodeToModuleWithApplication));
+
+        Set<Dependency> relationships = moduleNodes.stream()
+                .distinct()
+                .flatMap(module -> {
+                    return module.getDependencies().stream().map(dep -> {
+                        Module dependency = nodesById.get(dep.getId());
+                        if (dependency == null) {
+                            return null;
+                        }
+
+                        Jar jar = new Jar(dependency.getOrganization(), dependency.getName(), null);
+                        return new Dependency(nodesById.get(module.getId()), jar);
+                    }).filter(x -> x != null);
+                })
+                .collect(toSet());
+
+        return new DependencyGraph(root, relationships);
+    }
 }

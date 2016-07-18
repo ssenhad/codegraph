@@ -13,17 +13,17 @@ grunt {
   bufferOutput = false
 }
 
-node {
-  version = '0.10.22'
-  download = true
-}
-
-task bowerInstall(type: NpmTask, dependsOn: [ npmInstall ]) {
-  args = ['run', 'bowerInstall']
-}
-
-task gruntTest(type: GruntTask, dependsOn: [ bowerInstall, installGrunt ]) {
-  args = ['test']
-}
-
-check.dependsOn gruntTest
+//node {
+//  version = '0.10.22'
+//  download = true
+//}
+//
+//task bowerInstall(type: NpmTask, dependsOn: [ npmInstall ]) {
+//  args = ['run', 'bowerInstall']
+//}
+//
+//task gruntTest(type: GruntTask, dependsOn: [ bowerInstall, installGrunt ]) {
+//  args = ['test']
+//}
+//
+//check.dependsOn gruntTest

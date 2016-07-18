@@ -26,6 +26,7 @@ subprojects {
         testCompile files('../test-codebases/src/test/resources')
     }
 }
+
 idea {
     project {
         languageLevel = '1.8'

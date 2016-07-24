@@ -38,10 +38,13 @@ dependencies {
     acceptanceRuntime configurations.testRuntime
 
     compile project(':codegraph-core')
+    compile project(':codegraph-db')
     compile libraries.spring.boot
-        //exclude module: "spring-boot-starter-tomcat"
+    compile libraries.spring.dataNeo4j
+    //exclude module: "spring-boot-starter-tomcat"
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
+    testCompile group: 'org.neo4j', name: 'neo4j-kernel', version: versions.neo4jKernel, classifier: 'tests'
 }
 
 task acceptanceTests(type: Test) {
@@ -50,3 +53,4 @@ task acceptanceTests(type: Test) {
 }
 
 build.dependsOn acceptanceTests
+acceptanceTests.mustRunAfter test

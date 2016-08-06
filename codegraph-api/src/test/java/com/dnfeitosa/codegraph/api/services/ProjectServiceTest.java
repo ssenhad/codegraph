@@ -43,4 +43,9 @@ public class ProjectServiceTest {
         assertThat(savedProject.getId(), is(newId));
     }
 
+    @Test(expected = ItemDoesNotExistException.class)
+    public void shouldBeEmptyWhenProjectDoesNotExist() {
+        projectService.loadProject(999L);
+    }
 }
+

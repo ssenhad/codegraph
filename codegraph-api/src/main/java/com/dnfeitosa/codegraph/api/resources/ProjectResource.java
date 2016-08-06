@@ -2,7 +2,9 @@ package com.dnfeitosa.codegraph.api.resources;
 
 import java.util.List;
 
-public class ProjectResource {
+import static com.dnfeitosa.codegraph.core.utils.PathUtils.join;
+
+public class ProjectResource implements Resource {
 
     private Long id;
     private String name;
@@ -49,5 +51,13 @@ public class ProjectResource {
 
     public void setArtifacts(List<ArtifactResource> artifacts) {
         this.artifacts = artifacts;
+    }
+
+    @Override
+    public String getUri() {
+        if (id == null) {
+            return null;
+        }
+        return join(BASE_URI, "projects", id);
     }
 }

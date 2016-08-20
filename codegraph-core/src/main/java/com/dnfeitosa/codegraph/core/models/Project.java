@@ -1,18 +1,23 @@
 package com.dnfeitosa.codegraph.core.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Project {
 
     private Long id;
 
     private String name;
-    private String version;
+    private Version version;
     private String organization;
 
-    public Project(String name, String organization, String version) {
+    private List<Artifact> artifacts = new ArrayList<>();
+
+    public Project(String name, String organization, Version version) {
         this(null, name, organization, version);
     }
 
-    public Project(Long id, String name, String organization, String version) {
+    public Project(Long id, String name, String organization, Version version) {
         this.id = id;
         this.name = name;
         this.organization = organization;
@@ -27,11 +32,19 @@ public class Project {
         return name;
     }
 
-    public String getVersion() {
+    public Version getVersion() {
         return version;
     }
 
     public String getOrganization() {
         return organization;
+    }
+
+    public List<Artifact> getArtifacts() {
+        return artifacts;
+    }
+
+    public void addArtifact(Artifact artifact) {
+        artifacts.add(artifact);
     }
 }

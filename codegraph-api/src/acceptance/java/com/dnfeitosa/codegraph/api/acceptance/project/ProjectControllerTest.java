@@ -1,6 +1,7 @@
 package com.dnfeitosa.codegraph.api.acceptance.project;
 
 import com.dnfeitosa.codegraph.api.controllers.ProjectController;
+import com.dnfeitosa.codegraph.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.api.resources.ProjectResource;
 import com.dnfeitosa.codegraph.api.resources.ProjectResources;
 import com.dnfeitosa.codegraph.db.nodes.ProjectNode;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertThat;
@@ -40,6 +42,14 @@ public class ProjectControllerTest {
         projectResource.setOrganization("project-organization");
         projectResource.setVersion("project-version");
 
+        ArtifactResource artifactResource = new ArtifactResource();
+        artifactResource.setName("project-name");
+        artifactResource.setExtension("artifact-extension");
+        artifactResource.setType("artifact-type");
+        artifactResource.setVersion("artifact-version");
+
+        projectResource.setArtifacts(asList(artifactResource));
+
         ResponseEntity<ProjectResource> response = controller.addProject(projectResource);
 
         assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
@@ -49,6 +59,12 @@ public class ProjectControllerTest {
         assertThat(responseResource.getName(), is("project-name"));
         assertThat(responseResource.getOrganization(), is("project-organization"));
         assertThat(responseResource.getVersion(), is("project-version"));
+
+        ArtifactResource responseArtifact = responseResource.getArtifacts().get(0);
+        assertThat(responseArtifact.getName(), is("project-name"));
+        assertThat(responseArtifact.getExtension(), is("artifact-extension"));
+        assertThat(responseArtifact.getType(), is("artifact-type"));
+        assertThat(responseArtifact.getVersion(), is("artifact-version"));
     }
 
     @Test

@@ -1,5 +1,6 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
+import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.nodes.ProjectNode;
 import com.dnfeitosa.codegraph.db.utils.ResultUtils;
 import org.junit.Test;
@@ -29,11 +30,20 @@ public class ProjectRepositoryTest {
     public void shouldSaveAProject() {
         ProjectNode node = new ProjectNode(null, "project-name", "project-organization", "project-version");
 
+        ArtifactNode artifactNode = new ArtifactNode();
+        artifactNode.setName("artifact-name");
+        artifactNode.setExtension("artifact-extension");
+        artifactNode.setType("artifact-type");
+        artifactNode.setVersion("artifact-version");
+        node.addArtifact(artifactNode);
+
         repository.save(node);
 
         Result<ProjectNode> all = repository.findAll();
 
         List<ProjectNode> projects = ResultUtils.toList(all);
         assertThat(projects.size(), is(1));
+
+        assertThat(projects.get(0).getArtifacts().size(), is(1));
     }
 }

@@ -39,4 +39,12 @@ public class CoolIterable<T> implements Iterable<T>, Mappable<CoolIterable<?>, T
 		}
 		return list;
 	}
+
+    public T first() {
+        Iterator<T> iterator = iterable.iterator();
+        if (iterator.hasNext()) {
+            return iterator.next();
+        }
+        return null;
+    }
 }

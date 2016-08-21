@@ -6,18 +6,18 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
 
-public class ProjectResourceTest {
+public class ArtifactResourceTest {
 
     @Test
     public void shouldReturnTheResourceUriWhenItContainsAnId() {
-        ProjectResource resource = new ProjectResource();
+        ArtifactResource resource = new ArtifactResource();
         resource.setId(10L);
 
-        assertThat(resource.getUri(), is("/api/projects/10"));
+        assertThat(resource.getUri(), is("/api/artifacts/10"));
     }
 
     @Test
     public void resourceUriIsNullWhenItDoesNotContainAnId() {
-        assertNull(new ProjectResource().getUri());
+        assertNull(new ArtifactResource().getUri());
     }
 }

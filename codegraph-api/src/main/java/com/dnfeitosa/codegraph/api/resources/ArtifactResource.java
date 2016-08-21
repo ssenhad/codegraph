@@ -1,11 +1,15 @@
 package com.dnfeitosa.codegraph.api.resources;
 
-public class ArtifactResource {
+import static com.dnfeitosa.codegraph.core.utils.PathUtils.join;
 
+public class ArtifactResource implements Resource {
+
+    private Long id;
     private String name;
     private String type;
     private String extension;
     private String version;
+    private String organization;
 
     public String getName() {
         return name;
@@ -13,6 +17,30 @@ public class ArtifactResource {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getType() {
@@ -31,11 +59,11 @@ public class ArtifactResource {
         this.extension = extension;
     }
 
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
+    @Override
+    public String getUri() {
+        if (id == null) {
+            return null;
+        }
+        return join(BASE_URI, "artifacts", id);
     }
 }

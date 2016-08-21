@@ -1,7 +1,6 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
 import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
-import com.dnfeitosa.codegraph.db.nodes.ProjectNode;
 import com.dnfeitosa.codegraph.db.utils.ResultUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,29 +20,20 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = { "classpath:/codegraph-db-base.xml", "classpath:/codegraph-db-test.xml" })
 @ActiveProfiles("test")
 @Transactional
-public class ProjectRepositoryTest {
+public class ArtifactRepositoryTest {
 
     @Autowired
-    private ProjectRepository repository;
+    private ArtifactRepository repository;
 
     @Test
-    public void shouldSaveAProject() {
-        ProjectNode node = new ProjectNode(null, "project-name", "project-organization", "project-version");
-
-        ArtifactNode artifactNode = new ArtifactNode();
-        artifactNode.setName("artifact-name");
-        artifactNode.setExtension("artifact-extension");
-        artifactNode.setType("artifact-type");
-        artifactNode.setVersion("artifact-version");
-        node.addArtifact(artifactNode);
+    public void shouldSaveAnArtifact() {
+        ArtifactNode node = new ArtifactNode(null, "artifact-name", "artifact-organization", "artifact-version", "artifact-type", "artifact-extension");
 
         repository.save(node);
 
-        Result<ProjectNode> all = repository.findAll();
+        Result<ArtifactNode> all = repository.findAll();
 
-        List<ProjectNode> projects = ResultUtils.toList(all);
-        assertThat(projects.size(), is(1));
-
-        assertThat(projects.get(0).getArtifacts().size(), is(1));
+        List<ArtifactNode> artifacts = ResultUtils.toList(all);
+        assertThat(artifacts.size(), is(1));
     }
 }

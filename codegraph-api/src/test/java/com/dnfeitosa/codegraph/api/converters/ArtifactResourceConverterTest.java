@@ -40,6 +40,14 @@ public class ArtifactResourceConverterTest {
         resource.setType(type);
         resource.setExtension(extension);
 
+        ArtifactResource dependencyResource = new ArtifactResource();
+        dependencyResource.setName("dependency-name");
+        dependencyResource.setType("dependency-type");
+        dependencyResource.setOrganization("dependency-organization");
+        dependencyResource.setExtension("dependency-extension");
+        dependencyResource.setVersion("dependency-version");
+        resource.addDependency(dependencyResource);
+
         Artifact artifact = converter.toModel(resource);
 
         assertThat(artifact.getId(), is(id));
@@ -48,11 +56,22 @@ public class ArtifactResourceConverterTest {
         assertThat(artifact.getType(), is(type));
         assertThat(artifact.getExtension(), is(extension));
         assertThat(artifact.getVersion().getNumber(), is(version));
+
+        List<Artifact> dependencies = artifact.getDependencies();
+        assertThat(dependencies.size(), is(1));
+        Artifact dependency = dependencies.get(0);
+        assertThat(dependency.getName(), is("dependency-name"));
+        assertThat(dependency.getType(), is("dependency-type"));
+        assertThat(dependency.getOrganization(), is("dependency-organization"));
+        assertThat(dependency.getVersion().getNumber(), is("dependency-version"));
+        assertThat(dependency.getExtension(), is("dependency-extension"));
     }
 
     @Test
     public void shouldConvertAnArtifactModelToArtifactResource() {
         Artifact artifact = new Artifact(id, name, organization, new Version(version), type, extension);
+        Artifact dependency = new Artifact("dependency-name", "dependency-organization", new Version("dependency-version"), "dependency-type", "dependency-extension");
+        artifact.addDependency(dependency);
 
         ArtifactResource resource = converter.toResource(artifact);
 
@@ -62,6 +81,15 @@ public class ArtifactResourceConverterTest {
         assertThat(resource.getExtension(), is(extension));
         assertThat(resource.getOrganization(), is(organization));
         assertThat(resource.getVersion(), is(version));
+
+        assertThat(resource.getDependencies().size(), is(1));
+
+        ArtifactResource dependencyResource = resource.getDependencies().get(0);
+        assertThat(dependencyResource.getName(), is("dependency-name"));
+        assertThat(dependencyResource.getOrganization(), is("dependency-organization"));
+        assertThat(dependencyResource.getExtension(), is("dependency-extension"));
+        assertThat(dependencyResource.getVersion(), is("dependency-version"));
+        assertThat(dependencyResource.getType(), is("dependency-type"));
     }
 
     @Test

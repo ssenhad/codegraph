@@ -1,5 +1,8 @@
 package com.dnfeitosa.codegraph.core.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Artifact {
 
     private Long id;
@@ -9,6 +12,8 @@ public class Artifact {
     private String organization;
     private String type;
     private String extension;
+
+    private List<Artifact> dependencies = new ArrayList<>();
 
     public Artifact(String name, String organization, Version version, String type, String extension) {
         this(null, name, organization, version, type, extension);
@@ -45,5 +50,13 @@ public class Artifact {
 
     public String getExtension() {
         return extension;
+    }
+
+    public void addDependency(Artifact artifact) {
+        this.dependencies.add(artifact);
+    }
+
+    public List<Artifact> getDependencies() {
+        return dependencies;
     }
 }

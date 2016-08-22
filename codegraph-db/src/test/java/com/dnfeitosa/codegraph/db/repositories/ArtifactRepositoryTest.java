@@ -28,12 +28,15 @@ public class ArtifactRepositoryTest {
     @Test
     public void shouldSaveAnArtifact() {
         ArtifactNode node = new ArtifactNode(null, "artifact-name", "artifact-organization", "artifact-version", "artifact-type", "artifact-extension");
+        node.addDependency(new ArtifactNode(null, "dependency-name", "dependency-organization", "dependency-version", "dependency-type", "dependency-extension"));
 
         repository.save(node);
 
         Result<ArtifactNode> all = repository.findAll();
 
         List<ArtifactNode> artifacts = ResultUtils.toList(all);
-        assertThat(artifacts.size(), is(1));
+        assertThat(artifacts.size(), is(2));
+
+        assertThat(artifacts.get(0).getDependencies().size(), is(1));
     }
 }

@@ -1,5 +1,8 @@
 package com.dnfeitosa.codegraph.api.resources;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static com.dnfeitosa.codegraph.core.utils.PathUtils.join;
 
 public class ArtifactResource implements Resource {
@@ -10,6 +13,7 @@ public class ArtifactResource implements Resource {
     private String extension;
     private String version;
     private String organization;
+    private List<ArtifactResource> dependencies = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -65,5 +69,13 @@ public class ArtifactResource implements Resource {
             return null;
         }
         return join(BASE_URI, "artifacts", id);
+    }
+
+    public List<ArtifactResource> getDependencies() {
+        return dependencies;
+    }
+
+    public void addDependency(ArtifactResource dependency) {
+        dependencies.add(dependency);
     }
 }

@@ -9,10 +9,21 @@ import org.springframework.stereotype.Component;
 public class ArtifactNodeConverter {
 
     public ArtifactNode toNode(Artifact artifact) {
-        return new ArtifactNode(artifact.getId(), artifact.getName(), artifact.getOrganization(), artifact.getVersion().getNumber(), artifact.getType(), artifact.getExtension());
+        Long id = artifact.getId();
+        String name = artifact.getName();
+        String organization = artifact.getOrganization();
+        String number = artifact.getVersion().getNumber();
+        String type = artifact.getType();
+        String extension = artifact.getExtension();
+
+        ArtifactNode node = new ArtifactNode(id, name, organization, number, type, extension);
+        artifact.getDependencies().forEach(dependency -> node.addDependency(toNode(dependency)));
+        return node;
     }
 
     public Artifact toModel(ArtifactNode node) {
-        return new Artifact(node.getId(), node.getName(), node.getOrganization(), new Version(node.getVersion()), node.getType(), node.getExtension());
+        Artifact artifact = new Artifact(node.getId(), node.getName(), node.getOrganization(), new Version(node.getVersion()), node.getType(), node.getExtension());
+        node.getDependencies().forEach(dependency -> artifact.addDependency(toModel(dependency)));
+        return artifact;
     }
 }

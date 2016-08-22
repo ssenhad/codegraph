@@ -20,7 +20,11 @@ public class ArtifactResourceConverter {
         Version version = new Version(resource.getVersion());
         String type = resource.getType();
         String extension = resource.getExtension();
-        return new Artifact(id, name, organization, version, type, extension);
+
+        Artifact artifact = new Artifact(id, name, organization, version, type, extension);
+        resource.getDependencies()
+                .forEach(dependency -> artifact.addDependency(toModel(dependency)));
+        return artifact;
     }
 
     public ArtifactResource toResource(Artifact artifact) {
@@ -31,6 +35,9 @@ public class ArtifactResourceConverter {
         resource.setVersion(artifact.getVersion().getNumber());
         resource.setExtension(artifact.getExtension());
         resource.setType(artifact.getType());
+
+        artifact.getDependencies()
+                .forEach(dependency -> resource.addDependency(toResource(dependency)));
         return resource;
     }
 

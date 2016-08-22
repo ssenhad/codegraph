@@ -42,6 +42,14 @@ public class ArtifactControllerTest {
         artifactResource.setType("artifact-type");
         artifactResource.setExtension("artifact-extension");
 
+        ArtifactResource dependency = new ArtifactResource();
+        dependency.setExtension("dependency-extension");
+        dependency.setName("dependency-name");
+        dependency.setType("dependency-type");
+        dependency.setVersion("dependency-version");
+        dependency.setOrganization("dependency-organization");
+        artifactResource.addDependency(dependency);
+
         ResponseEntity<ArtifactResource> response = controller.addArtifact(artifactResource);
 
         assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
@@ -53,6 +61,13 @@ public class ArtifactControllerTest {
         assertThat(responseResource.getVersion(), is("artifact-version"));
         assertThat(responseResource.getExtension(), is("artifact-extension"));
         assertThat(responseResource.getType(), is("artifact-type"));
+
+        ArtifactResource responseDependency = responseResource.getDependencies().get(0);
+        assertThat(responseDependency.getName(), is("dependency-name"));
+        assertThat(responseDependency.getVersion(), is("dependency-version"));
+        assertThat(responseDependency.getOrganization(), is("dependency-organization"));
+        assertThat(responseDependency.getExtension(), is("dependency-extension"));
+        assertThat(responseDependency.getType(), is("dependency-type"));
     }
 
     @Test

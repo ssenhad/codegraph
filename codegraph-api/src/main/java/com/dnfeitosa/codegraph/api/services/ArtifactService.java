@@ -27,6 +27,13 @@ public class ArtifactService {
 
     public Artifact addArtifact(Artifact artifact) {
         ArtifactNode node = nodeConverter.toNode(artifact);
+
+        node.getDependencies().forEach(dependency -> {
+            ArtifactNode existingNode = artifactRepository.find(dependency.getName(), dependency.getOrganization(), dependency.getVersion(), dependency.getType(), dependency.getExtension());
+            if (existingNode != null) {
+                dependency.setId(existingNode.getId());
+            }
+        });
         ArtifactNode saved = artifactRepository.save(node);
         return nodeConverter.toModel(saved);
     }

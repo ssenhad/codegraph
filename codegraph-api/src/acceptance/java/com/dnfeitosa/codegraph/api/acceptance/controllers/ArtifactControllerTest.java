@@ -1,4 +1,4 @@
-package com.dnfeitosa.codegraph.api.acceptance.artifact;
+package com.dnfeitosa.codegraph.api.acceptance.controllers;
 
 import com.dnfeitosa.codegraph.api.controllers.ArtifactController;
 import com.dnfeitosa.codegraph.api.resources.ArtifactResource;
@@ -63,11 +63,43 @@ public class ArtifactControllerTest {
         assertThat(responseResource.getType(), is("artifact-type"));
 
         ArtifactResource responseDependency = responseResource.getDependencies().get(0);
+        assertNotNull(responseDependency.getId());
         assertThat(responseDependency.getName(), is("dependency-name"));
         assertThat(responseDependency.getVersion(), is("dependency-version"));
         assertThat(responseDependency.getOrganization(), is("dependency-organization"));
         assertThat(responseDependency.getExtension(), is("dependency-extension"));
         assertThat(responseDependency.getType(), is("dependency-type"));
+    }
+
+    @Test
+    public void shouldLinkADependencyToAnArtifactIfItAlreadyExists() {
+        ArtifactNode existingDependency = new ArtifactNode(null, "dependency-name", "dependency-organization", "dependency-version", "dependency-type", "dependency-extension");
+        repository.save(existingDependency);
+
+        ArtifactResource artifactResource = new ArtifactResource();
+        artifactResource.setName("artifact-name");
+        artifactResource.setOrganization("artifact-organization");
+        artifactResource.setVersion("artifact-version");
+        artifactResource.setType("artifact-type");
+        artifactResource.setExtension("artifact-extension");
+
+        ArtifactResource dependency = new ArtifactResource();
+        dependency.setName("dependency-name");
+        dependency.setOrganization("dependency-organization");
+        dependency.setVersion("dependency-version");
+        dependency.setType("dependency-type");
+        dependency.setExtension("dependency-extension");
+        artifactResource.addDependency(dependency);
+
+        ResponseEntity<ArtifactResource> response = controller.addArtifact(artifactResource);
+
+        assertThat(response.getStatusCode(), is(HttpStatus.CREATED));
+        ArtifactResource responseResource = response.getBody();
+
+        assertNotNull(responseResource.getId());
+
+        ArtifactResource responseDependency = responseResource.getDependencies().get(0);
+        assertThat(responseDependency.getId(), is(existingDependency.getId()));
     }
 
     @Test

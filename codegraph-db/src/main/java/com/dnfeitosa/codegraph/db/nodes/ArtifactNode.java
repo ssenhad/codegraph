@@ -75,4 +75,8 @@ public class ArtifactNode {
     public void addDependency(ArtifactNode dependency) {
         getDependencies().add(dependency);
     }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

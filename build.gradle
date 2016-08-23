@@ -26,5 +26,11 @@ idea {
     }
 }
 
+apply from: "$rootDir/gradle/distribution.gradle"
+
+configure(subprojects) {
+  version = "${distribution.versions.major}.${distribution.versions.get(project.name)}-${distribution.versions.modifier}"
+}
+
 defaultTasks 'clean', 'build'
 

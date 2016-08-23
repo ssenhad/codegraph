@@ -16,3 +16,4 @@ build
 *.war
 MANIFEST.MF
 out
+distribution

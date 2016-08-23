@@ -5,6 +5,7 @@ plugins {
 apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'java'
+apply from: "$rootDir/gradle/distribution.gradle"
 
 
 grunt {

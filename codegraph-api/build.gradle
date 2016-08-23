@@ -9,8 +9,8 @@ buildscript {
 }
 
 apply plugin: 'java'
-apply plugin: 'war'
 apply plugin: 'spring-boot'
+apply from: "$rootDir/gradle/distribution.gradle"
 
 bootRun {
     systemProperties = System.properties
@@ -24,7 +24,7 @@ repositories {
 
 sourceSets {
     acceptance
-    if (System.properties.'ideah.active') {
+    if (System.properties.'idea.active') {
         main {
             resources.srcDir file('src/acceptance/resource')
         }
@@ -52,5 +52,6 @@ task acceptanceTests(type: Test) {
     classpath = project.sourceSets.acceptance.runtimeClasspath
 }
 
+groupFiles.dependsOn bootRepackage
 build.dependsOn acceptanceTests
 acceptanceTests.mustRunAfter test

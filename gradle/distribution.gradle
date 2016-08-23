@@ -1,0 +1,40 @@
+ext { 
+    distribution = [:]
+    distribution.versions = [:]
+}
+
+distribution.versions = [
+    major: '0',
+    modifier: 'dev',
+    'codegraph-api': '0.1',
+    'codegraph-core': '0.1',
+    'codegraph-db': '0.1',
+    'codegraph-indexer': '0.1',
+    'codegraph-viewer': '0.1',
+]
+
+
+apply plugin: 'distribution'
+
+distributions {
+  main {
+    contents {
+      from { 'distribution-template' }
+      from { groupFiles }
+    }
+  }
+}
+
+task groupFiles(type: Copy) {
+  from("$projectDir/build/libs") {
+    include '*.jar'
+  }
+  into("$buildDir/temp-dist")
+}
+
+task distribute(type: Copy) {
+  from distTar
+  from distZip
+
+  into "$rootDir/distribution"
+}

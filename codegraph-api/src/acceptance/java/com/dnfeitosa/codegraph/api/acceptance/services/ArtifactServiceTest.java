@@ -28,6 +28,23 @@ public class ArtifactServiceTest {
     private ArtifactService service;
 
     @Test
+    public void shouldUpdateAnArtifactIfItAlreadyExists() {
+        Artifact artifact = new Artifact("artifact-name", "artifact-organization", new Version("artifact-version"), "artifact-type", "artifact-extension");
+        service.addArtifact(artifact);
+
+        Artifact toUpdate = new Artifact("artifact-name", "artifact-organization", new Version("artifact-version"), "artifact-type", "artifact-extension");
+        toUpdate.addDependency(new Artifact("dependency-name", "dependency-organization", new Version("dependency-version"), "dependency-type", "dependency-extension"));
+        service.addArtifact(toUpdate);
+
+        List<Artifact> artifacts = service.loadAll();
+        artifacts.sort(comparing(Artifact::getName));
+
+        assertThat(artifacts.size(), is(2));
+        assertThat(artifacts.get(0).getName(), is("artifact-name"));
+        assertThat(artifacts.get(1).getName(), is("dependency-name"));
+    }
+
+    @Test
     public void shouldLinkADependencyToAnExistingArtifact() {
         Artifact dependency = new Artifact("dependency-name", "dependency-organization", new Version("dependency-version"), "dependency-type", "dependency-extension");
         service.addArtifact(dependency);
@@ -36,13 +53,27 @@ public class ArtifactServiceTest {
         newArtifact.addDependency(new Artifact("dependency-name", "dependency-organization", new Version("dependency-version"), "dependency-type", "dependency-extension"));
 
         Artifact saved = service.addArtifact(newArtifact);
-
         assertNotNull(saved.getId());
+
         List<Artifact> artifacts = service.loadAll();
         artifacts.sort(comparing(Artifact::getName));
 
         assertThat(artifacts.size(), is(2));
         assertThat(artifacts.get(0).getName(), is("dependency-name"));
         assertThat(artifacts.get(1).getName(), is("new-artifact-name"));
+    }
+
+    @Test
+    public void shouldUpdateTheArtifactInformationIfItExists() {
+        Artifact mainArtifact = new Artifact("main-artifact", "organization", new Version("version"), "type", "extension");
+        mainArtifact.addDependency(new Artifact("dependency1", "organization", new Version("version"), "type", "extension"));
+        Artifact saved = service.addArtifact(mainArtifact);
+
+        mainArtifact = new Artifact("main-artifact", "organization", new Version("version"), "type", "extension");
+        mainArtifact.addDependency(new Artifact("dependency2", "organization", new Version("version"), "type", "extension"));
+        service.addArtifact(mainArtifact);
+
+        Artifact loaded = service.loadArtifact(saved.getId());
+        assertThat(loaded.getDependencies().size(), is(2));
     }
 }

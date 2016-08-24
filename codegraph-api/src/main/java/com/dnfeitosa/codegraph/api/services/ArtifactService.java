@@ -27,15 +27,19 @@ public class ArtifactService {
 
     public Artifact addArtifact(Artifact artifact) {
         ArtifactNode node = nodeConverter.toNode(artifact);
+        mergeIfExists(node);
 
-        node.getDependencies().forEach(dependency -> {
-            ArtifactNode existingNode = artifactRepository.find(dependency.getName(), dependency.getOrganization(), dependency.getVersion(), dependency.getType(), dependency.getExtension());
-            if (existingNode != null) {
-                dependency.setId(existingNode.getId());
-            }
-        });
+        node.getDependencies().forEach(dependency -> mergeIfExists(dependency));
         ArtifactNode saved = artifactRepository.save(node);
         return nodeConverter.toModel(saved);
+    }
+
+    private void mergeIfExists(ArtifactNode node) {
+        ArtifactNode existingNode = artifactRepository.find(node.getName(), node.getOrganization(), node.getVersion(), node.getType(), node.getExtension());
+        if (existingNode != null) {
+            node.setId(existingNode.getId());
+            existingNode.getDependencies().forEach(node::addDependency);
+        }
     }
 
     public Artifact loadArtifact(Long id) {

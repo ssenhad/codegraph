@@ -1,3 +1,6 @@
+apply plugin: 'distribution'
+apply plugin: 'maven-publish'
+
 ext { 
     distribution = [:]
     distribution.versions = [:]
@@ -11,10 +14,8 @@ distribution.versions = [
     'codegraph-db': '0.1',
     'codegraph-indexer': '0.1',
     'codegraph-viewer': '0.1',
+    'codegraph-gradle-plugin': '0.1',
 ]
-
-
-apply plugin: 'distribution'
 
 distributions {
   main {
@@ -24,6 +25,7 @@ distributions {
     }
   }
 }
+
 
 task groupFiles(type: Copy) {
   from("$projectDir/build/libs") {

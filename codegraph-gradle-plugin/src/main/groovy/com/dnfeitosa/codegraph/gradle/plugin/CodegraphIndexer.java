@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.gradle.plugin;
 
-import com.dnfeitosa.codegraph.gradle.plugin.client.Client;
-import com.dnfeitosa.codegraph.gradle.plugin.client.resources.Artifact;
+import com.dnfeitosa.codegraph.client.CodegraphClient;
+import com.dnfeitosa.codegraph.client.resources.Artifact;
 import com.dnfeitosa.codegraph.gradle.plugin.converters.ProjectConverter;
 import com.dnfeitosa.codegraph.gradle.plugin.converters.ResolvedDependencyConverter;
 import com.dnfeitosa.codegraph.gradle.plugin.resolvers.DependenciesResolver;
@@ -12,20 +12,20 @@ import org.gradle.api.logging.Logging;
 
 import java.util.Set;
 
-class CodegraphIndexer {
+public class CodegraphIndexer {
 
     private static final Logger LOGGER = Logging.getLogger(CodegraphIndexer.class);
 
     private final ProjectConverter projectConverter;
     private final ResolvedDependencyConverter dependencyConverter;
     private final DependenciesResolver dependencyResolver;
-    private final Client client;
+    private final CodegraphClient client;
 
-    public CodegraphIndexer(Client client) {
+    public CodegraphIndexer(CodegraphClient client) {
         this(client, new DependenciesResolver(), new ProjectConverter(), new ResolvedDependencyConverter());
     }
 
-    CodegraphIndexer(Client client, DependenciesResolver dependencyResolver, ProjectConverter projectConverter, ResolvedDependencyConverter dependencyConverter) {
+    CodegraphIndexer(CodegraphClient client, DependenciesResolver dependencyResolver, ProjectConverter projectConverter, ResolvedDependencyConverter dependencyConverter) {
         this.client = client;
         this.dependencyResolver = dependencyResolver;
         this.projectConverter = projectConverter;

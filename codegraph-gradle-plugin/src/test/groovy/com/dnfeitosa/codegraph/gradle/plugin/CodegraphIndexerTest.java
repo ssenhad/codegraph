@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.gradle.plugin;
 
-import com.dnfeitosa.codegraph.gradle.plugin.client.Client;
-import com.dnfeitosa.codegraph.gradle.plugin.client.resources.Artifact;
+import com.dnfeitosa.codegraph.client.CodegraphClient;
+import com.dnfeitosa.codegraph.client.resources.Artifact;
 import com.dnfeitosa.codegraph.gradle.plugin.converters.ProjectConverter;
 import com.dnfeitosa.codegraph.gradle.plugin.converters.ResolvedDependencyConverter;
 import com.dnfeitosa.codegraph.gradle.plugin.resolvers.DependenciesResolver;
@@ -24,11 +24,11 @@ public class CodegraphIndexerTest {
     private ResolvedDependencyConverter dependencyConverter;
     private CodegraphIndexer task;
     private Project project;
-    private Client client;
+    private CodegraphClient client;
 
     @Before
     public void setUp() {
-        client = mock(Client.class);
+        client = mock(CodegraphClient.class);
         dependenciesResolver = mock(DependenciesResolver.class);
         projectConverter = mock(ProjectConverter.class);
         dependencyConverter = mock(ResolvedDependencyConverter.class);

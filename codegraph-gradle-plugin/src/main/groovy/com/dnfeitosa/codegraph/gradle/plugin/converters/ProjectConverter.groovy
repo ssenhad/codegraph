@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.gradle.plugin.converters
 
-import com.dnfeitosa.codegraph.gradle.plugin.client.resources.Artifact
+import com.dnfeitosa.codegraph.client.resources.Artifact
 import org.gradle.api.Project
 
 class ProjectConverter {

@@ -16,6 +16,7 @@ distribution.versions = [
     'codegraph-viewer': '0.1',
     'codegraph-client-base': '0.1',
     'codegraph-gradle-plugin': '0.1',
+    'codegraph-ant': '0.1',
 ]
 
 distributions {

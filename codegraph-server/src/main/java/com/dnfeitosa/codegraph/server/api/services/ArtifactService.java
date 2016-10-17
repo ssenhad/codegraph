@@ -53,7 +53,7 @@ public class ArtifactService {
     public List<Artifact> loadAll() {
         Result<ArtifactNode> all = artifactRepository.findAll();
         return stream(all)
-                .map(x -> nodeConverter.toModel(x))
+                .map(nodeConverter::toModel)
                 .collect(toList());
     }
 }

@@ -29,6 +29,9 @@ public class ArtifactNode {
     @RelatedTo(direction = Direction.OUTGOING, type = "DEPENDS_ON")
     private Set<ArtifactNode> dependencies;
 
+    @RelatedTo(direction = Direction.OUTGOING, type = "CONTAINS")
+    private Set<TypeNode> types;
+
     public ArtifactNode() {
     }
 

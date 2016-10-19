@@ -1,10 +1,14 @@
 package com.dnfeitosa.codegraph.db.nodes.converters;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.Type;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
+import com.dnfeitosa.codegraph.db.nodes.TypeNode;
 import org.junit.Before;
 import org.junit.Test;
+
+import java.util.Set;
 
 import static com.dnfeitosa.coollections.Coollections.$;
 import static org.hamcrest.CoreMatchers.is;
@@ -66,5 +70,23 @@ public class ArtifactNodeConverterTest {
         assertThat(dependency.getVersion().getNumber(), is("dependency-version"));
         assertThat(dependency.getType(), is("dependency-type"));
         assertThat(dependency.getExtension(), is("dependency-extension"));
+    }
+
+    @Test
+    public void shouldConvertArtifactsTypesToNodes() {
+        Artifact artifact = new Artifact(name, organization, new Version(version), type, extension);
+        Type type = new Type("ArtifactNodeConverterTest", "com.dnfeitosa.codegraph.db.nodes.converters", "test", "class");
+
+        artifact.addType(type);
+
+        ArtifactNode artifactNode = converter.toNode(artifact);
+        Set<TypeNode> types = artifactNode.getTypes();
+        assertThat(types.size(), is(1));
+
+        TypeNode typeNode = $(types).first();
+        assertThat(typeNode.getName(), is("ArtifactNodeConverterTest"));
+        assertThat(typeNode.getPackageName(), is("com.dnfeitosa.codegraph.db.nodes.converters"));
+        assertThat(typeNode.getUsage(), is("test"));
+        assertThat(typeNode.getType(), is("class"));
     }
 }

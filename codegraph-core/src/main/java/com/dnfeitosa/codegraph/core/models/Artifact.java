@@ -1,7 +1,9 @@
 package com.dnfeitosa.codegraph.core.models;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class Artifact {
 
@@ -14,6 +16,7 @@ public class Artifact {
     private String extension;
 
     private List<Artifact> dependencies = new ArrayList<>();
+    private Set<Type> types = new HashSet<>();
 
     public Artifact(String name, String organization, Version version, String type, String extension) {
         this(null, name, organization, version, type, extension);
@@ -58,5 +61,13 @@ public class Artifact {
 
     public List<Artifact> getDependencies() {
         return dependencies;
+    }
+
+    public void addType(Type type) {
+        this.types.add(type);
+    }
+
+    public Set<Type> getTypes() {
+        return types;
     }
 }

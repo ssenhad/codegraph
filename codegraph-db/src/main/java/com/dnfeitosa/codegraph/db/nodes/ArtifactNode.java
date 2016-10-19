@@ -82,4 +82,15 @@ public class ArtifactNode {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public void addType(TypeNode type) {
+        getTypes().add(type);
+    }
+
+    public Set<TypeNode> getTypes() {
+        if (types == null) {
+            types = new HashSet<>();
+        }
+        return types;
+    }
 }

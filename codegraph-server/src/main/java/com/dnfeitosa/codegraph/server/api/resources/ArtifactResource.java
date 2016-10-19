@@ -14,6 +14,7 @@ public class ArtifactResource implements Resource {
     private String version;
     private String organization;
     private List<ArtifactResource> dependencies = new ArrayList<>();
+    private TypesResource types = new TypesResource(this);
 
     public String getName() {
         return name;
@@ -63,6 +64,18 @@ public class ArtifactResource implements Resource {
         this.extension = extension;
     }
 
+    public List<ArtifactResource> getDependencies() {
+        return dependencies;
+    }
+
+    public void addDependency(ArtifactResource dependency) {
+        dependencies.add(dependency);
+    }
+
+    public void addType(TypeResource type) {
+        types.add(type);
+    }
+
     @Override
     public String getUri() {
         if (id == null) {
@@ -71,11 +84,7 @@ public class ArtifactResource implements Resource {
         return join(BASE_URI, "artifacts", id);
     }
 
-    public List<ArtifactResource> getDependencies() {
-        return dependencies;
-    }
-
-    public void addDependency(ArtifactResource dependency) {
-        dependencies.add(dependency);
+    public TypesResource getTypes() {
+        return types;
     }
 }

@@ -1,14 +1,18 @@
 package com.dnfeitosa.codegraph.server.api.converters;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.Type;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactsResource;
+import com.dnfeitosa.codegraph.server.api.resources.TypeResource;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.util.List;
+import java.util.Set;
 
+import static com.dnfeitosa.coollections.Coollections.$;
 import static java.util.Arrays.asList;
 import static java.util.Comparator.comparing;
 import static org.hamcrest.CoreMatchers.is;
@@ -105,5 +109,32 @@ public class ArtifactResourceConverterTest {
         assertThat(artifacts.size(), is(2));
         assertThat(artifacts.get(0).getId(), is(10L));
         assertThat(artifacts.get(1).getId(), is(11L));
+    }
+
+    @Test
+    public void shouldConvertAnArtifactWithItsTypes() {
+        ArtifactResource resource = new ArtifactResource();
+        resource.setName("artifact");
+
+        TypeResource typeResource = new TypeResource();
+        typeResource.setName("ArtifactResourceConverterTest");
+        typeResource.setPackageName("com.dnfeitosa.codegraph.server.api.converters");
+        typeResource.setUsage("test");
+        typeResource.setType("class");
+
+        resource.addType(typeResource);
+
+        Artifact artifact = converter.toModel(resource);
+
+        assertThat(artifact.getName(), is("artifact"));
+
+        Set<Type> types = artifact.getTypes();
+        assertThat(types.size(), is(1));
+
+        Type type = $(types).first();
+        assertThat(type.getName(), is("ArtifactResourceConverterTest"));
+        assertThat(type.getPackageName(), is("com.dnfeitosa.codegraph.server.api.converters"));
+        assertThat(type.getUsage(), is("test"));
+        assertThat(type.getType(), is("class"));
     }
 }

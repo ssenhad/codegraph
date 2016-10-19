@@ -32,24 +32,32 @@ sourceSets {
 }
 
 dependencies {
-    acceptanceCompile sourceSets.main.output
-    acceptanceCompile sourceSets.test.output
-    acceptanceCompile configurations.testCompile
-    acceptanceRuntime configurations.testRuntime
-
     compile project(':codegraph-core')
     compile project(':codegraph-db')
     compile libraries.spring.boot
     compile libraries.spring.dataNeo4j
     //exclude module: "spring-boot-starter-tomcat"
 
+    testCompile libraries.unitTesting
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testCompile group: 'org.neo4j', name: 'neo4j-kernel', version: versions.neo4jKernel, classifier: 'tests'
+    //testCompile group: 'org.neo4j', name: 'neo4j-kernel', version: versions.neo4jKernel, classifier: 'tests'
+
+    acceptanceCompile sourceSets.main.output
+    acceptanceCompile sourceSets.test.output
+    acceptanceCompile configurations.testCompile
+    acceptanceRuntime configurations.testRuntime
 }
 
 task acceptanceTests(type: Test) {
     testClassesDir = project.sourceSets.acceptance.output.classesDir
     classpath = project.sourceSets.acceptance.runtimeClasspath
+}
+
+idea.module.iml {
+  withXml { xml ->
+    println xml
+    xml
+  }
 }
 
 groupFiles.dependsOn bootRepackage

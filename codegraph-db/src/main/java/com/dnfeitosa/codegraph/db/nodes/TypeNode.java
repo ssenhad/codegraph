@@ -1,35 +1,32 @@
 package com.dnfeitosa.codegraph.db.nodes;
 
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@NodeEntity
+@NodeEntity(label = "Type")
 public class TypeNode {
 
     @GraphId
-    @Indexed
     private Long id;
 
-    @Indexed(unique = true)
     private String qualifiedName;
     private String name;
     private String packageName;
     private String usage;
     private String type;
 
-    @RelatedTo(direction = Direction.OUTGOING, type = "USES")
+    @Relationship(direction = Relationship.OUTGOING, type = "USES")
     private Set<TypeNode> referencedTypes;
 
-    @RelatedTo(direction = Direction.OUTGOING, type = "DECLARES", enforceTargetType = true)
+    @Relationship(direction = Relationship.OUTGOING, type = "DECLARES")
     private Set<FieldNode> fields;
 
-    @RelatedTo(direction = Direction.OUTGOING, type = "DECLARES", enforceTargetType = true)
+    @Relationship(direction = Relationship.OUTGOING, type = "DECLARES")
     private Set<MethodNode> methods;
 
     TypeNode() {

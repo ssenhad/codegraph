@@ -1,5 +1,6 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
+import com.dnfeitosa.codegraph.db.Config;
 import com.dnfeitosa.codegraph.db.nodes.FieldNode;
 import com.dnfeitosa.codegraph.db.nodes.MethodNode;
 import com.dnfeitosa.codegraph.db.nodes.ParameterNode;
@@ -8,6 +9,7 @@ import com.dnfeitosa.codegraph.db.utils.ResultUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,7 +21,8 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = { "classpath:/codegraph-db-base.xml", "classpath:/codegraph-db-test.xml" })
+@ContextConfiguration(classes = {Config.class} /*, locations = { "classpath:/codegraph-db-base.xml", "classpath:/codegraph-db-test.xml" } */)
+@ComponentScan("com.dnfeitosa.codegraph.db")
 @ActiveProfiles("test")
 @Transactional
 public class TypeRepositoryTest {

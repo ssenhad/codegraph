@@ -1,18 +1,13 @@
 package com.dnfeitosa.codegraph.db.nodes;
 
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
-import org.springframework.data.neo4j.annotation.RelatedToVia;
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@NodeEntity
-@TypeAlias("MethodNode")
+@NodeEntity(label = "Method")
 public class MethodNode {
 
     @GraphId
@@ -20,13 +15,12 @@ public class MethodNode {
 
     private String name;
 
-    @Indexed(unique = true)
     private String qualifiedName;
 
-    @RelatedTo(direction = Direction.OUTGOING, type = "RETURNS")
+    @Relationship(direction = Relationship.OUTGOING, type = "RETURNS")
     private Set<TypeNode> returnTypes;
 
-    @RelatedToVia(direction = Direction.OUTGOING, type = "TAKES")
+    @Relationship(direction = Relationship.OUTGOING, type = "TAKES")
     private Set<ParameterNode> parameters;
 
     MethodNode() {

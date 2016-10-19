@@ -1,5 +1,6 @@
 package com.dnfeitosa.codegraph.server.api.acceptance.controllers;
 
+import com.dnfeitosa.codegraph.db.Config;
 import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
 import com.dnfeitosa.codegraph.server.api.controllers.ArtifactController;
@@ -8,6 +9,7 @@ import com.dnfeitosa.codegraph.server.api.resources.ArtifactsResource;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.test.context.ActiveProfiles;
@@ -22,7 +24,8 @@ import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:/codegraph-db.xml", "classpath:/codegraph-acceptance-test.xml"})
+@ContextConfiguration(classes = {Config.class} /*, locations = { "classpath:/codegraph-db-base.xml", "classpath:/codegraph-acceptance-test.xml" } */)
+@ComponentScan("com.dnfeitosa.codegraph.db")
 @ActiveProfiles("acceptance")
 @Transactional
 public class ArtifactControllerTest {

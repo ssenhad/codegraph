@@ -1,22 +1,17 @@
 package com.dnfeitosa.codegraph.db.nodes;
 
-import org.neo4j.graphdb.Direction;
-import org.springframework.data.annotation.TypeAlias;
-import org.springframework.data.neo4j.annotation.Fetch;
-import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
-import org.springframework.data.neo4j.annotation.NodeEntity;
-import org.springframework.data.neo4j.annotation.RelatedTo;
+
+import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.NodeEntity;
+import org.neo4j.ogm.annotation.Relationship;
 
 import java.util.HashSet;
 import java.util.Set;
 
-@NodeEntity
-@TypeAlias("Artifact")
+@NodeEntity(label = "Artifact")
 public class ArtifactNode {
 
     @GraphId
-    @Indexed
     private Long id;
 
     private String name;
@@ -25,11 +20,10 @@ public class ArtifactNode {
     private String extension;
     private String type;
 
-    @Fetch
-    @RelatedTo(direction = Direction.OUTGOING, type = "DEPENDS_ON")
+    @Relationship(direction = Relationship.OUTGOING, type = "DEPENDS_ON")
     private Set<ArtifactNode> dependencies;
 
-    @RelatedTo(direction = Direction.OUTGOING, type = "CONTAINS")
+    @Relationship(direction = Relationship.OUTGOING, type = "CONTAINS")
     private Set<TypeNode> types;
 
     public ArtifactNode() {

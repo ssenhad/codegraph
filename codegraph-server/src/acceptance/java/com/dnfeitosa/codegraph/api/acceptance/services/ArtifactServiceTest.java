@@ -2,10 +2,12 @@ package com.dnfeitosa.codegraph.server.api.acceptance.services;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Version;
+import com.dnfeitosa.codegraph.db.Config;
 import com.dnfeitosa.codegraph.server.api.services.ArtifactService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -19,7 +21,8 @@ import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
 @RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:/codegraph-db.xml", "classpath:/codegraph-acceptance-test.xml"})
+@ContextConfiguration(classes = {Config.class} /*, locations = { "classpath:/codegraph-db-base.xml", "classpath:/codegraph-acceptance-test.xml" } */)
+@ComponentScan("com.dnfeitosa.codegraph")
 @ActiveProfiles("acceptance")
 @Transactional
 public class ArtifactServiceTest {

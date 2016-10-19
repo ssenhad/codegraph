@@ -5,7 +5,6 @@ import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.nodes.converters.ArtifactNodeConverter;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -51,7 +50,7 @@ public class ArtifactService {
     }
 
     public List<Artifact> loadAll() {
-        Result<ArtifactNode> all = artifactRepository.findAll();
+        Iterable<ArtifactNode> all = artifactRepository.findAll();
         return stream(all)
                 .map(nodeConverter::toModel)
                 .collect(toList());

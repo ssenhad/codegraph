@@ -15,7 +15,11 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class ArtifactResourceConverter {
 
+    private TypeResourceConverter typeResourceConverter;
 
+    public ArtifactResourceConverter() {
+        this.typeResourceConverter = new TypeResourceConverter();
+    }
 
     public Artifact toModel(ArtifactResource resource) {
         Long id = resource.getId();
@@ -32,7 +36,7 @@ public class ArtifactResourceConverter {
     }
 
     private Type toModel(TypeResource type) {
-        return new Type(type.getName(), type.getPackageName(), type.getUsage(), type.getType());
+        return typeResourceConverter.toModel(type);
     }
 
     public ArtifactResource toResource(Artifact artifact) {

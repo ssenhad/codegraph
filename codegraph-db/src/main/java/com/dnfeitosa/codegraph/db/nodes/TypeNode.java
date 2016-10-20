@@ -1,6 +1,7 @@
 package com.dnfeitosa.codegraph.db.nodes;
 
 import org.neo4j.graphdb.Direction;
+import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.GraphId;
 import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
@@ -10,6 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @NodeEntity
+@TypeAlias("Type")
 public class TypeNode {
 
     @GraphId

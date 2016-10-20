@@ -6,15 +6,22 @@ import java.util.List;
 
 public class TypesResource implements Resource, Iterable<TypeResource> {
 
-    private List<TypeResource> types = new ArrayList<>();
+    private List<TypeResource> types = new ArrayList<>();;
     private ArtifactResource artifactResource;
+
+    public TypesResource() {
+    }
 
     public TypesResource(ArtifactResource artifactResource) {
         this.artifactResource = artifactResource;
     }
 
     public void add(TypeResource type) {
-        types.add(type);
+        getTypes().add(type);
+    }
+
+    public List<TypeResource> getTypes() {
+        return types;
     }
 
     @Override

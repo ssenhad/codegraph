@@ -16,8 +16,4 @@ public class ArtifactsResource {
     public List<ArtifactResource> getArtifacts() {
         return artifacts;
     }
-
-    public void setArtifacts(List<ArtifactResource> artifacts) {
-        this.artifacts = artifacts;
-    }
 }

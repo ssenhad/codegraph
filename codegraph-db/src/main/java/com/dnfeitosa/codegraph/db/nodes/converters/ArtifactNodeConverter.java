@@ -1,14 +1,18 @@
 package com.dnfeitosa.codegraph.db.nodes.converters;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
-import com.dnfeitosa.codegraph.core.models.Type;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
-import com.dnfeitosa.codegraph.db.nodes.TypeNode;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ArtifactNodeConverter {
+
+    private final TypeNodeConverter typeConverter;
+
+    public ArtifactNodeConverter() {
+        typeConverter = new TypeNodeConverter();
+    }
 
     public ArtifactNode toNode(Artifact artifact) {
         Long id = artifact.getId();
@@ -20,15 +24,8 @@ public class ArtifactNodeConverter {
 
         ArtifactNode node = new ArtifactNode(id, name, organization, number, artifactType, extension);
         artifact.getDependencies().forEach(dependency -> node.addDependency(toNode(dependency)));
-        artifact.getTypes().forEach(type -> node.addType(toNode(type)));
+        artifact.getTypes().forEach(type -> node.addType(typeConverter.toNode(type)));
         return node;
-    }
-
-    private TypeNode toNode(Type type) {
-        TypeNode typeNode = new TypeNode(type.getName(), type.getPackageName());
-        typeNode.setUsage(type.getUsage());
-        typeNode.setType(type.getType());
-        return typeNode;
     }
 
     public Artifact toModel(ArtifactNode node) {

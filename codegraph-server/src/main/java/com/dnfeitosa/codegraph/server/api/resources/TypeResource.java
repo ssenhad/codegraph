@@ -1,8 +1,12 @@
 package com.dnfeitosa.codegraph.server.api.resources;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 public class TypeResource implements Resource {
 
     private String name;
+
+    @JsonProperty("package")
     private String packageName;
     private String type;
     private String usage;

@@ -1,5 +1,6 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
+import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.nodes.FieldNode;
 import com.dnfeitosa.codegraph.db.nodes.MethodNode;
 import com.dnfeitosa.codegraph.db.nodes.ParameterNode;
@@ -8,13 +9,17 @@ import com.dnfeitosa.codegraph.db.utils.ResultUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Set;
 
+import static java.util.Comparator.comparing;
+import static java.util.stream.Collectors.toList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -22,22 +27,17 @@ import static org.junit.Assert.assertThat;
 @ContextConfiguration(locations = { "classpath:/codegraph-db-base.xml", "classpath:/codegraph-db-test.xml" })
 @ActiveProfiles("test")
 @Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TypeRepositoryTest {
 
     @Autowired
     private TypeRepository repository;
 
-    private TypeNode appType(String typeName, String packageName) {
-        return type(typeName, packageName, "application");
-    }
-
-    private TypeNode type(String typeName, String packageName, String usage) {
-        TypeNode type = new TypeNode(typeName, packageName);
-        type.setUsage(usage);
-        return type;
-    }
+    @Autowired
+    private ArtifactRepository artifactRepository;
 
     @Test
+    @Transactional
     public void shouldSaveAType() {
         TypeNode type = type("TypeRepositoryTest", "com.dnfeitosa.codegraph.db.repositories", "test");
 
@@ -71,5 +71,39 @@ public class TypeRepositoryTest {
         List<TypeNode> types = ResultUtils.toList(repository.findAll());
 
         assertThat(types.size(), is(4));
+    }
+
+    @Test
+    @Transactional
+    public void shouldFindAllTypesBelongingToAnArtifact() {
+        ArtifactNode codegraphDb = new ArtifactNode(null, "codegraph-db", "com.dnfeitosa", "1.0", "jar", "jar");
+        codegraphDb.addType(appType("TypeRepository", "com.dnfeitosa.codegraph.db.repositories"));
+        codegraphDb.addType(appType("ArtifactRepository", "com.dnfeitosa.codegraph.db.repositories"));
+        artifactRepository.save(codegraphDb);
+
+        ArtifactNode codegraphServer = new ArtifactNode(null, "codegraph-server", "com.dnfeitosa", "1.0", "jar", "jar");
+        codegraphServer.addType(appType("CodegraphServer", "com.dnfeitosa.codegraph.server.main"));
+        artifactRepository.save(codegraphServer);
+
+        Set<TypeNode> loadedTypes = repository.loadTypesFromArtifact(codegraphDb.getId());
+
+        List<TypeNode> types = loadedTypes.stream()
+                .sorted(comparing(TypeNode::getQualifiedName))
+                .collect(toList());
+
+        assertThat(types.size(), is(2));
+
+        assertThat(types.get(0).getName(), is("ArtifactRepository"));
+        assertThat(types.get(1).getName(), is("TypeRepository"));
+    }
+
+    private TypeNode appType(String typeName, String packageName) {
+        return type(typeName, packageName, "application");
+    }
+
+    private TypeNode type(String typeName, String packageName, String usage) {
+        TypeNode type = new TypeNode(typeName, packageName);
+        type.setUsage(usage);
+        return type;
     }
 }

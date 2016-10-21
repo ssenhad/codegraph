@@ -1,5 +1,6 @@
 package com.dnfeitosa.codegraph.server.api.acceptance.controllers;
 
+import com.dnfeitosa.codegraph.api.acceptance.controllers.BaseAcceptanceTest;
 import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.nodes.TypeNode;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
@@ -27,11 +28,7 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hibernate.validator.internal.util.Contracts.assertNotNull;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration({ "classpath:/codegraph-db.xml", "classpath:/codegraph-acceptance-test.xml"})
-@ActiveProfiles("acceptance")
-@Transactional
-public class ArtifactControllerTest {
+public class ArtifactControllerTest extends BaseAcceptanceTest {
 
     @Autowired
     private ArtifactRepository repository;

@@ -41,7 +41,7 @@ public class TypeRepositoryTest {
     public void shouldSaveAType() {
         TypeNode type = type("TypeRepositoryTest", "com.dnfeitosa.codegraph.db.repositories", "test");
 
-        MethodNode method = new MethodNode(type.getQualifiedName(), "shouldSaveAType");
+        MethodNode method = new MethodNode("shouldSaveAType");
 
         ParameterNode parameter1 = new ParameterNode();
         parameter1.setOrder(0);

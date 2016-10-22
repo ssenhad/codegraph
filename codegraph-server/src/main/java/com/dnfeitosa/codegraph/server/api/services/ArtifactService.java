@@ -4,6 +4,7 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.nodes.converters.ArtifactNodeConverter;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
+import com.dnfeitosa.codegraph.db.repositories.TypeRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.neo4j.conversion.Result;
 import org.springframework.stereotype.Service;
@@ -18,11 +19,13 @@ public class ArtifactService {
 
     private ArtifactNodeConverter nodeConverter;
     private ArtifactRepository artifactRepository;
+    private TypeRepository typeRepository;
 
     @Autowired
-    public ArtifactService(ArtifactNodeConverter nodeConverter, ArtifactRepository artifactRepository) {
+    public ArtifactService(ArtifactNodeConverter nodeConverter, ArtifactRepository artifactRepository, TypeRepository typeRepository) {
         this.nodeConverter = nodeConverter;
         this.artifactRepository = artifactRepository;
+        this.typeRepository = typeRepository;
     }
 
     public Artifact addArtifact(Artifact artifact) {
@@ -30,6 +33,7 @@ public class ArtifactService {
         mergeIfExists(node);
 
         node.getDependencies().forEach(dependency -> mergeIfExists(dependency));
+        node.getTypes().forEach(typeRepository::save);
         ArtifactNode saved = artifactRepository.save(node);
         return nodeConverter.toModel(saved);
     }

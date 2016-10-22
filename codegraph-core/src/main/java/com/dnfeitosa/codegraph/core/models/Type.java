@@ -1,11 +1,16 @@
 package com.dnfeitosa.codegraph.core.models;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Type {
 
     private String name;
     private String packageName;
     private String usage;
     private String type;
+    private List<Method> methods = new ArrayList<>();
+    private List<Field> fields = new ArrayList<>();
 
     public Type(String name, String packageName, String usage, String type) {
         this.name = name;
@@ -44,5 +49,21 @@ public class Type {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public List<Method> getMethods() {
+        return methods;
+    }
+
+    public void addMethod(Method method) {
+        methods.add(method);
+    }
+
+    public void addField(Field field) {
+        fields.add(field);
+    }
+
+    public List<Field> getFields() {
+        return fields;
     }
 }

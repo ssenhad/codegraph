@@ -3,7 +3,6 @@ package com.dnfeitosa.codegraph.db.nodes;
 import org.neo4j.graphdb.Direction;
 import org.springframework.data.annotation.TypeAlias;
 import org.springframework.data.neo4j.annotation.GraphId;
-import org.springframework.data.neo4j.annotation.Indexed;
 import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 import org.springframework.data.neo4j.annotation.RelatedToVia;
@@ -20,9 +19,6 @@ public class MethodNode {
 
     private String name;
 
-    @Indexed(unique = true)
-    private String qualifiedName;
-
     @RelatedTo(direction = Direction.OUTGOING, type = "RETURNS")
     private Set<TypeNode> returnTypes;
 
@@ -32,9 +28,8 @@ public class MethodNode {
     MethodNode() {
     }
 
-    public MethodNode(String className, String name) {
+    public MethodNode(String name) {
         this.name = name;
-        this.qualifiedName = className + "." + name;
     }
 
     public Long getId() {

@@ -21,7 +21,7 @@ public class ArtifactControllerTest {
 
     @Before
     public void setUp() {
-        artifactService = new ArtifactService(null, null) {
+        artifactService = new ArtifactService(null, null, null) {
             @Override
             public Artifact addArtifact(Artifact artifact) {
                 return new Artifact(createdId, null, null, null, null, null);

@@ -4,6 +4,7 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.db.nodes.ArtifactNode;
 import com.dnfeitosa.codegraph.db.nodes.converters.ArtifactNodeConverter;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
+import com.dnfeitosa.codegraph.db.repositories.TypeRepository;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -21,19 +22,22 @@ public class ArtifactServiceTest {
     private ArtifactService artifactService;
     private ArtifactRepository repository;
     private ArtifactNodeConverter converter;
+    private TypeRepository typeRepository;
 
     @Before
     public void setUp() {
         converter = mock(ArtifactNodeConverter.class);
         when(converter.toNode(any(Artifact.class))).thenReturn(node);
 
-        repository = mock(ArtifactRepository.class);
         ArtifactNode newNode = new ArtifactNode(null, null, null, null, null, null);
-        when(repository.save(node)).thenReturn(newNode);
 
+        repository = mock(ArtifactRepository.class);
+        when(repository.save(node)).thenReturn(newNode);
         when(converter.toModel(newNode)).thenReturn(new Artifact(newId, null, null, null, null, null));
 
-        artifactService = new ArtifactService(converter, repository);
+        typeRepository = mock(TypeRepository.class);
+
+        artifactService = new ArtifactService(converter, repository, typeRepository);
     }
 
     @Test

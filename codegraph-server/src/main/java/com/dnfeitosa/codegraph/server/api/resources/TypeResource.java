@@ -2,6 +2,9 @@ package com.dnfeitosa.codegraph.server.api.resources;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TypeResource implements Resource {
 
     private String name;
@@ -10,6 +13,9 @@ public class TypeResource implements Resource {
     private String packageName;
     private String type;
     private String usage;
+
+    private List<MethodResource> methods = new ArrayList<>();
+    private List<FieldResource> fields = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -46,5 +52,21 @@ public class TypeResource implements Resource {
     @Override
     public String getUri() {
         return null;
+    }
+
+    public void setMethods(List<MethodResource> methods) {
+        this.methods = methods;
+    }
+
+    public void setFields(List<FieldResource> fields) {
+        this.fields = fields;
+    }
+
+    public List<MethodResource> getMethods() {
+        return methods;
+    }
+
+    public List<FieldResource> getFields() {
+        return fields;
     }
 }

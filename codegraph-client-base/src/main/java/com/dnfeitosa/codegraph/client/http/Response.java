@@ -1,11 +1,11 @@
 package com.dnfeitosa.codegraph.client.http;
 
-import org.apache.http.client.methods.CloseableHttpResponse;
+import org.apache.http.HttpResponse;
 
 public class Response {
-    private CloseableHttpResponse response;
+    private HttpResponse response;
 
-    public Response(CloseableHttpResponse response) {
+    public Response(HttpResponse response) {
         this.response = response;
     }
 }

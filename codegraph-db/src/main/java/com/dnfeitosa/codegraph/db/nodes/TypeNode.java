@@ -37,10 +37,14 @@ public class TypeNode {
     TypeNode() {
     }
 
+    public TypeNode(String name) {
+        this(name, null);
+    }
+
     public TypeNode(String name, String packageName) {
         this.name = name;
         this.packageName = packageName;
-        this.qualifiedName = packageName + "." + name;
+        this.qualifiedName = packageName != null ? packageName + "." + name : name;
     }
 
     public Long getId() {

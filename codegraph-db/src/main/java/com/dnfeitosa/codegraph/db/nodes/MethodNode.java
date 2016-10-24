@@ -11,7 +11,7 @@ import java.util.HashSet;
 import java.util.Set;
 
 @NodeEntity
-@TypeAlias("MethodNode")
+@TypeAlias("Method")
 public class MethodNode {
 
     @GraphId

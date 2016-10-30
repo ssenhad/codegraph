@@ -30,9 +30,6 @@ subprojects {
         compile group: "commons-lang", name: "commons-lang", version: "2.6"
 
         testCompile libraries.unitTesting
-
-        testCompile project(':test-codebases')
-        testCompile files('../test-codebases/src/test/resources')
     }
 }
 

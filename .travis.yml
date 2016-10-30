@@ -14,4 +14,4 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper
 
-script: ./gradlew build --info
+script: ./gradlew clean build --info

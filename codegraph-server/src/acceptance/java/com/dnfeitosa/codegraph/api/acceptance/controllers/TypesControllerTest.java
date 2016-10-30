@@ -32,6 +32,9 @@ public class TypesControllerTest extends BaseAcceptanceTest {
 
         ResponseEntity<TypesResource> response = controller.getTypes(artifactNode.getId());
 
+        System.out.println(artifactNode.getId());
+        System.out.println(artifactRepository.findAll());
+
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
 
         TypesResource types = response.getBody();

@@ -56,7 +56,12 @@ public class TypeResourceConverter {
     public Type toModel(TypeResource typeResource) {
         Type type = new Type(typeResource.getName(), typeResource.getPackageName(), typeResource.getUsage(), typeResource.getType());
         typeResource.getMethods().forEach(method -> type.addMethod(toModel(method)));
+        typeResource.getFields().forEach(field -> type.addField(toModel(field)));
         return type;
+    }
+
+    private Field toModel(FieldResource field) {
+        return new Field(field.getName(), toModel(field.getType()));
     }
 
     private Method toModel(MethodResource method) {

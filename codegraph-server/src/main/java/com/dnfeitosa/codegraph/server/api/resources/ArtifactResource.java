@@ -14,7 +14,7 @@ public class ArtifactResource implements Resource {
     private String version;
     private String organization;
     private List<ArtifactResource> dependencies = new ArrayList<>();
-    private TypesResource types = new TypesResource(this);
+    private List<TypeResource> types = new ArrayList<>();;
 
     public String getName() {
         return name;
@@ -84,7 +84,7 @@ public class ArtifactResource implements Resource {
         return join(BASE_URI, "artifacts", id);
     }
 
-    public TypesResource getTypes() {
+    public List<TypeResource> getTypes() {
         return types;
     }
 }

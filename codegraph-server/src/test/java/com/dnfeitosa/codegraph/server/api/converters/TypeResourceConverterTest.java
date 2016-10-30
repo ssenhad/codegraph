@@ -67,7 +67,7 @@ public class TypeResourceConverterTest {
         assertThat(returnTypes.size(), is(1));
         assertThat(returnTypes.get(0).getName(), is("List"));
 
-        List<FieldResource> fields = type.getFields();
+        List<Field> fields = node.getFields();
         assertThat(fields.size(), is(1));
         assertThat(fields.get(0).getName(), is("converter"));
         assertThat(fields.get(0).getType().getName(), is("TypeResourceConverter"));

@@ -8,7 +8,7 @@ import org.springframework.data.neo4j.annotation.NodeEntity;
 import org.springframework.data.neo4j.annotation.RelatedTo;
 
 @NodeEntity
-@TypeAlias("FieldNode")
+@TypeAlias("Field")
 public class FieldNode {
 
     @GraphId
@@ -17,7 +17,7 @@ public class FieldNode {
 
     private String name;
 
-    @RelatedTo(direction = Direction.OUTGOING, type = "OF")
+    @RelatedTo(direction = Direction.OUTGOING, type = "OF_TYPE")
     private TypeNode type;
 
     public String getName() {

@@ -9,6 +9,7 @@ ext {
 distribution.versions = [
     major: '0',
     modifier: 'dev',
+    'coollections': '0.1',
     'codegraph-server': '0.1',
     'codegraph-core': '0.1',
     'codegraph-db': '0.1',

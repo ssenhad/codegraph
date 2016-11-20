@@ -9,6 +9,7 @@ buildscript {
 
     dependencies {
         classpath group: 'com.jfrog.bintray.gradle', name: 'gradle-bintray-plugin', version: '1.7'
+        classpath group: 'com.dnfeitosa.codegraph', name: 'codegraph-gradle-plugin', version: '0.0.1-dev'
     }
 }
 
@@ -19,6 +20,7 @@ subprojects {
     apply from: "$rootDir/gradle/dependencies.gradle"
     apply plugin: 'idea'
     apply plugin: 'java'
+    apply plugin: 'codegraph'
 
     group = 'com.dnfeitosa.codegraph'
     version = "${distribution.versions.major}.${distribution.versions.get(project.name)}-${distribution.versions.modifier}"
@@ -30,6 +32,10 @@ subprojects {
         compile group: "commons-lang", name: "commons-lang", version: "2.6"
 
         testCompile libraries.unitTesting
+    }
+
+    codegraph {
+      url 'http://codegraph-dev.dnfeitosa.com:9292'
     }
 }
 

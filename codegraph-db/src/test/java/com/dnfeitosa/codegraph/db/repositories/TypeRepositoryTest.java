@@ -40,6 +40,8 @@ public class TypeRepositoryTest {
     @Transactional
     public void shouldSaveAType() {
         TypeNode type = type("TypeRepositoryTest", "com.dnfeitosa.codegraph.db.repositories", "test");
+        type.setSuperclass(type("AbstractRepository", "com.dnfeitosa.codegraph.db.repositories", "test"));
+        type.addInterface(type("GraphRepository", "org.springframework.data.neo4j.repository", "application"));
 
         MethodNode method = new MethodNode("shouldSaveAType");
 
@@ -70,7 +72,7 @@ public class TypeRepositoryTest {
 
         List<TypeNode> types = ResultUtils.toList(repository.findAll());
 
-        assertThat(types.size(), is(4));
+        assertThat(types.size(), is(6));
     }
 
     @Test

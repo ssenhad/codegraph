@@ -33,6 +33,14 @@ public class TypeResourceConverterTest {
         type.setPackageName("com.dnfeitosa.codegraph.server.api.converters");
         type.setUsage("application");
         type.setType("class");
+        type.setSuperclass(new TypeResource() {{
+            setName("Object");
+            setPackageName("java.lang");
+        }});
+        type.setInterfaces(asList(new TypeResource() {{
+            setName("Iterator");
+            setPackageName("java.lang");
+        }}));
 
         MethodResource methodResource = new MethodResource("shouldConvertAResourceToModel");
         TypeResource list = type("List", "java.util");
@@ -51,6 +59,12 @@ public class TypeResourceConverterTest {
         assertThat(node.getPackageName(), is("com.dnfeitosa.codegraph.server.api.converters"));
         assertThat(node.getUsage(), is("application"));
         assertThat(node.getType(), is("class"));
+
+        assertThat(node.getSuperclass().getName(), is("Object"));
+
+        List<Type> interfaces = node.getInterfaces();
+        assertThat(interfaces.size(), is(1));
+        assertThat(interfaces.get(0).getName(), is("Iterator"));
 
         List<Method> methods = node.getMethods();
         assertThat(methods.size(), is(1));
@@ -89,6 +103,8 @@ public class TypeResourceConverterTest {
         Type type = new Type("TypeResourceConverterTest", "com.dnfeitosa.codegraph.server.api.converters", "application", "class");
         type.addMethod(new Method("shouldConvertAModelTypeToResource", asList(new Parameter(1, list)), asList(list)));
         type.addField(new Field("converter", new Type("TypeResourceConverter", "com.dnfeitosa.codegraph.server.api.converters", "application", "class")));
+        type.setSuperclass(new Type("Object", "java.lang", "application", "class"));
+        type.addInterface(new Type("Iterator", "java.util", "application", "class"));
 
         TypeResource resource = converter.toResource(type);
 
@@ -96,6 +112,10 @@ public class TypeResourceConverterTest {
         assertThat(resource.getPackageName(), is("com.dnfeitosa.codegraph.server.api.converters"));
         assertThat(resource.getUsage(), is("application"));
         assertThat(resource.getType(), is("class"));
+
+        assertThat(resource.getSuperclass().getName(), is("Object"));
+        assertThat(resource.getInterfaces().size(), is(1));
+        assertThat(resource.getInterfaces().get(0).getName(), is("Iterator"));
 
         List<MethodResource> methods = resource.getMethods();
         assertThat(methods.size(), is(1));

@@ -16,6 +16,8 @@ public class TypeResource implements Resource {
 
     private List<MethodResource> methods = new ArrayList<>();
     private List<FieldResource> fields = new ArrayList<>();
+    private TypeResource superclass;
+    private List<TypeResource> interfaces = new ArrayList<>();
 
     public String getName() {
         return name;
@@ -68,5 +70,21 @@ public class TypeResource implements Resource {
 
     public List<FieldResource> getFields() {
         return fields;
+    }
+
+    public TypeResource getSuperclass() {
+        return superclass;
+    }
+
+    public List<TypeResource> getInterfaces() {
+        return interfaces;
+    }
+
+    public void setSuperclass(TypeResource superclass) {
+        this.superclass = superclass;
+    }
+
+    public void setInterfaces(List<TypeResource> interfaces) {
+        this.interfaces = interfaces;
     }
 }

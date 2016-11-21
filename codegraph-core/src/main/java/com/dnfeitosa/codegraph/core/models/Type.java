@@ -11,6 +11,8 @@ public class Type {
     private String type;
     private List<Method> methods = new ArrayList<>();
     private List<Field> fields = new ArrayList<>();
+    private Type superclass;
+    private List<Type> interfaces = new ArrayList<>();
 
     public Type(String name, String packageName, String usage, String type) {
         this.name = name;
@@ -65,5 +67,25 @@ public class Type {
 
     public List<Field> getFields() {
         return fields;
+    }
+
+    public Type getSuperclass() {
+        return superclass;
+    }
+
+    public List<Type> getInterfaces() {
+        return interfaces;
+    }
+
+    public void setSuperclass(Type superclass) {
+        this.superclass = superclass;
+    }
+
+    public void addInterface(Type type) {
+        interfaces.add(type);
+    }
+
+    public void setInterfaces(List<Type> interfaces) {
+        this.interfaces = interfaces;
     }
 }

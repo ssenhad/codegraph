@@ -38,6 +38,8 @@ public class TypeNodeConverterTest {
         Parameter parameter = new Parameter(1, list);
         type.addMethod(new Method("shouldConvertATypeToNode", asList(parameter), asList(list)));
         type.addField(new Field("converter", new Type("TypeNodeConverter", "com.dnfeitosa.codegraph.db.nodes.converters", "application", "class")));
+        type.setSuperclass(new Type("Object", "java.lang", "application", "class"));
+        type.addInterface(new Type("Iterator", "java.lang", "application", "interface"));
 
         TypeNode node = converter.toNode(type);
 
@@ -45,6 +47,12 @@ public class TypeNodeConverterTest {
         assertThat(node.getType(), is(typeType));
         assertThat(node.getPackageName(), is(packageName));
         assertThat(node.getType(), is(typeType));
+
+        List<TypeNode> interfaces = $(node.getInterfaces()).toList();
+        assertThat(interfaces.size(), is(1));
+        assertThat(interfaces.get(0).getName(), is("Iterator"));
+
+        assertThat(node.getSuperclass().getName(), is("Object"));
 
         List<FieldNode> fields = $(node.getFields()).toList();
         assertThat(fields.size(), is(1));
@@ -73,6 +81,8 @@ public class TypeNodeConverterTest {
         TypeNode node = new TypeNode(name, packageName);
         node.setType(typeType);
         node.setUsage(usage);
+        node.setSuperclass(new TypeNode("Object", "java.lang"));
+        node.addInterface(new TypeNode("Iterator", "java.util"));
 
         MethodNode methodNode = new MethodNode("shouldConvertANodeToModel");
         methodNode.addReturnType(new TypeNode("List", "java.util"));
@@ -94,6 +104,9 @@ public class TypeNodeConverterTest {
         assertThat(type.getPackageName(), is(packageName));
         assertThat(type.getUsage(), is(usage));
         assertThat(type.getType(), is(typeType));
+
+        assertThat(type.getSuperclass().getName(), is("Object"));
+        assertThat(type.getInterfaces().get(0).getName(), is("Iterator"));
 
         List<Method> methods = type.getMethods();
         assertThat(methods.size(), is(1));

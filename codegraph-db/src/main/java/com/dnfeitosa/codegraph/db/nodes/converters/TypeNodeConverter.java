@@ -20,7 +20,12 @@ import static java.util.stream.Collectors.toSet;
 public class TypeNodeConverter {
 
     public TypeNode toNode(Type type) {
+        if (type == null) {
+            return null;
+        }
         TypeNode typeNode = new TypeNode(type.getName(), type.getPackageName());
+        typeNode.setSuperclass(toNode(type.getSuperclass()));
+        type.getInterfaces().forEach(i -> typeNode.addInterface(toNode(i)));
         typeNode.setUsage(type.getUsage());
         typeNode.setType(type.getType());
 
@@ -53,7 +58,12 @@ public class TypeNodeConverter {
     }
 
     public Type toModel(TypeNode node) {
+        if (node == null) {
+            return null;
+        }
         Type type = new Type(node.getName(), node.getPackageName(), node.getUsage(), node.getType());
+        type.setSuperclass(toModel(node.getSuperclass()));
+        node.getInterfaces().forEach(i -> type.addInterface(toModel(i)));
         node.getFields().forEach(f -> type.addField(toModel(f)));
         node.getMethods().forEach(m -> type.addMethod(toModel(m)));
         return type;

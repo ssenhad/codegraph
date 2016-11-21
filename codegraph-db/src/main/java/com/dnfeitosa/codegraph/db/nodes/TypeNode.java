@@ -37,6 +37,12 @@ public class TypeNode {
     @RelatedTo(direction = Direction.OUTGOING, type = "DECLARES", enforceTargetType = true)
     private Set<MethodNode> methods;
 
+    @RelatedTo(direction = Direction.OUTGOING, type = "EXTENDS", enforceTargetType = true)
+    private TypeNode superclass;
+
+    @RelatedTo(direction = Direction.OUTGOING, type = "IMPLEMENTS", enforceTargetType = true)
+    private Set<TypeNode> interfaces;
+
     TypeNode() {
     }
 
@@ -106,5 +112,24 @@ public class TypeNode {
             fields = new HashSet<>();
         }
         return fields;
+    }
+
+    public void addInterface(TypeNode interface_) {
+        getInterfaces().add(interface_);
+    }
+
+    public Set<TypeNode> getInterfaces() {
+        if (interfaces == null) {
+            interfaces = new HashSet<>();
+        }
+        return interfaces;
+    }
+
+    public void setSuperclass(TypeNode superclass) {
+        this.superclass = superclass;
+    }
+
+    public TypeNode getSuperclass() {
+        return superclass;
     }
 }

@@ -27,11 +27,17 @@ public class TypeResourceConverter {
     }
 
     public TypeResource toResource(Type type) {
+        if (type == null) {
+            return null;
+        }
         TypeResource resource = new TypeResource();
         resource.setType(type.getType());
         resource.setName(type.getName());
         resource.setPackageName(type.getPackageName());
         resource.setUsage(type.getUsage());
+
+        resource.setSuperclass(toResource(type.getSuperclass()));
+        resource.setInterfaces(type.getInterfaces().stream().map(this::toResource).collect(toList()));
 
         resource.setMethods(type.getMethods().stream().map(this::toResource).collect(toList()));
         resource.setFields(type.getFields().stream().map(this::toResource).collect(toList()));
@@ -54,9 +60,14 @@ public class TypeResourceConverter {
     }
 
     public Type toModel(TypeResource typeResource) {
+        if (typeResource == null) {
+            return null;
+        }
         Type type = new Type(typeResource.getName(), typeResource.getPackageName(), typeResource.getUsage(), typeResource.getType());
         typeResource.getMethods().forEach(method -> type.addMethod(toModel(method)));
         typeResource.getFields().forEach(field -> type.addField(toModel(field)));
+        type.setSuperclass(toModel(typeResource.getSuperclass()));
+        typeResource.getInterfaces().forEach(interface_ -> type.addInterface(toModel(interface_)));
         return type;
     }
 

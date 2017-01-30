@@ -43,9 +43,10 @@ public class ArtifactController {
 
     @RequestMapping(value = "/artifacts", method = POST)
     public ResponseEntity<ArtifactResource> addArtifact(@RequestBody ArtifactResource artifactResource) {
-        Artifact artifact = artifactResourceConverter.toModel(artifactResource);
-        Artifact created = artifactService.addArtifact(artifact);
-        return new ResponseEntity<>(artifactResourceConverter.toResource(created), HttpStatus.CREATED);
+//        Artifact artifact = artifactResourceConverter.toModel(artifactResource);
+//        Artifact created = artifactService.addArtifact(artifact);
+//        return new ResponseEntity<>(artifactResourceConverter.toResource(created), HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/artifacts/{id}")

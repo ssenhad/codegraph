@@ -1,4 +1,6 @@
 language: java
+sudo: required
+dist: trusty
 
 jdk:
   - oraclejdk8
@@ -8,6 +10,11 @@ os:
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+before_script:
+  - 'wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb'
+  - 'sudo dpkg -i google-chrome*.deb'
+  - 'export CHROME_BIN=/usr/bin/google-chrome'
 
 cache:
   directories:

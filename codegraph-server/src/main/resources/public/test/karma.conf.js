@@ -2,16 +2,17 @@ module.exports = function (config) {
     config.set({
         basePath: '../',
         files: [
-            './src/main/webapp/components/jquery/dist/jquery.min.js',
-            './src/main/webapp/components/bootstrap/dist/js/bootstrap.min.js',
-            './src/main/webapp/components/angular/angular.min.js',
-            './src/main/webapp/components/angular-mocks/angular-mocks.js',
-            './src/main/webapp/components/angular-route/angular-route.min.js',
-            './src/main/webapp/components/angular-bootstrap/ui-bootstrap.min.js',
-            './src/main/webapp/components/angular-bootstrap/ui-bootstrap-tpls.min.js',
+            './components/jquery/dist/jquery.min.js',
+            './components/bootstrap/dist/js/bootstrap.min.js',
+            './components/angular/angular.min.js',
+            './components/angular-mocks/angular-mocks.js',
+            './components/angular-route/angular-route.min.js',
+            './components/angular-bootstrap/ui-bootstrap.min.js',
+            './components/angular-bootstrap/ui-bootstrap-tpls.min.js',
 
-            './src/main/webapp/app/modules/**/*.module.js',
-            './src/main/webapp/app/**/*.js',
+            './app/*.js',
+            './app/modules/**/*.module.js',
+            './app/**/*.js',
 
             './test/**/*.js'
         ],
@@ -19,10 +20,10 @@ module.exports = function (config) {
         autoWatch: true,
         singleRun: false,
         frameworks: ['jasmine'],
-        browsers: ['PhantomJS'],
+        browsers: ['ChromeHeadless'],
         plugins: [
             'karma-jasmine',
-            'karma-phantomjs-launcher'
+            'karma-chrome-launcher'
         ]
     });
 };

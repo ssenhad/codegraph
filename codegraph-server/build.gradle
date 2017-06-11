@@ -8,6 +8,10 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.moowork.grunt" version "1.1.1"
+}
+
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply from: "$rootDir/gradle/distribution.gradle"
@@ -52,6 +56,17 @@ task acceptanceTests(type: Test) {
     classpath = project.sourceSets.acceptance.runtimeClasspath
 }
 
+node {
+    npmWorkDir = file("$projectDir/src/main/resources/public")
+    nodeModulesDir = file("$projectDir/src/main/resources/public")
+}
+grunt {
+    workDir = file("$projectDir/src/main/resources/public")
+}
+
+grunt_build.dependsOn npmInstall
+build.dependsOn grunt_build
+bootRepackage.mustRunAfter grunt_build
 groupFiles.dependsOn bootRepackage
 build.dependsOn acceptanceTests
 acceptanceTests.mustRunAfter test

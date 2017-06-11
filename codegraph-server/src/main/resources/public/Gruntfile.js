@@ -19,7 +19,8 @@ module.exports = function (grunt) {
         }
     });
 
-    grunt.registerTask('default', ['dev'])
+    grunt.registerTask('default', ['build'])
+    grunt.registerTask('build', ['test'])
     grunt.registerTask('dev', ['karma:unit'])
     grunt.registerTask('test', ['karma:test'])
 };

@@ -1,0 +1,149 @@
+<html
+
+<!doctype html>
+
+<meta charset="utf-8">
+<title>Dagre D3 Demo: Style Attributes</title>
+
+<link rel="stylesheet" href="http://cpettitt.github.io/project/dagre-d3/latest/demo/demo.css">
+<script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+<script src="http://cpettitt.github.io/project/dagre-d3/latest/dagre-d3.js"></script>
+
+<h1>Dagre D3 Demo: Style Attributes</h1>
+
+<style id="css">
+.animate .node {
+  transition: fill 0.5s, stroke 0.5s, opacity 0.5s;
+	-webkit-transition: fill 0.5s, stroke 0.5s, opacity 0.5s;
+}
+
+.animate .node ellipse {
+	transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s;
+	-webkit-transition: fill 0.5s, stroke 0.5s, stroke-width 0.5s;
+}
+
+.animate .node.remove,
+.animate .node.remove ellipse {
+  fill: white;
+}
+.animate .node.remove ellipse {
+  stroke: white;
+}
+
+text {
+  font-weight: 300;
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serf;
+  font-size: 14px;
+  cursor: default;
+}
+
+.node ellipse {
+  stroke: #333;
+  fill: red;
+  stroke-width: 1.5px;
+}
+.edgePath path.path {
+  stroke: #333;
+  fill: none;
+  stroke-width: 1.5px;
+}
+
+.hovering .node ellipse, .hovering .edgePath path.path {
+  opacity: 0.2;
+  stroke: red;
+  fill: blue;
+}
+
+.hovering .edgePath path.path {
+  opacity: 0.2;
+  stroke: red;
+  fill: blue;
+  stroke-width: 5px;
+}
+</style>
+
+<svg id="svg" width=960 height=600></svg>
+
+<section>
+<p>An example showing how styles that are set in the input graph can be applied
+to nodes, node labels, edges, and edge labels in the rendered graph.
+</section>
+
+<script id="js">
+// Create the input graph
+var g = new dagreD3.graphlib.Graph().setGraph({});
+
+// Fill node "A" with the color green
+g.setNode("A", { shape: "ellipse" });
+g.setNode("B", { shape: "ellipse" });
+g.setNode("C", { shape: "ellipse" });
+g.setNode("D", { shape: "ellipse" });
+g.setNode("E", { shape: "ellipse" });
+g.setNode("F", { shape: "ellipse" });
+g.setNode("G", { shape: "ellipse" });
+g.setNode("H", { shape: "ellipse" });
+g.setNode("I", { shape: "ellipse" });
+
+// Make the edge from "A" to "B" red, thick, and dashed
+g.setEdge("A", "B", { lineInterpolate: 'basis' });
+
+// Make the label for the edge from "C" to "B" italic and underlined
+g.setEdge("C", "B", { lineInterpolate: 'basis' });
+
+// Make the edge between A and D smoother. 
+// see available options for lineInterpolate here: https://github.com/mbostock/d3/wiki/SVG-Shapes#line_interpolate
+g.setEdge("A", "D", {lineInterpolate: 'basis'});
+
+g.setEdge("E", "D", {lineInterpolate: 'basis'});
+
+// Make the arrowhead blue
+g.setEdge("A", "E", {lineInterpolate: 'basis'});
+g.setEdge("C", "I", {lineInterpolate: 'basis'});
+g.setEdge("C", "E", {lineInterpolate: 'basis'});
+g.setEdge("F", "E", {lineInterpolate: 'basis'});
+g.setEdge("B", "F", {lineInterpolate: 'basis'});
+g.setEdge("B", "H", {lineInterpolate: 'basis'});
+g.setEdge("D", "G", {lineInterpolate: 'basis'});
+
+// Create the renderer
+var render = new dagreD3.render();
+
+// Set up an SVG group so that we can translate the final graph.
+var svg = d3.select("svg"),
+    inner = svg.append("g");
+
+// Run the renderer. This is what draws the final graph.
+render(inner, g);
+
+// Center the graph
+var xCenterOffset = (svg.attr("width") - g.graph().width) / 2;
+inner.attr("transform", "translate(" + xCenterOffset + ", 20)");
+svg.attr("height", g.graph().height + 40);
+
+
+var nodes = svg.selectAll('.node');
+var edges = svg.selectAll('.edgePath');
+
+/*
+nodes.on("mouseover", function () {
+  svg.classed("hovering", true);
+}).on("mouseout", function () {
+  svg.classed("hovering", false);
+});
+
+edges.on("mouseover", function () {
+  svg.classed("hovering", true);
+}).on("mouseout", function () {
+  svg.classed("hovering", false);
+});
+*/
+
+nodes.on("click", function () {
+  svg.classed("animate", true);
+  d3.select(this).classed("remove", true).transition().duration(1000).remove();
+  //svg.datum(g);
+  //render(inner, g);
+  
+});
+</script>
+

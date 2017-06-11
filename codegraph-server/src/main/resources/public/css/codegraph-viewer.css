@@ -1,0 +1,55 @@
+.artifact-view {
+    display: flex;
+    flex-flow: row wrap;
+    padding-botton: 10px;
+}
+
+node {
+    background-color: red;
+}
+
+.sidebar {
+    background-color: #f8f8f8;
+    border: solid 1px #e7e7e7;
+}
+
+.sidebar {
+    flex-basis: 20%;
+}
+
+.viewarea {
+    flex-basis: 80%;
+    border: solid 1px #e7e7e7;
+    padding: 10px;
+}
+
+.sidebar div {
+    padding: 10px;
+}
+
+.artifact div {
+    padding: 3px 0 2px 0;
+}
+
+.artifact {
+    border-bottom: solid 2px #e7e7e7;
+    text-align: right;
+}
+
+.artifact .name {
+    font-size: 2em;
+    font-weight: bold;
+}
+
+.artifact .organization {
+    font-size: 1em;
+    font-style: italic;
+}
+
+.artifact .version {
+}
+
+.cytoscape-navigator {
+    width: 200px;
+    height: 200px;
+}

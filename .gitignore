@@ -17,3 +17,7 @@ build
 MANIFEST.MF
 out
 distribution
+codegraph-server/src/main/resources/public/components
+codegraph-server/src/main/resources/public/node_modules
+.DS_Store
+classes

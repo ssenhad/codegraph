@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="Codegraph">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Codegraph</title>
+
+    <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/components/qtip2/jquery.qtip.css" rel="stylesheet">
+    <link href="/components/cytoscape.js-navigator/cytoscape.js-navigator.css" rel="stylesheet">
+    <link href="/css/codegraph.css" rel="stylesheet">
+    <link href="/css/codegraph-viewer.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><strong>Codegraph</strong></a>
+            </div>
+            <form class="navbar-form navbar-right">
+                <div class="form-group form-group-sm">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                        <input type="text" name="artifact" class="form-control" placeholder="Artifact">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container-fluid full-height">
+        <main ng-view class="full-height">
+            <div class="preloader"><img src="/images/ring.gif" /></div>
+        </main>
+    </div>
+
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="/components/angular/angular.min.js"></script>
+    <script src="/components/angular-route/angular-route.min.js"></script>
+    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/components/qtip2/jquery.qtip.js"></script>
+    <script src="/components/lodash/lodash.js"></script>
+    <script src="/components/graphlib/dist/graphlib.core.min.js"></script>
+    <script src="/components/dagre/dist/dagre.core.min.js"></script>
+    <script src="/components/cytoscape/dist/cytoscape.js"></script>
+    <script src="/components/cytoscape-dagre/cytoscape-dagre.js"></script>
+    <script src="/components/cytoscape.js-navigator/cytoscape-navigator.js"></script>
+    <script src="/components/cytoscape-qtip/cytoscape-qtip.js"></script>
+
+    <script src="/app/extensions.js"></script>
+    <script src="/app/models/artifact.js"></script>
+    <script src="/app/models/node.js"></script>
+    <script src="/app/modules/api/api.module.js"></script>
+    <script src="/app/modules/api/api.service.js"></script>
+    <script src="/app/modules/index/index.module.js"></script>
+    <script src="/app/modules/index/index.service.js"></script>
+    <script src="/app/modules/index/index.controller.js"></script>
+    <script src="/app/modules/artifact/artifact.module.js"></script>
+    <script src="/app/modules/artifact/artifact.controller.js"></script>
+    <script src="/app/app.js"></script>
+</body>
+</html>

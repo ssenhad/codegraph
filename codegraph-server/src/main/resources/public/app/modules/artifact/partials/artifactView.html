@@ -1,0 +1,21 @@
+<div class="artifact-view full-height">
+    <div class="sidebar">
+        <div class="artifact">
+            <div class="name">{{artifact.name}}</div>
+            <div class="organization">{{artifact.organization}}</div>
+            <div class="version">{{artifact.version}}</div>
+        </div>
+        <div class="controls btn-group">
+            <div class="btn btn-xs btn-default" ng-click="directDependencies(artifact)">Dependencies</div>
+            <div class="btn btn-xs btn-default" ng-click="directDependencies(artifact)">Dependency Graph</div>
+            <!--<div class="btn btn-default" ng-click="directDependencies(artifact)">Consumers</div>-->
+            <!--<div class="btn btn-default" ng-click="directDependencies(artifact)">Consumers Graph</div>-->
+        </div>
+    </div>
+    <div class="viewarea" id="viewarea">
+        <div class="loading text-center" ng-show="requesting">
+            <div><img src="/images/ring.gif"/></div>
+            <div class="message">Hang tight. This may take a while.</div>
+        </div>
+    </div>
+</div>

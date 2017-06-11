@@ -1,0 +1,9 @@
+{
+    "artifact": {
+        "name": "commons-lang",
+        "organization": "commons-lang",
+        "version": "2.6",
+        "dependencies": [
+        ]
+    }
+}

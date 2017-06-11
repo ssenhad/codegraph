@@ -1,0 +1,41 @@
+{
+    "artifact": {
+        "name": "org.springframework",
+        "organization": "spring-context",
+        "version": "4.2.7.RELEASE",
+        "dependencies": [
+            {
+                "name": "org.springframework",
+                "organization": "spring-aop",
+                "version": "4.2.7.RELEASE",
+                "configurations": [
+                    "compile"
+                ]
+            },
+            {
+                "name": "org.springframework",
+                "organization": "spring-bean",
+                "version": "4.2.7.RELEASE",
+                "configurations": [
+                    "compile"
+                ]
+            },
+            {
+                "name": "org.springframework",
+                "organization": "spring-core",
+                "version": "4.2.7.RELEASE",
+                "configurations": [
+                    "compile"
+                ]
+            },
+            {
+                "name": "org.springframework",
+                "organization": "spring-expression",
+                "version": "4.2.7.RELEASE",
+                "configurations": [
+                    "compile"
+                ]
+            }
+        ]
+    }
+}

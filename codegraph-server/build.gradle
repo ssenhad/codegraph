@@ -28,11 +28,6 @@ repositories {
 
 sourceSets {
     acceptance
-    if (System.properties.'idea.active') {
-        main {
-            resources.srcDir file('src/acceptance/resource')
-        }
-    }
 }
 
 dependencies {
@@ -45,7 +40,6 @@ dependencies {
     compile project(':codegraph-db')
     compile libraries.spring.boot
     compile libraries.spring.dataNeo4j
-    //exclude module: "spring-boot-starter-tomcat"
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
     testCompile group: 'org.neo4j', name: 'neo4j-kernel', version: versions.neo4jKernel, classifier: 'tests'
@@ -60,6 +54,7 @@ node {
     yarnWorkDir = file("$projectDir/src/main/resources/public")
     nodeModulesDir = file("$projectDir/src/main/resources/public")
 }
+
 grunt {
     workDir = file("$projectDir/src/main/resources/public")
 }

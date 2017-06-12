@@ -8,12 +8,12 @@ import static com.dnfeitosa.codegraph.core.utils.PathUtils.join;
 public class ArtifactResource implements Resource {
 
     private Long id;
-    private String name;
     private String type;
     private String extension;
+    private String name;
     private String version;
     private String organization;
-    private List<ArtifactResource> dependencies = new ArrayList<>();
+    private List<DependencyResource> dependencies = new ArrayList<>();
     private List<TypeResource> types = new ArrayList<>();;
 
     public String getName() {
@@ -64,11 +64,11 @@ public class ArtifactResource implements Resource {
         this.extension = extension;
     }
 
-    public List<ArtifactResource> getDependencies() {
+    public List<DependencyResource> getDependencies() {
         return dependencies;
     }
 
-    public void addDependency(ArtifactResource dependency) {
+    public void addDependency(DependencyResource dependency) {
         dependencies.add(dependency);
     }
 
@@ -78,10 +78,10 @@ public class ArtifactResource implements Resource {
 
     @Override
     public String getUri() {
-        if (id == null) {
+        if (name == null) {
             return null;
         }
-        return join(BASE_URI, "artifacts", id);
+        return join(BASE_URI, "artifacts", organization, name, version);
     }
 
     public List<TypeResource> getTypes() {

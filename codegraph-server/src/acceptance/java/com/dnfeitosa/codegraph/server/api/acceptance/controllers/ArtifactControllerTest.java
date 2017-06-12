@@ -74,7 +74,7 @@ public class ArtifactControllerTest extends BaseAcceptanceTest {
         dependency.setType("dependency-type");
         dependency.setVersion("dependency-version");
         dependency.setOrganization("dependency-organization");
-        artifactResource.addDependency(dependency);
+//        artifactResource.addDependency(dependency);
 
         ResponseEntity<ArtifactResource> response = controller.addArtifact(artifactResource);
 
@@ -88,13 +88,13 @@ public class ArtifactControllerTest extends BaseAcceptanceTest {
         assertThat(responseResource.getExtension(), is("artifact-extension"));
         assertThat(responseResource.getType(), is("artifact-type"));
 
-        ArtifactResource responseDependency = responseResource.getDependencies().get(0);
-        assertNotNull(responseDependency.getId());
-        assertThat(responseDependency.getName(), is("dependency-name"));
-        assertThat(responseDependency.getVersion(), is("dependency-version"));
-        assertThat(responseDependency.getOrganization(), is("dependency-organization"));
-        assertThat(responseDependency.getExtension(), is("dependency-extension"));
-        assertThat(responseDependency.getType(), is("dependency-type"));
+//        ArtifactResource responseDependency = responseResource.getDependencies().get(0);
+//        assertNotNull(responseDependency.getId());
+//        assertThat(responseDependency.getName(), is("dependency-name"));
+//        assertThat(responseDependency.getVersion(), is("dependency-version"));
+//        assertThat(responseDependency.getOrganization(), is("dependency-organization"));
+//        assertThat(responseDependency.getExtension(), is("dependency-extension"));
+//        assertThat(responseDependency.getType(), is("dependency-type"));
     }
 
     @Test
@@ -115,7 +115,7 @@ public class ArtifactControllerTest extends BaseAcceptanceTest {
         dependency.setVersion("dependency-version");
         dependency.setType("dependency-type");
         dependency.setExtension("dependency-extension");
-        artifactResource.addDependency(dependency);
+//        artifactResource.addDependency(dependency);
 
         ResponseEntity<ArtifactResource> response = controller.addArtifact(artifactResource);
 
@@ -124,24 +124,8 @@ public class ArtifactControllerTest extends BaseAcceptanceTest {
 
         assertNotNull(responseResource.getId());
 
-        ArtifactResource responseDependency = responseResource.getDependencies().get(0);
-        assertThat(responseDependency.getId(), is(existingDependency.getId()));
-    }
-
-    @Test
-    public void loadingAartifactResourceByItsId() {
-        ArtifactNode node = new ArtifactNode(null, "artifact-name", "artifact-organization", "artifact-version", "type", "extension");
-        repository.save(node);
-
-        ResponseEntity<ArtifactResource> response = controller.getArtifact(node.getId());
-
-        assertThat(response.getStatusCode(), is(HttpStatus.OK));
-        ArtifactResource resource = response.getBody();
-        assertThat(resource.getId(), is(node.getId()));
-        assertThat(resource.getName(), is("artifact-name"));
-        assertThat(resource.getOrganization(), is("artifact-organization"));
-        assertThat(resource.getVersion(), is("artifact-version"));
-        assertThat(resource.getUri(), is("/api/artifacts/" + resource.getId()));
+//        ArtifactResource responseDependency = responseResource.getDependencies().get(0);
+//        assertThat(responseDependency.getId(), is(existingDependency.getId()));
     }
 
     @Test
@@ -168,13 +152,13 @@ public class ArtifactControllerTest extends BaseAcceptanceTest {
         assertThat(aartifact.getName(), is("anArtifact"));
         assertThat(aartifact.getOrganization(), is("organization"));
         assertThat(aartifact.getVersion(), is("version"));
-        assertThat(aartifact.getUri(), is("/api/artifacts/" + aartifact.getId()));
+        assertThat(aartifact.getUri(), is("/api/artifacts/organization/anArtifact/version"));
 
         ArtifactResource anotherArtifact = artifacts.get(1);
         assertThat(anotherArtifact.getName(), is("anotherArtifact"));
         assertThat(anotherArtifact.getOrganization(), is("organization"));
         assertThat(anotherArtifact.getVersion(), is("version"));
-        assertThat(anotherArtifact.getUri(), is("/api/artifacts/" + anotherArtifact.getId()));
+        assertThat(anotherArtifact.getUri(), is("/api/artifacts/organization/anotherArtifact/version"));
     }
 
     @Test

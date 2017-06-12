@@ -11,13 +11,15 @@ public class ArtifactResourceTest {
     @Test
     public void shouldReturnTheResourceUriWhenItContainsAnId() {
         ArtifactResource resource = new ArtifactResource();
-        resource.setId(10L);
+        resource.setName("codegraph-server");
+        resource.setOrganization("com.dnfeitosa.codegraph");
+        resource.setVersion("1.0");
 
-        assertThat(resource.getUri(), is("/api/artifacts/10"));
+        assertThat(resource.getUri(), is("/api/artifacts/com.dnfeitosa.codegraph/codegraph-server/1.0"));
     }
 
     @Test
-    public void resourceUriIsNullWhenItDoesNotContainAnId() {
+    public void resourceUriIsNullWhenItDoesNotContainAName() {
         assertNull(new ArtifactResource().getUri());
     }
 }

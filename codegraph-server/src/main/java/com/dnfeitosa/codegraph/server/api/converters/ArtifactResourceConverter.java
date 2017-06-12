@@ -5,7 +5,9 @@ import com.dnfeitosa.codegraph.core.models.Type;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactsResource;
+import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
 import com.dnfeitosa.codegraph.server.api.resources.TypeResource;
+import com.dnfeitosa.codegraph.server.api.resources.VersionResource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
@@ -35,6 +37,11 @@ public class ArtifactResourceConverter {
         return artifact;
     }
 
+    private Artifact toModel(DependencyResource dependency) {
+        Version version = new Version(dependency.getVersion().getDeclared());
+        return new Artifact(dependency.getName(), dependency.getOrganization(), version, null, null);
+    }
+
     private Type toModel(TypeResource type) {
         return typeResourceConverter.toModel(type);
     }
@@ -49,7 +56,16 @@ public class ArtifactResourceConverter {
         resource.setType(artifact.getType());
 
         artifact.getDependencies()
-                .forEach(dependency -> resource.addDependency(toResource(dependency)));
+                .forEach(dependency -> resource.addDependency(toDependencyResource(dependency)));
+        return resource;
+    }
+
+    private DependencyResource toDependencyResource(Artifact dependency) {
+        DependencyResource resource = new DependencyResource();
+        resource.setName(dependency.getName());
+        resource.setOrganization(dependency.getOrganization());
+        String number = dependency.getVersion().getNumber();
+        resource.setVersion(new VersionResource(number, number));
         return resource;
     }
 

@@ -35,20 +35,20 @@ public class ArtifactController {
         this.artifactResourceConverter = artifactResourceConverter;
     }
 
-    @RequestMapping(value = "/artifacts", method = GET)
+    @RequestMapping(value = "/api/artifacts", method = GET)
     public ResponseEntity<ArtifactsResource> getArtifacts() {
         List<Artifact> artifacts = artifactService.loadAll();
         return new ResponseEntity<>(artifactResourceConverter.toResources(artifacts), HttpStatus.OK);
     }
 
-    @RequestMapping(value = "/artifacts", method = POST)
+    @RequestMapping(value = "/api/artifacts", method = POST)
     public ResponseEntity<ArtifactResource> addArtifact(@RequestBody ArtifactResource artifactResource) {
         Artifact artifact = artifactResourceConverter.toModel(artifactResource);
         Artifact created = artifactService.addArtifact(artifact);
         return new ResponseEntity<>(artifactResourceConverter.toResource(created), HttpStatus.CREATED);
     }
 
-    @RequestMapping(value = "/artifacts/{id}")
+    @RequestMapping(value = "/api/artifacts/{id}")
     public ResponseEntity<ArtifactResource> getArtifact(@PathVariable("id") Long id) {
         try {
             Artifact artifact = artifactService.loadArtifact(id);

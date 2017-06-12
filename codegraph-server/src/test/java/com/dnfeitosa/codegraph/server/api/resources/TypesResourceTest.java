@@ -11,10 +11,12 @@ public class TypesResourceTest {
     @Test
     public void shouldReturnTheResourceUri() {
         TypesResource typesResource = new TypesResource(new ArtifactResource() {{
-            setId(1L);
+            setName("name");
+            setOrganization("organization");
+            setVersion("version");
         }});
 
-        assertThat(typesResource.getUri(), is("/api/artifacts/1/types"));
+        assertThat(typesResource.getUri(), is("/api/artifacts/organization/name/version/types"));
     }
 
     @Test

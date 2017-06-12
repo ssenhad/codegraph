@@ -5,7 +5,9 @@ import com.dnfeitosa.codegraph.core.models.Type;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactsResource;
+import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
 import com.dnfeitosa.codegraph.server.api.resources.TypeResource;
+import com.dnfeitosa.codegraph.server.api.resources.VersionResource;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -44,12 +46,10 @@ public class ArtifactResourceConverterTest {
         resource.setType(type);
         resource.setExtension(extension);
 
-        ArtifactResource dependencyResource = new ArtifactResource();
+        DependencyResource dependencyResource = new DependencyResource();
         dependencyResource.setName("dependency-name");
-        dependencyResource.setType("dependency-type");
         dependencyResource.setOrganization("dependency-organization");
-        dependencyResource.setExtension("dependency-extension");
-        dependencyResource.setVersion("dependency-version");
+        dependencyResource.setVersion(new VersionResource("dependency-version", "dependency-version"));
         resource.addDependency(dependencyResource);
 
         Artifact artifact = converter.toModel(resource);
@@ -65,10 +65,8 @@ public class ArtifactResourceConverterTest {
         assertThat(dependencies.size(), is(1));
         Artifact dependency = dependencies.get(0);
         assertThat(dependency.getName(), is("dependency-name"));
-        assertThat(dependency.getType(), is("dependency-type"));
         assertThat(dependency.getOrganization(), is("dependency-organization"));
         assertThat(dependency.getVersion().getNumber(), is("dependency-version"));
-        assertThat(dependency.getExtension(), is("dependency-extension"));
     }
 
     @Test
@@ -88,12 +86,11 @@ public class ArtifactResourceConverterTest {
 
         assertThat(resource.getDependencies().size(), is(1));
 
-        ArtifactResource dependencyResource = resource.getDependencies().get(0);
+        DependencyResource dependencyResource = resource.getDependencies().get(0);
         assertThat(dependencyResource.getName(), is("dependency-name"));
         assertThat(dependencyResource.getOrganization(), is("dependency-organization"));
-        assertThat(dependencyResource.getExtension(), is("dependency-extension"));
-        assertThat(dependencyResource.getVersion(), is("dependency-version"));
-        assertThat(dependencyResource.getType(), is("dependency-type"));
+        assertThat(dependencyResource.getVersion().getDeclared(), is("dependency-version"));
+        assertThat(dependencyResource.getVersion().getResolved(), is("dependency-version"));
     }
 
     @Test

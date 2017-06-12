@@ -19,5 +19,6 @@ out
 distribution
 codegraph-server/src/main/resources/public/components
 codegraph-server/src/main/resources/public/node_modules
+codegraph-server/src/main/resources/public/yarn-latest
 .DS_Store
 classes

@@ -57,14 +57,14 @@ task acceptanceTests(type: Test) {
 }
 
 node {
-    npmWorkDir = file("$projectDir/src/main/resources/public")
+    yarnWorkDir = file("$projectDir/src/main/resources/public")
     nodeModulesDir = file("$projectDir/src/main/resources/public")
 }
 grunt {
     workDir = file("$projectDir/src/main/resources/public")
 }
 
-grunt_build.dependsOn npmInstall
+grunt_build.dependsOn yarn_install
 build.dependsOn grunt_build
 bootRepackage.mustRunAfter grunt_build
 groupFiles.dependsOn bootRepackage

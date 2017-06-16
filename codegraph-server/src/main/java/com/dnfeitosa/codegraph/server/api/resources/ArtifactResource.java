@@ -5,6 +5,7 @@ import java.util.List;
 
 import static com.dnfeitosa.codegraph.core.utils.PathUtils.join;
 
+@Deprecated
 public class ArtifactResource implements LinkableResource {
 
     private Long id;

@@ -2,6 +2,7 @@ package com.dnfeitosa.codegraph.server.api.resources;
 
 import java.util.List;
 
+@Deprecated
 public class ArtifactsResource {
 
     private List<ArtifactResource> artifacts;

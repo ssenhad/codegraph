@@ -5,7 +5,7 @@ import java.util.List;
 
 import static com.dnfeitosa.codegraph.core.utils.PathUtils.join;
 
-public class ArtifactResource implements Resource {
+public class ArtifactResource implements LinkableResource {
 
     private Long id;
     private String type;

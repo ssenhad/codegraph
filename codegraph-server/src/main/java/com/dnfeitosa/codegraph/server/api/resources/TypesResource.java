@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class TypesResource implements Resource, Iterable<TypeResource> {
+public class TypesResource implements LinkableResource, Iterable<TypeResource> {
 
     private List<TypeResource> types = new ArrayList<>();;
     private ArtifactResource artifactResource;

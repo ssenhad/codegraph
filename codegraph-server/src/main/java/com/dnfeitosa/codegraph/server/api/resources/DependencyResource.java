@@ -3,7 +3,7 @@ package com.dnfeitosa.codegraph.server.api.resources;
 import java.util.ArrayList;
 import java.util.List;
 
-public class DependencyResource implements Resource {
+public class DependencyResource implements LinkableResource {
 
     private String name;
     private String organization;

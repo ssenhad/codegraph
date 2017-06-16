@@ -5,7 +5,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TypeResource implements Resource {
+public class TypeResource implements LinkableResource {
 
     private String name;
 

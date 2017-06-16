@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.server.api.resources;
 
-public class FieldResource implements Resource {
+public class FieldResource implements LinkableResource {
 
     private String name;
     private TypeResource type;

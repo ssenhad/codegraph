@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.server.api.resources;
 
-public class ParameterResource implements Resource {
+public class ParameterResource implements LinkableResource {
 
     private TypeResource type;
     private Integer order;

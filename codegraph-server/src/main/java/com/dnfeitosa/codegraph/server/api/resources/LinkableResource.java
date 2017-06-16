@@ -1,6 +1,6 @@
 package com.dnfeitosa.codegraph.server.api.resources;
 
-public interface Resource {
+public interface LinkableResource {
 
     String BASE_URI = "/api";
 

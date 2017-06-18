@@ -26,11 +26,7 @@ public class TypesResource implements LinkableResource, Iterable<TypeResource> {
 
     @Override
     public String getUri() {
-        String parentUri = artifactResource.getUri();
-        if (parentUri == null) {
-            return null;
-        }
-        return String.format("%s/types", parentUri);
+        return null;
     }
 
     @Override

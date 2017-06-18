@@ -15,21 +15,19 @@ public class ArtifactNodeConverter {
     }
 
     public ArtifactNode toNode(Artifact artifact) {
-        Long id = artifact.getId();
+        Long id = artifact._getId();
         String name = artifact.getName();
         String organization = artifact.getOrganization();
         String number = artifact.getVersion().getNumber();
-        String artifactType = artifact.getType();
-        String extension = artifact.getExtension();
 
-        ArtifactNode node = new ArtifactNode(id, name, organization, number, artifactType, extension);
-        artifact.getDependencies().forEach(dependency -> node.addDependency(toNode(dependency)));
+        ArtifactNode node = new ArtifactNode(id, name, organization, number, null, null);
+        artifact._getDependencies().forEach(dependency -> node.addDependency(toNode(dependency)));
         artifact.getTypes().forEach(type -> node.addType(typeConverter.toNode(type)));
         return node;
     }
 
     public Artifact toModel(ArtifactNode node) {
-        Artifact artifact = new Artifact(node.getId(), node.getName(), node.getOrganization(), new Version(node.getVersion()), node.getType(), node.getExtension());
+        Artifact artifact = new Artifact(node.getName(), node.getOrganization(), new Version(node.getVersion()));
         node.getDependencies().forEach(dependency -> artifact.addDependency(toModel(dependency)));
         return artifact;
     }

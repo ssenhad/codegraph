@@ -19,7 +19,7 @@ public class ArtifactNode {
     @Indexed
     private Long id;
 
-    @Indexed(unique = true)
+//    @Indexed(unique = true)
     private String name;
     private String version;
     private String organization;

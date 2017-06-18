@@ -12,14 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
 import static org.springframework.web.bind.annotation.RequestMethod.GET;
-import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
 public class ArtifactController {
@@ -39,13 +37,6 @@ public class ArtifactController {
     public ResponseEntity<ArtifactsResource> getArtifacts() {
         List<Artifact> artifacts = artifactService.loadAll();
         return new ResponseEntity<>(artifactResourceConverter.toResources(artifacts), HttpStatus.OK);
-    }
-
-    @RequestMapping(value = "/api/artifacts", method = POST)
-    public ResponseEntity<ArtifactResource> addArtifact(@RequestBody ArtifactResource artifactResource) {
-        Artifact artifact = artifactResourceConverter.toModel(artifactResource);
-        Artifact created = artifactService.addArtifact(artifact);
-        return new ResponseEntity<>(artifactResourceConverter.toResource(created), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/api/artifacts/{id}")

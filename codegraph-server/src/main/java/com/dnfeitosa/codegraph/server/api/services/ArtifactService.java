@@ -49,7 +49,7 @@ public class ArtifactService {
     public Artifact loadArtifact(Long id) {
         ArtifactNode node = artifactRepository.findOne(id);
         if (node == null) {
-            throw new ItemDoesNotExistException(String.format("Artifact '%d' does not exist.", id));
+            throw new ItemDoesNotExistException(String.format("ArtifactResource '%d' does not exist.", id));
         }
         return nodeConverter.toModel(node);
     }

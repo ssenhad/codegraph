@@ -1,13 +1,13 @@
 package com.dnfeitosa.coollections;
 
-import static java.util.Arrays.asList;
+import com.dnfeitosa.coollections.decorators.CoolIterable;
+import com.dnfeitosa.coollections.decorators.CoolList;
 
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import com.dnfeitosa.coollections.decorators.CoolIterable;
-import com.dnfeitosa.coollections.decorators.CoolList;
+import static java.util.Arrays.asList;
 
 public class Coollections {
 
@@ -33,8 +33,8 @@ public class Coollections {
 		return collection;
 	}
 
-	@SuppressWarnings("unchecked")
+
 	public static <T> Set<T> asSet(T... values) {
-		return new HashSet<T>(asList(values));
+		return new HashSet<>(asList(values));
 	}
 }

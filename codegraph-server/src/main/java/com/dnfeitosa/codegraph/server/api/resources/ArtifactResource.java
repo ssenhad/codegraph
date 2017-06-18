@@ -1,91 +1,41 @@
 package com.dnfeitosa.codegraph.server.api.resources;
 
-import java.util.ArrayList;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import java.util.List;
 
-import static com.dnfeitosa.codegraph.core.utils.PathUtils.join;
+public class ArtifactResource implements Resource {
 
-@Deprecated
-public class ArtifactResource implements LinkableResource {
-
-    private Long id;
-    private String type;
-    private String extension;
+    private String organization;
     private String name;
     private String version;
-    private String organization;
-    private List<DependencyResource> dependencies = new ArrayList<>();
-    private List<TypeResource> types = new ArrayList<>();;
+    private List<DeclaredDependency> dependencies;
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
+    @JsonCreator
+    public ArtifactResource(@JsonProperty("organization") String organization,
+                            @JsonProperty("name") String name,
+                            @JsonProperty("version") String version,
+                            @JsonProperty("dependencies") List<DeclaredDependency> dependencies) {
+        this.organization = organization;
         this.name = name;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
         this.version = version;
+        this.dependencies = dependencies;
     }
 
     public String getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
-        this.organization = organization;
+    public String getName() {
+        return name;
     }
 
-    public Long getId() {
-        return id;
+    public String getVersion() {
+        return version;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public String getExtension() {
-        return extension;
-    }
-
-    public void setExtension(String extension) {
-        this.extension = extension;
-    }
-
-    public List<DependencyResource> getDependencies() {
+    public List<DeclaredDependency> getDependencies() {
         return dependencies;
-    }
-
-    public void addDependency(DependencyResource dependency) {
-        dependencies.add(dependency);
-    }
-
-    public void addType(TypeResource type) {
-        types.add(type);
-    }
-
-    @Override
-    public String getUri() {
-        if (name == null) {
-            return null;
-        }
-        return join(BASE_URI, "artifacts", organization, name, version);
-    }
-
-    public List<TypeResource> getTypes() {
-        return types;
     }
 }

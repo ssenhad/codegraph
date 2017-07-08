@@ -8,13 +8,13 @@ public class ResolvedDependency {
     private final String parent;
     private final String organization;
     private final String name;
-    private final String version;
+    private final VersionResource version;
 
     @JsonCreator
     public ResolvedDependency(@JsonProperty("parent") String parent,
                               @JsonProperty("organization") String organization,
                               @JsonProperty("name") String name,
-                              @JsonProperty("version") String version) {
+                              @JsonProperty("version") VersionResource version) {
         this.parent = parent;
         this.organization = organization;
         this.name = name;
@@ -33,7 +33,7 @@ public class ResolvedDependency {
         return name;
     }
 
-    public String getVersion() {
+    public VersionResource getVersion() {
         return version;
     }
 }

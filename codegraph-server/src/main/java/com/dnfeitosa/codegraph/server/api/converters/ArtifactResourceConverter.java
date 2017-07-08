@@ -4,13 +4,11 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
-import com.dnfeitosa.codegraph.server.api.resources.ArtifactsResource;
 import com.dnfeitosa.codegraph.server.api.resources.DeclaredDependency;
-import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
-import com.dnfeitosa.codegraph.server.api.resources.VersionResource;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
+import java.util.Set;
 
 import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
@@ -18,18 +16,12 @@ import static java.util.stream.Collectors.toList;
 @Component
 public class ArtifactResourceConverter {
 
-    private TypeResourceConverter typeResourceConverter;
-
-    public ArtifactResourceConverter() {
-        this.typeResourceConverter = new TypeResourceConverter();
-    }
-
     public Artifact toModel(ArtifactResource resource) {
         String name = resource.getName();
         String organization = resource.getOrganization();
         Version version = new Version(resource.getVersion());
 
-        Artifact artifact = new Artifact(name, organization, version);
+        Artifact artifact = new Artifact(organization, name, version);
         resource.getDependencies().forEach(dependency -> artifact.addDependency(toModel(dependency)));
         return artifact;
     }
@@ -54,22 +46,10 @@ public class ArtifactResourceConverter {
     }
 
     private DeclaredDependency toResource(Dependency dependency) {
-        return new DeclaredDependency(dependency.getOrganization(), dependency.getName(), dependency.getVersion().getNumber(), dependency.getConfigurations());
-    }
-
-    private DependencyResource toDependencyResource(Artifact dependency) {
-        DependencyResource resource = new DependencyResource();
-        resource.setName(dependency.getName());
-        resource.setOrganization(dependency.getOrganization());
-        String number = dependency.getVersion().getNumber();
-        resource.setVersion(new VersionResource(number, number));
-        return resource;
-    }
-
-    public ArtifactsResource toResources(List<Artifact> artifacts) {
-        List<ArtifactResource> artifactsResource = artifacts.stream()
-                .map(this::toResource)
-                .collect(toList());
-        return new ArtifactsResource(artifactsResource);
+        String organization = dependency.getOrganization();
+        String name = dependency.getName();
+        String version = dependency.getVersion().getNumber();
+        Set<String> configurations = dependency.getConfigurations();
+        return new DeclaredDependency(organization, name, version, configurations);
     }
 }

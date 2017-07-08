@@ -1,13 +1,13 @@
-package com.dnfeitosa.codegraph.db.nodes.converters;
+package com.dnfeitosa.codegraph.db.models.converters;
 
 import com.dnfeitosa.codegraph.core.models.Field;
 import com.dnfeitosa.codegraph.core.models.Method;
 import com.dnfeitosa.codegraph.core.models.Parameter;
 import com.dnfeitosa.codegraph.core.models.Type;
-import com.dnfeitosa.codegraph.db.nodes.FieldNode;
-import com.dnfeitosa.codegraph.db.nodes.MethodNode;
-import com.dnfeitosa.codegraph.db.nodes.ParameterNode;
-import com.dnfeitosa.codegraph.db.nodes.TypeNode;
+import com.dnfeitosa.codegraph.db.models.FieldNode;
+import com.dnfeitosa.codegraph.db.models.MethodNode;
+import com.dnfeitosa.codegraph.db.models.ParameterNode;
+import com.dnfeitosa.codegraph.db.models.TypeNode;
 import org.springframework.stereotype.Component;
 
 import java.util.List;

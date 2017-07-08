@@ -1,4 +1,4 @@
-package com.dnfeitosa.codegraph.server.api.services;
+package com.dnfeitosa.codegraph.server.services;
 
 public class ItemDoesNotExistException extends RuntimeException {
 

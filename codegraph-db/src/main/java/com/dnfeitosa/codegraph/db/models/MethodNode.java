@@ -1,4 +1,4 @@
-package com.dnfeitosa.codegraph.db.nodes;
+package com.dnfeitosa.codegraph.db.models;
 
 import java.util.HashSet;
 import java.util.Set;

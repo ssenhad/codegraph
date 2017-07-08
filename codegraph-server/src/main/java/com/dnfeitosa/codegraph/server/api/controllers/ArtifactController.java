@@ -1,7 +1,7 @@
 package com.dnfeitosa.codegraph.server.api.controllers;
 
 import com.dnfeitosa.codegraph.server.api.converters.ArtifactResourceConverter;
-import com.dnfeitosa.codegraph.server.api.services.ArtifactService;
+import com.dnfeitosa.codegraph.server.services.ArtifactService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

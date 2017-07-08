@@ -1,13 +1,13 @@
-package com.dnfeitosa.codegraph.server.api.acceptance;
+package com.dnfeitosa.codegraph.server.acceptance.api.controllers;
 
-import com.dnfeitosa.codegraph.api.acceptance.controllers.BaseAcceptanceTest;
+import com.dnfeitosa.codegraph.server.acceptance.AcceptanceTestBase;
 import com.dnfeitosa.codegraph.server.api.controllers.IndexController;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.api.resources.DeclaredDependency;
 import com.dnfeitosa.codegraph.server.api.resources.IndexResource;
 import com.dnfeitosa.codegraph.server.api.resources.ResolutionResultResource;
 import com.dnfeitosa.codegraph.server.api.resources.ResolvedDependency;
-import org.junit.Ignore;
+import com.dnfeitosa.codegraph.server.api.resources.VersionResource;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -20,20 +20,18 @@ import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
-
-@Ignore
-public class IndexingTest extends BaseAcceptanceTest {
+public class IndexControllerTest extends AcceptanceTestBase {
 
     @Autowired
     private IndexController controller;
 
     @Test
-    public void indexesAndReturnAnArtifact() {
+    public void indexesAndReturnTheIndexedArtifact() {
         List<DeclaredDependency> declared = asList(
             new DeclaredDependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile"))
         );
         List<ResolvedDependency> resolved = asList(
-            new ResolvedDependency("com.dnfeitosa.codegraph:codegraph-core:1.0", "com.dnfeitosa.codegraph", "coollections", "1.0")
+            new ResolvedDependency("com.dnfeitosa.codegraph:codegraph-core:1.0", "com.dnfeitosa.codegraph", "coollections", new VersionResource("1.0", "1.0"))
         );
         ArtifactResource artifact = new ArtifactResource("com.dnfeitosa.codegraph", "codegraph-core", "1.0", declared);
 

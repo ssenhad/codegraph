@@ -10,11 +10,18 @@ buildscript {
 
 plugins {
     id "com.moowork.grunt" version "1.1.1"
+    id 'org.unbroken-dome.test-sets' version '1.4.0'
 }
 
 apply plugin: 'java'
 apply plugin: 'spring-boot'
 apply from: "$rootDir/gradle/distribution.gradle"
+
+testSets {
+    componentTest {
+        dirName = 'component-test'
+    }
+}
 
 bootRun {
     systemProperties = System.properties
@@ -39,10 +46,10 @@ dependencies {
     compile project(':codegraph-core')
     compile project(':codegraph-db')
     compile libraries.spring.boot
-    compile libraries.spring.dataNeo4j
 
     testCompile group: 'org.springframework.boot', name: 'spring-boot-starter-test'
-    testCompile group: 'org.neo4j', name: 'neo4j-kernel', version: versions.neo4jKernel, classifier: 'tests'
+    testCompile 'org.neo4j:neo4j-ogm-test:2.1.3'
+    testCompile 'org.neo4j:neo4j-ogm-embedded-driver:2.1.3'
 }
 
 task acceptanceTests(type: Test) {

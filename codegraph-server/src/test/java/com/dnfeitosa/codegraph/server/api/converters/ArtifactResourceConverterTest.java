@@ -50,7 +50,7 @@ public class ArtifactResourceConverterTest {
 
     @Test
     public void shouldConvertAnArtifactModelToArtifactResource() {
-        Artifact artifact = new Artifact(name, organization, new Version(version));
+        Artifact artifact = new Artifact(organization, name, new Version(version));
         Dependency dependency = new Dependency("dependency-organization", "dependency-name", new Version("dependency-version"), asSet("compile"));
         artifact.addDependency(dependency);
 

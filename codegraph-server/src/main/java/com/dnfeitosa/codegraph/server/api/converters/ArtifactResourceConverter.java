@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.Collections.emptySet;
 import static java.util.stream.Collectors.toList;
 
 @Component
@@ -28,7 +27,7 @@ public class ArtifactResourceConverter {
 
     private Dependency toModel(DeclaredDependency dependency) {
         Version version = new Version(dependency.getVersion());
-        return new Dependency(dependency.getOrganization(), dependency.getName(), version, emptySet());
+        return new Dependency(dependency.getOrganization(), dependency.getName(), version, dependency.getConfigurations());
     }
 
 

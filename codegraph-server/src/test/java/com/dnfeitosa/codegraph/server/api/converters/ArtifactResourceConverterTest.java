@@ -12,6 +12,7 @@ import java.util.List;
 
 import static com.dnfeitosa.coollections.Coollections.asSet;
 import static java.util.Arrays.asList;
+import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -31,7 +32,7 @@ public class ArtifactResourceConverterTest {
     @Test
     public void shouldConvertAnArtifactResourceToArtifactModel() {
         ArtifactResource resource = new ArtifactResource(organization, name, version, asList(
-            new DeclaredDependency("dependency-organization", "dependency-name", "dependency-version", asSet("compile")))
+            new DeclaredDependency("dependency-organization", "dependency-name", "dependency-version", asSet("compile", "test")))
         );
 
         Artifact artifact = converter.toModel(resource);
@@ -46,6 +47,7 @@ public class ArtifactResourceConverterTest {
         assertThat(dependency.getName(), is("dependency-name"));
         assertThat(dependency.getOrganization(), is("dependency-organization"));
         assertThat(dependency.getVersion().getNumber(), is("dependency-version"));
+        assertThat(dependency.getConfigurations(), hasItems("compile", "test"));
     }
 
     @Test

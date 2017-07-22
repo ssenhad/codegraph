@@ -10,8 +10,8 @@ import org.springframework.stereotype.Service;
 @Service
 public class ArtifactService {
 
-    private ArtifactNodeConverter nodeConverter;
-    private ArtifactRepository repository;
+    private final ArtifactNodeConverter nodeConverter;
+    private final ArtifactRepository repository;
 
     @Autowired
     public ArtifactService(ArtifactNodeConverter nodeConverter, ArtifactRepository repository) {
@@ -21,6 +21,9 @@ public class ArtifactService {
 
     public Artifact load(String organization, String name, String version) {
         ArtifactNode artifactNode = repository.load(organization, name, version);
+        if (artifactNode == null) {
+            return null;
+        }
         return nodeConverter.toModel(artifactNode);
     }
 

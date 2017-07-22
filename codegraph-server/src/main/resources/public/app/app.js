@@ -7,7 +7,7 @@ angular
         'ui.bootstrap',
         'Codegraph.api',
         'Codegraph.index',
-        'Codegraph.artifact',
+        'Codegraph.viewer',
 
     ]).config(function ($routeProvider) {
         $routeProvider.when('/', {
@@ -15,9 +15,9 @@ angular
             controller: 'IndexController'
         });
 
-        $routeProvider.when('/:organization/:name/:version', {
-            templateUrl: 'app/modules/artifact/partials/artifactView.html',
-            controller: 'ArtifactController'
+        $routeProvider.when('/:organization/:name/:version/dependencies', {
+            templateUrl: 'app/modules/viewer/partials/viewer.html',
+            controller: 'ViewerController'
         });
     });
 

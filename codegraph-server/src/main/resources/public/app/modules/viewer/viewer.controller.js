@@ -1,6 +1,6 @@
 'use strict';
-angular.module('Codegraph.artifact')
-    .controller('ArtifactController', function ($scope, $routeParams, api) {
+angular.module('Codegraph.viewer')
+    .controller('ViewerController', function ($scope, $routeParams, api) {
         $scope.artifact = {
             organization: $routeParams.organization,
             name: $routeParams.name,

@@ -6,6 +6,7 @@ angular
         'ngRoute',
         'ui.bootstrap',
         'Codegraph.api',
+        'Codegraph.artifact',
         'Codegraph.index',
         'Codegraph.viewer',
 
@@ -18,6 +19,11 @@ angular
         $routeProvider.when('/:organization/:name/:version/dependencies', {
             templateUrl: 'app/modules/viewer/partials/viewer.html',
             controller: 'ViewerController'
+        });
+
+        $routeProvider.when('/:organization/:name/:version', {
+            templateUrl: 'app/modules/artifact/partials/artifact.html',
+            controller: 'ArtifactController'
         });
     });
 

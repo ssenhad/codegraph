@@ -1,4 +1,4 @@
-.artifact-view {
+.viewer {
     display: flex;
     flex-flow: row wrap;
     padding-botton: 10px;
@@ -8,45 +8,45 @@ node {
     background-color: red;
 }
 
-.sidebar {
+.viewer .sidebar {
     background-color: #f8f8f8;
     border: solid 1px #e7e7e7;
 }
 
-.sidebar {
+.viewer .sidebar {
     flex-basis: 20%;
 }
 
-.viewarea {
+.viewer .viewarea {
     flex-basis: 80%;
     border: solid 1px #e7e7e7;
     padding: 10px;
 }
 
-.sidebar div {
+.viewer .sidebar div {
     padding: 10px;
 }
 
-.artifact div {
+.viewer .artifact div {
     padding: 3px 0 2px 0;
 }
 
-.artifact {
+.viewer .artifact {
     border-bottom: solid 2px #e7e7e7;
     text-align: right;
 }
 
-.artifact .name {
+.viewer .artifact .name {
     font-size: 2em;
     font-weight: bold;
 }
 
-.artifact .organization {
+.viewer .artifact .organization {
     font-size: 1em;
     font-style: italic;
 }
 
-.artifact .version {
+.viewer .artifact .version {
 }
 
 .cytoscape-navigator {

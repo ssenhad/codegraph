@@ -1,0 +1,54 @@
+.artifact-overview {
+}
+
+.artifact-overview .overview {
+    background-color: #f8f8f8;
+    border: solid 1px #e7e7e7;
+}
+
+.artifact-overview .artifact {
+    padding: 20px;
+}
+
+.artifact-overview .stats {
+    /*margin-top: 20px;*/
+    /*padding-top: 10px;*/
+    text-align: right;
+    padding: 0 20px 0 20px;
+
+}
+
+.artifact-overview .stats .stat {
+    border-left: solid 2px #e7e7e7;
+    float: right;
+    /*margin-right: 10px;*/
+}
+
+.artifact-overview .artifact .name {
+    font-size: 3em;
+    font-weight: bold;
+    text-align: right;
+}
+
+.artifact-overview .artifact .organization {
+    font-size: 2em;
+    text-align: right;
+}
+
+.artifact-overview .all-versions {
+    border-top: solid 2px #e7e7e7;
+    padding: 20px;
+}
+
+.artifact-overview .all-versions .versions {
+    text-align: center;
+}
+
+.artifact-overview .dependency {
+    padding: 5px;
+}
+
+.artifact-overview .dependency .configurations {
+    float: right;
+    font-style: italic;
+}

@@ -1,9 +1,8 @@
-<div class="artifact-view full-height">
+<div class="viewer full-height">
     <div class="sidebar">
         <div class="artifact">
-            <div class="name">{{artifact.name}}</div>
+            <div class="name">{{artifact.name}}:{{artifact.version}}</div>
             <div class="organization">{{artifact.organization}}</div>
-            <div class="version">{{artifact.version}}</div>
         </div>
         <div class="controls btn-group">
             <div class="btn btn-xs btn-default" ng-click="directDependencies(artifact)">Dependencies</div>

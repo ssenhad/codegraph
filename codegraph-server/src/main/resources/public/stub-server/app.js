@@ -22,6 +22,13 @@ app.get('/api/artifacts/:organization/:artifact/:version/dependencies', function
     res.sendFile(`data/artifacts/dependencies/${organization}_${artifact}_${version}.json`, { root: __dirname })
 });
 
+app.get('/api/artifacts/:organization/:artifact/:version', function (req, res) {
+    var organization = req.params['organization'];
+    var artifact = req.params['artifact'];
+    var version = req.params['version'];
+    res.sendFile(`data/artifacts/${organization}_${artifact}_${version}.json`, { root: __dirname })
+});
+
 app.get('/api/artifacts/:organization/:artifact/:version/dependency-graph', function (req, res) {
     var organization = req.params['organization'];
     var artifact = req.params['artifact'];

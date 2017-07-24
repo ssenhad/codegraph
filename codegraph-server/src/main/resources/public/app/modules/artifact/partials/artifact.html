@@ -1,0 +1,48 @@
+<div class="row artifact-overview">
+    <div class="col-md-5">
+        <div class="overview">
+            <div class="artifact">
+                <div class="name">{{artifact.name}}:{{artifact.version}}</div>
+                <div class="organization">{{artifact.organization}}</div>
+            </div>
+            <div class="stats row">
+                <!--
+                <div class="stat col-md-4">
+                    <span><a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/classes">{{stats.classes}}</a></span>
+                    <p>classes</p>
+                </div>
+                -->
+                <div class="stat col-md-4">
+                    <span><a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependencies">{{stats.dependencies}}</a></span>
+                    <p>dependencies</p>
+                </div>
+                <!--
+                <div class="stat col-md-4">
+                    <span><a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependents">{{stats.dependents}}</a></span>
+                    <p>dependents</p>
+                </div>
+                -->
+            </div>
+            <div class="all-versions">
+                <h3>Other versions</h3>
+                <span class="versions">
+                    <a ng-repeat="version in allVersions" href="#!/{{artifact.organization}}/{{artifact.name}}/{{version}}">{{version}}{{$last ? '' : ', '}}</a>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <h3>Declared dependencies</h3>
+        <div ng-show="artifact.dependencies.length == 0">
+            <i>No dependencies</i>
+        </div>
+        <div class="declared-dependencies" ng-show="artifact.dependencies.length > 0">
+            <div class="dependency" ng-repeat="dependency in artifact.dependencies">
+                {{dependency.organization}}:{{dependency.name}}:{{dependency.version}}
+                <span class="configurations">
+                    <span ng-repeat="configuration in dependency.configurations">{{configuration}}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

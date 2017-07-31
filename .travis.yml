@@ -21,5 +21,10 @@ cache:
     - $HOME/.gradle/caches/
     - $HOME/.gradle/wrapper
 
-script: ./gradlew clean build --info
+jobs:
+  include:
+    - stage: License header validation
+      script: ./gradlew license
+    - stage: Build and Test
+      script: ./gradlew clean build -i license --info
 

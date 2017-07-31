@@ -4,7 +4,7 @@
     "repository": "https://github.com/dnfeitosa/codegraph",
     "version": "0.0.1",
     "author": "Diego Feitosa <dnfeitosa@gmail.com>",
-    "license": "Apache License 2.0",
+    "license": "AGPL-3.0",
     "devDependencies": {
         "bower": "~1.8",
         "express": "^4.14.1",

@@ -1,0 +1,14 @@
+{
+    "artifact": {
+        "name": "codegraph-core",
+        "organization": "com.dnfeitosa.codegraph",
+        "dependencies": []
+    },
+    "versions": [{
+        "version": "1.0-dev",
+        "availability": ["DEPENDENCY", "ARTIFACT"]
+    },{
+        "version": "1.0-RELEASE",
+        "availability": ["DEPENDENCY"]
+    }]
+}

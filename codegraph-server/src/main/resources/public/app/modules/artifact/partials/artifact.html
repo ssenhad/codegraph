@@ -26,7 +26,9 @@
             <div class="all-versions">
                 <h3>Other versions</h3>
                 <span class="versions">
-                    <a ng-repeat="version in allVersions" href="#!/{{artifact.organization}}/{{artifact.name}}/{{version}}">{{version}}{{$last ? '' : ', '}}</a>
+                    <span ng-repeat="availableVersion in availableVersions">
+                        <a ng-class="{'artifact-unavailable': !availableVersion.availability.contains('ARTIFACT')}" href="#!/{{artifact.organization}}/{{artifact.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
+                    </span>
                 </span>
             </div>
         </div>

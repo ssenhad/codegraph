@@ -38,5 +38,9 @@ angular.module('Codegraph.api')
 
         this.getArtifact = function (artifact) {
             return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}`)
+        };
+
+        this.getVersions = function (artifact) {
+            return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/versions`);
         }
     });

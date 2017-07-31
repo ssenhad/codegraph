@@ -44,6 +44,11 @@
     text-align: center;
 }
 
+.artifact-overview .all-versions .artifact-unavailable {
+    color: #7f7f7f;
+    font-style: italic;
+}
+
 .artifact-overview .dependency {
     padding: 5px;
 }

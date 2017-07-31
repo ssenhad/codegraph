@@ -22,6 +22,12 @@ app.get('/api/artifacts/:organization/:artifact/:version/dependencies', function
     res.sendFile(`data/artifacts/dependencies/${organization}_${artifact}_${version}.json`, { root: __dirname })
 });
 
+app.get('/api/artifacts/:organization/:artifact/versions', function (req, res) {
+    var organization = req.params['organization'];
+    var artifact = req.params['artifact'];
+    res.sendFile(`data/artifacts/versions/${organization}_${artifact}.json`, { root: __dirname })
+});
+
 app.get('/api/artifacts/:organization/:artifact/:version', function (req, res) {
     var organization = req.params['organization'];
     var artifact = req.params['artifact'];

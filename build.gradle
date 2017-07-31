@@ -1,5 +1,3 @@
-apply plugin: 'idea'
-
 buildscript {
     repositories {
         mavenLocal()
@@ -17,7 +15,6 @@ apply from: "$rootDir/gradle/distribution.gradle"
 subprojects {
     apply from: "$rootDir/gradle/repositories.gradle"
     apply from: "$rootDir/gradle/dependencies.gradle"
-    apply plugin: 'idea'
     apply plugin: 'java'
 
     group = 'com.dnfeitosa.codegraph'
@@ -33,15 +30,9 @@ subprojects {
     }
 }
 
-idea {
-    project {
-        languageLevel = '1.8'
-    }
-}
 
 task wrapper(type: Wrapper) {
   gradleVersion = '2.2.1'
 }
 
 defaultTasks 'clean', 'build'
-

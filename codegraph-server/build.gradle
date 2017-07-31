@@ -27,6 +27,10 @@ bootRun {
     systemProperties = System.properties
 }
 
+springBoot {
+    mainClass = 'com.dnfeitosa.codegraph.server.main.CodegraphServer'
+}
+
 repositories {
     mavenLocal()
     mavenCentral()

@@ -1,8 +1,10 @@
 package com.dnfeitosa.codegraph.server.api.controllers;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.AvailableVersion;
 import com.dnfeitosa.codegraph.server.api.converters.ArtifactResourceConverter;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
+import com.dnfeitosa.codegraph.server.api.resources.ArtifactVersions;
 import com.dnfeitosa.codegraph.server.services.ArtifactService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -12,6 +14,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Set;
 
 @RestController
 public class ArtifactController {
@@ -41,4 +45,11 @@ public class ArtifactController {
         return new ResponseEntity<>(artifactResource, HttpStatus.OK);
     }
 
+    @RequestMapping(path = "/api/artifact/{organization}/{name}/versions")
+    public ResponseEntity<ArtifactVersions> getVersions(@PathVariable("organization") String organization,
+                                                        @PathVariable("name") String name) {
+        Set<AvailableVersion> versions = artifactService.getVersions(organization, name);
+        ArtifactVersions artifactVersions = artifactResourceConverter.toResource(organization, name, versions);
+        return new ResponseEntity<>(artifactVersions, HttpStatus.OK);
+    }
 }

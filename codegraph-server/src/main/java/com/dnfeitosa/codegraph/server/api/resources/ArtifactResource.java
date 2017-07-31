@@ -7,10 +7,10 @@ import java.util.List;
 
 public class ArtifactResource implements Resource {
 
-    private String organization;
-    private String name;
-    private String version;
-    private List<DeclaredDependency> dependencies;
+    private final String organization;
+    private final String name;
+    private final String version;
+    private final List<DeclaredDependency> dependencies;
 
     @JsonCreator
     public ArtifactResource(@JsonProperty("organization") String organization,

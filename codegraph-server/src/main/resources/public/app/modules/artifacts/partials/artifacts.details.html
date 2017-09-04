@@ -1,0 +1,45 @@
+<div class="row">
+    <div class="col-md-2">
+        <div class="name version">{{artifact.version}}</div>
+    </div>
+    <div class="col-md-10">
+        <div class="controls">
+            <div class="row">
+                <div class="col-md-2">
+                    <div class="panel panel-default text-center">
+                        <a href="#!/dependencies">
+                            <div class="panel-body">
+                                <i class="fa fa-sitemap fa-1x"></i>
+                            </div>
+                            <div class="panel-footer">Dependencies</div>
+                        </a>
+                    </div>
+                </div>
+                <div class="col-md-2">
+                    <div class="panel panel-default text-center">
+                        <a href="#!/dependents">
+                            <div class="panel-heading">
+                                <i class="fa fa-sitemap fa-1x"></i>
+                            </div>
+                            <div class="panel-footer">Dependents</div>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div>Declared dependencies</div>
+        <div ng-show="artifact.dependencies.length == 0">
+            <i>No dependencies</i>
+        </div>
+        <div class="declared-dependencies" ng-show="artifact.dependencies.length > 0">
+            <div class="dependency" ng-repeat="dependency in artifact.dependencies">
+                {{dependency.organization}}:{{dependency.name}}:{{dependency.version}}
+                <span class="configurations">
+                                <span ng-repeat="configuration in dependency.configurations">{{configuration}}</span>
+                            </span>
+            </div>
+        </div>
+    </div>
+</div>

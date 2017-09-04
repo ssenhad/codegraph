@@ -1,0 +1,22 @@
+{
+    "nodes": [
+        {
+            "id": "com.dnfeitosa.codegraph.codegraph-core",
+            "name": "codegraph-core",
+            "type": "artifact",
+            "parent": "com.dnfeitosa.codegraph"
+        },
+        {
+            "id": "com.dnfeitosa.codegraph.codegraph-server",
+            "name": "codegraph-server",
+            "type": "artifact",
+            "parent": "com.dnfeitosa.codegraph"
+        },
+        {
+            "id": "com.dnfeitosa.codegraph.codegraph-db",
+            "name": "codegraph-db",
+            "type": "artifact",
+            "parent": "com.dnfeitosa.codegraph"
+        }
+    ]
+}

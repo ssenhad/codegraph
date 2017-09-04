@@ -1,0 +1,10 @@
+{
+    "nodes": [
+        {
+            "id": "commons-lang:commons-lang",
+            "name": "commons-lang",
+            "type": "artifact",
+            "parent": "commons-lang"
+        }
+    ]
+}

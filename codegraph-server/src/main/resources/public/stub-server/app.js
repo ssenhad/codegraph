@@ -27,35 +27,46 @@ app.use(function (req, res, next) {
     return next();
 });
 
-app.get('/api/artifacts', function (req, res) {
-    res.sendFile("data/artifacts.json", { root: __dirname });
-});
+// app.get('/api/artifacts', function (req, res) {
+//     res.sendFile("data/artifacts.json", {root: __dirname});
+// });
 
 app.get('/api/artifacts/:organization/:artifact/:version/dependencies', function (req, res) {
     var organization = req.params['organization'];
     var artifact = req.params['artifact'];
     var version = req.params['version'];
-    res.sendFile(`data/artifacts/dependencies/${organization}_${artifact}_${version}.json`, { root: __dirname })
+    res.sendFile(`data/artifacts/dependencies/${organization}_${artifact}_${version}.json`, {root: __dirname});
 });
 
 app.get('/api/artifacts/:organization/:artifact/versions', function (req, res) {
     var organization = req.params['organization'];
     var artifact = req.params['artifact'];
-    res.sendFile(`data/artifacts/versions/${organization}_${artifact}.json`, { root: __dirname })
+    res.sendFile(`data/artifacts/versions/${organization}_${artifact}.json`, {root: __dirname});
 });
 
 app.get('/api/artifacts/:organization/:artifact/:version', function (req, res) {
     var organization = req.params['organization'];
     var artifact = req.params['artifact'];
     var version = req.params['version'];
-    res.sendFile(`data/artifacts/${organization}_${artifact}_${version}.json`, { root: __dirname })
+    res.sendFile(`data/artifacts/${organization}_${artifact}_${version}.json`, {root: __dirname});
 });
 
 app.get('/api/artifacts/:organization/:artifact/:version/dependency-graph', function (req, res) {
     var organization = req.params['organization'];
     var artifact = req.params['artifact'];
     var version = req.params['version'];
-    res.sendFile(`data/artifacts/dependency-graph/${organization}_${artifact}_${version}.json`, { root: __dirname })
+    res.sendFile(`data/artifacts/dependency-graph/${organization}_${artifact}_${version}.json`, {root: __dirname});
+});
+
+app.get('/ui/tree', function (req, res) {
+    var path = req.query['path'];
+
+    if (path == '') {
+        res.sendFile(`data/tree/_root.json`, {root: __dirname});
+        return;
+    }
+
+    res.sendFile(`data/tree/${path}.json`, {root: __dirname});
 });
 
 app.listen(3000, function () {

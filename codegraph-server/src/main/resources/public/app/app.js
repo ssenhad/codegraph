@@ -18,18 +18,51 @@
 
 angular
     .module('Codegraph', [
-
-        'ngRoute',
+        'ui.router',
+        'ngJsTree',
         'ui.bootstrap',
         'Codegraph.api',
         'Codegraph.artifact',
+        'Codegraph.artifacts',
         'Codegraph.index',
         'Codegraph.viewer',
 
-    ]).config(function ($routeProvider) {
+    ]).config(function ($stateProvider) {
+        $stateProvider.state('artifacts', {
+            abstract: true,
+            url: '/artifacts',
+            templateUrl: 'app/modules/artifacts/partials/artifacts.html',
+            controller: 'TreeController',
+        }).state('artifacts.start', {
+            url: '',
+            controller: 'TreeController',
+        }).state('artifacts.artifact', {
+            url: '/{organization}/{name}',
+            views: {
+                artifact: {
+                    templateUrl: 'app/modules/artifacts/partials/artifacts.artifact.html',
+                    controller: 'ArtifactsController',
+                }
+            }
+        }).state('artifacts.artifact.details', {
+            url: '/{version}',
+            views: {
+                details: {
+                    templateUrl: 'app/modules/artifacts/partials/artifacts.details.html',
+                    controller: 'ArtifactsController',
+                }
+            }
+        })
+        ;
+        /*
         $routeProvider.when('/', {
             templateUrl: 'app/modules/index/partials/index.html',
             controller: 'IndexController'
+        });
+
+        $routeProvider.when('/artifacts', {
+            templateUrl: 'app/modules/artifacts/partials/artifacts.html',
+            controller: 'ArtifactsController'
         });
 
         $routeProvider.when('/:organization/:name/:version/dependencies', {
@@ -37,9 +70,10 @@ angular
             controller: 'ViewerController'
         });
 
-        $routeProvider.when('/:organization/:name/:version', {
-            templateUrl: 'app/modules/artifact/partials/artifact.html',
-            controller: 'ArtifactController'
+        $routeProvider.when('/artifacts/:organization/:name', {
+            templateUrl: 'app/modules/artifacts/partials/artifacts.html',
+            controller: 'ArtifactsController'
         });
+        */
     });
 

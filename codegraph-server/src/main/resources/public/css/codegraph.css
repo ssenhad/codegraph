@@ -117,3 +117,11 @@ text {
     stroke-width: 1px;
 }
 */
+
+.debug {
+    border: solid 1px black;
+}
+
+.artifacts {
+    height: 100%;
+}

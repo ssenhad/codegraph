@@ -1,0 +1,18 @@
+<div class="overview">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="name">{{artifact.organization}}:{{artifact.name}}</div>
+        </div>
+        <div class="col-md-12 all-versions">
+            <h4>Versions</h4>
+            <span class="versions">
+                <span ng-repeat="availableVersion in availableVersions">
+                    <a ng-class="{'artifact-unavailable': !availableVersion.availability.contains('ARTIFACT')}"
+                       href="#!/artifacts/{{artifact.organization}}/{{artifact.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
+                </span>
+            </span>
+        </div>
+    </div>
+</div>
+<div class="details" ui-view="details">
+</div>

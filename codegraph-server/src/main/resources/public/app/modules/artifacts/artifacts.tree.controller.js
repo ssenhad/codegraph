@@ -17,18 +17,19 @@
 'use strict';
 
 angular.module('Codegraph.artifacts')
-    .controller('TreeController', function ($scope, $state, $stateParams, $location, api) {
-        console.log('tree');
+    .controller('TreeController', function ($interval, $scope, $state, $stateParams, $location, api) {
+        var toJsTreeNode = function (node) {
+            node.data = node;
+            node.state = { closed: true };
+            node.text = node.name;
+            node.children = node.type === 'organization';
+            return node;
+        };
         $scope.treeData = function (node, callback) {
+            console.log("treeData", node);
             if (node && callback) {
                 api.getTreeItems(node.id).then(function (data) {
-                    var nodes = data.nodes.map(function (node) {
-                        node.data = node;
-                        node.state = {closed: true};
-                        node.text = node.name;
-                        node.children = node.type === 'organization';
-                        return node;
-                    });
+                    var nodes = data.nodes.map(toJsTreeNode);
                     callback.call(this, nodes);
                 });
             }
@@ -42,8 +43,7 @@ angular.module('Codegraph.artifacts')
             }
             var artifact = {
                 organization: node.data.parent,
-                name: node.data.name,
-                version: '0.0.1'
+                name: node.data.name
             }
             $state.go('artifacts.artifact', artifact, { location: true });
         };
@@ -55,8 +55,9 @@ angular.module('Codegraph.artifacts')
                 error: function (error) {
                     console.log('treeCtrl: error from js tree - ' + angular.toJson(error));
                 },
-                check_callback: false,
+                check_callback: true,
                 worker: true,
+                expand_selected_onload: true
             },
             types: {
                 default: {
@@ -66,7 +67,10 @@ angular.module('Codegraph.artifacts')
                     icon: 'glyphicon glyphicon-file'
                 }
             },
+            massload: {
+
+            },
             version: 1,
-            plugins: ['types', "wholerow"]
+            plugins: ['types', 'wholerow', 'massload']
         };
     });

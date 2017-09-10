@@ -1,4 +1,4 @@
-/**
+/*
  * Copyright (C) 2015-2017 Diego Feitosa [dnfeitosa@gmail.com]
  *
  * This program is free software: you can redistribute it and/or modify
@@ -14,7 +14,12 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-.no-gutter > [class*='col-'] {
-    padding-right: 0;
-    padding-left: 0;
-}
+'use strict';
+
+angular.module('Codegraph.artifacts')
+    .controller('ArtifactController', function ($scope, $state, $stateParams, $location, api) {
+        api.getVersions($stateParams.organization, $stateParams.name).then(function (data) {
+            $scope.availableVersions = data.versions;
+            $scope.artifact = $stateParams;
+        });
+    });

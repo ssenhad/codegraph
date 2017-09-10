@@ -5,7 +5,7 @@
         "dependencies": []
     },
     "versions": [{
-        "version": "1.0-dev",
+        "version": "0.0.1",
         "availability": ["DEPENDENCY", "ARTIFACT"]
     },{
         "version": "1.0-RELEASE",

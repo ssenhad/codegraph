@@ -56,8 +56,8 @@ angular.module('Codegraph.api')
             return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}`)
         };
 
-        this.getVersions = function (artifact) {
-            return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/versions`);
+        this.getVersions = function (organization, name) {
+            return this.get(`/api/artifacts/${organization}/${name}/versions`);
         };
 
         this.getTreeItems = function(parent) {

@@ -7,7 +7,7 @@
             "parent": "com.dnfeitosa"
         },
         {
-            "id": "com.dnfeitosa:artifact",
+            "id": "com.dnfeitosa.artifact",
             "name": "artifact",
             "type": "artifact",
             "parent": "com.dnfeitosa"

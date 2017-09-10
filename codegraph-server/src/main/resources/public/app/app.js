@@ -41,7 +41,7 @@ angular
             views: {
                 artifact: {
                     templateUrl: 'app/modules/artifacts/partials/artifacts.artifact.html',
-                    controller: 'ArtifactsController',
+                    controller: 'ArtifactController',
                 }
             }
         }).state('artifacts.artifact.details', {
@@ -49,7 +49,7 @@ angular
             views: {
                 details: {
                     templateUrl: 'app/modules/artifacts/partials/artifacts.details.html',
-                    controller: 'ArtifactsController',
+                    controller: 'ArtifactDetailsController',
                 }
             }
         })

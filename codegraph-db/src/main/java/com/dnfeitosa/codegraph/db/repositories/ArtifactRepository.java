@@ -17,12 +17,15 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
+import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static com.dnfeitosa.codegraph.db.Node.id;
@@ -50,12 +53,17 @@ public class ArtifactRepository  {
     }
 
     public Set<String> getVersions(String organization, String name) {
-        HashMap<String, Object> parameters = new HashMap<>();
+        Map<String, Object> parameters = new HashMap<>();
         parameters.put("organization", organization);
         parameters.put("name", name);
         Result result = session.query("MATCH (a:Artifact { organization: {organization},  name: {name}}) return a.version as version", parameters);
         return stream(result.spliterator(), false)
             .map(r -> r.get("version").toString())
             .collect(toSet());
+    }
+
+    public Set<ArtifactNode> getArtifactsFromOrganization(String organization) {
+        Filter filter = new Filter("organization", organization);
+        return new HashSet<>(session.loadAll(ArtifactNode.class, filter));
     }
 }

@@ -17,12 +17,15 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
 import com.dnfeitosa.codegraph.db.models.DependencyNode;
+import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
@@ -54,5 +57,10 @@ public class DependencyRepository {
         return stream(result.spliterator(), false)
             .map(r -> r.get("version").toString())
             .collect(toSet());
+    }
+
+    public Set<DependencyNode> getArtifactsFromOrganization(String organization) {
+        Collection<DependencyNode> dependencies = session.loadAll(DependencyNode.class, new Filter("organization", organization));
+        return new HashSet<>(dependencies);
     }
 }

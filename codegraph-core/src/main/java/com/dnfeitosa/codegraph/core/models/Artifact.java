@@ -18,8 +18,9 @@ package com.dnfeitosa.codegraph.core.models;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
-public class Artifact {
+public class Artifact implements Comparable<Artifact> {
 
     private final String id;
     private final String organization;
@@ -57,5 +58,23 @@ public class Artifact {
 
     public List<Dependency> getDependencies() {
         return dependencies;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Artifact artifact = (Artifact) o;
+        return Objects.equals(id, artifact.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
+
+    @Override
+    public int compareTo(Artifact o) {
+        return id.compareTo(o.id);
     }
 }

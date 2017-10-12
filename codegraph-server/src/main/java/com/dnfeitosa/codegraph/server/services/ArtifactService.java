@@ -20,6 +20,7 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.AvailableVersion;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
+import com.dnfeitosa.codegraph.db.models.DependencyNode;
 import com.dnfeitosa.codegraph.db.models.converters.ArtifactNodeConverter;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
 import com.dnfeitosa.codegraph.db.repositories.DependencyRepository;
@@ -27,6 +28,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 import static com.dnfeitosa.codegraph.core.models.AvailableVersion.Availability.ARTIFACT;
@@ -73,9 +75,25 @@ public class ArtifactService {
         return collate(dependencyVersions, artifactVersions, false).stream()
             .map(version -> new Version(version))
             .filter(version -> !version.isDynamic())
-            .map(version -> {
-                return new AvailableVersion(version, availability(version, dependenciesOnly, artifactsOnly));
-            }).collect(toSet());
+            .map(version -> toAvailableVersion(dependenciesOnly, artifactsOnly, version))
+            .collect(toSet());
+    }
+
+    public Set<Artifact> getArtifactsFromOrganization(String organization) {
+        Set<ArtifactNode> artifactNodes = artifactRepository.getArtifactsFromOrganization(organization);
+        Set<DependencyNode> dependencyArtifactNodes = dependencyRepository.getArtifactsFromOrganization(organization);
+        Iterable<Artifact> artifacts = artifactNodes.stream()
+            .map(nodeConverter::toModel)
+            .collect(toSet());
+
+        Iterable<Artifact> dependencyArtifacts = dependencyArtifactNodes.stream()
+            .map(node -> new Artifact(node.getOrganization(), node.getName(), new Version(node.getVersion())))
+            .collect(toSet());
+        return new HashSet(collate(artifacts, dependencyArtifacts, false));
+    }
+
+    private AvailableVersion toAvailableVersion(Collection<String> dependenciesOnly, Collection<String> artifactsOnly, Version version) {
+        return new AvailableVersion(version, availability(version, dependenciesOnly, artifactsOnly));
     }
 
     private AvailableVersion.Availability[] availability(Version version, Collection<String> dependenciesOnly, Collection<String> artifactsOnly) {

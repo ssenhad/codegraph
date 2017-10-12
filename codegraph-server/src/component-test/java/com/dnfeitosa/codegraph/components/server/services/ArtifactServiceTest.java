@@ -1,6 +1,7 @@
 package com.dnfeitosa.codegraph.components.server.services;
 
 import com.dnfeitosa.codegraph.components.server.ComponentTestBase;
+import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.AvailableVersion;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
@@ -40,6 +41,22 @@ public class ArtifactServiceTest extends ComponentTestBase {
             new AvailableVersion(new Version("1.0"), ARTIFACT),
             new AvailableVersion(new Version("1.1"), ARTIFACT, DEPENDENCY),
             new AvailableVersion(new Version("1.2"), DEPENDENCY)
+        ));
+    }
+
+    @Test
+    public void shouldReturnTheArtifactsBelongingToAnOrganization() {
+        session.save(new ArtifactNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0"));
+        session.save(new ArtifactNode("com.dnfeitosa.codegraph", "codegraph-core", "1.1"));
+        session.save(new DependencyNode("com.dnfeitosa.codegraph", "codegraph-core", "1.1"));
+        session.save(new ArtifactNode("com.dnfeitosa.codegraph.foo", "codegraph-foo", "1.1"));
+
+        Set<Artifact> artifacts = artifactService.getArtifactsFromOrganization("com.dnfeitosa.codegraph");
+
+        assertThat(artifacts.size(), is(2));
+        assertThat(artifacts, hasItems(
+            new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")),
+            new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.1"))
         ));
     }
 }

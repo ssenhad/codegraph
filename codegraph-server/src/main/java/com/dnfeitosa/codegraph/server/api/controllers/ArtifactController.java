@@ -47,7 +47,7 @@ public class ArtifactController {
         this.artifactResourceConverter = artifactResourceConverter;
     }
 
-    @RequestMapping(path = "/api/artifact/{organization}/{name}/{version}")
+    @RequestMapping(path = "/api/artifacts/{organization}/{name}/{version}")
     public ResponseEntity<ArtifactResource> getArtifact(@PathVariable("organization") String organization,
                                                         @PathVariable("name") String name,
                                                         @PathVariable("version") String version) {
@@ -61,7 +61,7 @@ public class ArtifactController {
         return new ResponseEntity<>(artifactResource, HttpStatus.OK);
     }
 
-    @RequestMapping(path = "/api/artifact/{organization}/{name}/versions")
+    @RequestMapping(path = "/api/artifacts/{organization}/{name}/versions")
     public ResponseEntity<ArtifactVersions> getVersions(@PathVariable("organization") String organization,
                                                         @PathVariable("name") String name) {
         Set<AvailableVersion> versions = artifactService.getVersions(organization, name);

@@ -41,6 +41,10 @@ sourceSets {
     acceptance
 }
 
+configurations {
+    all*.exclude group: 'org.slf4j', module: 'slf4j-nop'
+}
+
 dependencies {
     acceptanceCompile sourceSets.main.output
     acceptanceCompile sourceSets.test.output

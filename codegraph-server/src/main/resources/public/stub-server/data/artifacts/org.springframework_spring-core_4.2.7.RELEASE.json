@@ -1,17 +1,15 @@
 {
-    "artifact": {
-        "name": "org.springframework",
-        "organization": "spring-core",
-        "version": "4.2.7.RELEASE",
-        "dependencies": [
-            {
-                "name": "commons-logging",
-                "organization": "commons-logging",
-                "version": "1.2",
-                "configurations": [
-                    "compile"
-                ]
-            }
-        ]
-    }
+    "name": "org.springframework",
+    "organization": "spring-core",
+    "version": "4.2.7.RELEASE",
+    "dependencies": [
+        {
+            "name": "commons-logging",
+            "organization": "commons-logging",
+            "version": "1.2",
+            "configurations": [
+                "compile"
+            ]
+        }
+    ]
 }

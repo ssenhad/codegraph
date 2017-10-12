@@ -25,11 +25,13 @@ angular.module('Codegraph.artifacts')
             node.children = node.type === 'organization';
             return node;
         };
+        var byName = function (a, b) {
+            return a.name.localeCompare(b.name);
+        };
         $scope.treeData = function (node, callback) {
-            console.log("treeData", node);
             if (node && callback) {
                 api.getTreeItems(node.id).then(function (data) {
-                    var nodes = data.nodes.map(toJsTreeNode);
+                    var nodes = data.nodes.map(toJsTreeNode).sort(byName);
                     callback.call(this, nodes);
                 });
             }
@@ -47,6 +49,8 @@ angular.module('Codegraph.artifacts')
             }
             $state.go('artifacts.artifact', artifact, { location: true });
         };
+
+
 
         $scope.treeConfig = {
             core: {

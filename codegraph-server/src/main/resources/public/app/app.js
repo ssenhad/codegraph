@@ -27,7 +27,11 @@ angular
         'Codegraph.index',
         'Codegraph.viewer',
 
-    ]).config(function ($stateProvider) {
+    ]).run(function ($rootScope, $state, $stateParams) {
+        $rootScope.$state = $state;
+        $rootScope.$stateParams = $stateParams;
+    })
+    .config(function ($stateProvider) {
         $stateProvider.state('artifacts', {
             abstract: true,
             url: '/artifacts',
@@ -52,8 +56,7 @@ angular
                     controller: 'ArtifactDetailsController',
                 }
             }
-        })
-        ;
+        });
         /*
         $routeProvider.when('/', {
             templateUrl: 'app/modules/index/partials/index.html',

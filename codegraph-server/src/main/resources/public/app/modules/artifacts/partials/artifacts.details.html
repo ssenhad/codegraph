@@ -16,7 +16,7 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<div class="panel panel-default">
+<div class="panel panel-default" ng-hide="noDetails">
     <div class="panel-heading">
         <span><b>{{artifact.version}}</b></span>
     </div>
@@ -60,7 +60,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="dependency" ng-repeat="dependency in artifact.dependencies">
+                                <tr class="dependency" ng-repeat="dependency in artifact.dependencies | orderBy: ['configurations', 'organization', 'name']">
                                     <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.organization}}</a></td>
                                     <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.name}}</a></td>
                                     <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.version}}</a></td>

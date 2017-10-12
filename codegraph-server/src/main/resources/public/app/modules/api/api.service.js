@@ -17,10 +17,9 @@
 'use strict';
 
 angular.module('Codegraph.api')
-    .service('api', function ($http) {
+    .service('api', function ($http, $q) {
         this.get = function (url) {
-            return $http
-                .get(url)
+            return $http.get(url)
                 .then(function (response) {
                     return response.data;
                 });
@@ -61,6 +60,6 @@ angular.module('Codegraph.api')
         };
 
         this.getTreeItems = function(parent) {
-            return this.get(`/ui/tree?path=${parent ? parent : ''}`);
+            return this.get(`/ui/tree/nodes?parent=${parent ? parent : ''}`);
         }
     });

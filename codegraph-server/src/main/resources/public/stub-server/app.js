@@ -58,15 +58,15 @@ app.get('/api/artifacts/:organization/:artifact/:version/dependency-graph', func
     res.sendFile(`data/artifacts/dependency-graph/${organization}_${artifact}_${version}.json`, {root: __dirname});
 });
 
-app.get('/ui/tree', function (req, res) {
-    var path = req.query['path'];
+app.get('/ui/tree/nodes', function (req, res) {
+    var parent = req.query['parent'];
 
-    if (path == '') {
+    if (parent == '') {
         res.sendFile(`data/tree/_root.json`, {root: __dirname});
         return;
     }
 
-    res.sendFile(`data/tree/${path}.json`, {root: __dirname});
+    res.sendFile(`data/tree/${parent}.json`, {root: __dirname});
 });
 
 app.listen(3000, function () {

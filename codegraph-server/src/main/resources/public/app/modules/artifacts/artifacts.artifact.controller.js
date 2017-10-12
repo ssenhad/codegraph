@@ -21,5 +21,7 @@ angular.module('Codegraph.artifacts')
         api.getVersions($stateParams.organization, $stateParams.name).then(function (data) {
             $scope.availableVersions = data.versions;
             $scope.artifact = $stateParams;
+        }).catch(function (response) {
+            $scope.noVersions = true;
         });
     });

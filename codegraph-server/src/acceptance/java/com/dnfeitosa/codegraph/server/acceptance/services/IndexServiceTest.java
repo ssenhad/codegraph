@@ -4,10 +4,8 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
-import com.dnfeitosa.codegraph.db.models.DependencyNode;
 import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
-import com.dnfeitosa.codegraph.db.repositories.DependencyRepository;
 import com.dnfeitosa.codegraph.server.acceptance.AcceptanceTestBase;
 import com.dnfeitosa.codegraph.server.services.IndexService;
 import org.junit.Test;
@@ -28,9 +26,6 @@ public class IndexServiceTest extends AcceptanceTestBase {
     @Autowired
     private ArtifactRepository artifactRepository;
 
-    @Autowired
-    private DependencyRepository dependencyRepository;
-
     @Test
     public void whenIndexingAnArtifactAndItsDependencies() {
         Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0"));
@@ -41,7 +36,7 @@ public class IndexServiceTest extends AcceptanceTestBase {
         indexService.index(artifact);
 
         shouldCreateAnArtifactNodeFor(artifact);
-        shouldCreateTheDependencyNodeFor(dependency);
+        shouldCreateTheArtifactNodeFor(dependency);
         shouldCreateTheRelationshipBetween(artifact, dependency, configurations);
     }
 
@@ -53,12 +48,12 @@ public class IndexServiceTest extends AcceptanceTestBase {
         assertThat(artifactNode.getVersion(), is(artifact.getVersion().getNumber()));
     }
 
-    private void shouldCreateTheDependencyNodeFor(Dependency dependency) {
+    private void shouldCreateTheArtifactNodeFor(Dependency dependency) {
         String organization = dependency.getOrganization();
         String name = dependency.getName();
         String version = dependency.getVersion().getNumber();
 
-        DependencyNode dependencyNode = dependencyRepository.load(organization, name, version);
+        ArtifactNode dependencyNode = artifactRepository.load(organization, name, version);
         assertThat(dependencyNode.getName(), is(name));
         assertThat(dependencyNode.getOrganization(), is(organization));
         assertThat(dependencyNode.getVersion(), is(version));
@@ -67,7 +62,7 @@ public class IndexServiceTest extends AcceptanceTestBase {
     private void shouldCreateTheRelationshipBetween(Artifact artifact, Dependency dependency, Set<String> configurations) {
         ArtifactNode artifactNode = load(artifact);
 
-        DependencyNode dependencyNode = new DependencyNode(dependency.getOrganization(), dependency.getName(), dependency.getVersion().getNumber());
+        ArtifactNode dependencyNode = new ArtifactNode(dependency.getOrganization(), dependency.getName(), dependency.getVersion().getNumber());
         assertThat(artifactNode.getDeclaredDependencies(), hasItem(new DeclaresRelationship(artifactNode, dependencyNode, configurations)));
     }
 

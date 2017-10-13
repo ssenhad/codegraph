@@ -2,7 +2,6 @@ package com.dnfeitosa.codegraph.components.server.services;
 
 import com.dnfeitosa.codegraph.components.server.ComponentTestBase;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
-import com.dnfeitosa.codegraph.db.models.DependencyNode;
 import com.dnfeitosa.codegraph.server.services.Organization;
 import com.dnfeitosa.codegraph.server.services.OrganizationService;
 import org.junit.Test;
@@ -25,8 +24,8 @@ public class OrganizationServiceTest extends ComponentTestBase {
 
     @Test
     public void shouldReturnAllRootOrganizationsWhenParentIsNull() {
-        session.save(new DependencyNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0"));
-        session.save(new DependencyNode("aopalliance", "aopalliance", "1.0"));
+        session.save(new ArtifactNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0"));
+        session.save(new ArtifactNode("aopalliance", "aopalliance", "1.0"));
         session.save(new ArtifactNode("org.springframework", "spring-aop", "4.2.7.RELEASE"));
         session.save(new ArtifactNode("org.slf4j", "slf4j-api", "1.7.21"));
 
@@ -42,11 +41,11 @@ public class OrganizationServiceTest extends ComponentTestBase {
 
     @Test
     public void shouldReturnAllTheOrganizationsForAGivenParent() {
-        session.save(new DependencyNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0"));
-        session.save(new DependencyNode("aopalliance", "aopalliance", "1.0"));
+        session.save(new ArtifactNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0"));
+        session.save(new ArtifactNode("aopalliance", "aopalliance", "1.0"));
         session.save(new ArtifactNode("org.springframework", "spring-aop", "4.2.7.RELEASE"));
         session.save(new ArtifactNode("org.springframework.boot", "spring-boot", "1.3.6.RELEASE"));
-        session.save(new DependencyNode("org.slf4j", "slf4j-api", "1.7.21"));
+        session.save(new ArtifactNode("org.slf4j", "slf4j-api", "1.7.21"));
 
         Set<Organization> organizations = service.getOrganizations("org");
 
@@ -59,8 +58,8 @@ public class OrganizationServiceTest extends ComponentTestBase {
 
     @Test
     public void shouldReturnAllTheOrganizationsWithExactMatchForParentName() {
-        session.save(new DependencyNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0"));
-        session.save(new DependencyNode("co.foo.bar", "bar-baz", "1.0"));
+        session.save(new ArtifactNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0"));
+        session.save(new ArtifactNode("co.foo.bar", "bar-baz", "1.0"));
 
         Set<Organization> organizations = service.getOrganizations("co");
 

@@ -4,7 +4,6 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
-import com.dnfeitosa.codegraph.db.models.DependencyNode;
 import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import org.junit.Before;
 import org.junit.Test;
@@ -43,7 +42,7 @@ public class ArtifactNodeConverterTest {
         DeclaresRelationship declaredDependency = $(declaredDependencies).first();
 
         assertThat(declaredDependency.getConfigurations(), is(asSet("compile")));
-        DependencyNode dependencyNode = declaredDependency.getDependency();
+        ArtifactNode dependencyNode = declaredDependency.getDependency();
         assertThat(dependencyNode.getOrganization(), is("org.apache.commons"));
         assertThat(dependencyNode.getName(), is("commons-lang3"));
         assertThat(dependencyNode.getVersion(), is("3.4"));
@@ -52,7 +51,7 @@ public class ArtifactNodeConverterTest {
     @Test
     public void convertsAnArtifactNodeToModel() {
         ArtifactNode artifactNode = new ArtifactNode("com.dnfeitosa.codegraph", "codegraph-core", "1.0");
-        artifactNode.addDependency(new DependencyNode("org.apache.commons", "commons-lang3", "3.4"), asSet("compile"));
+        artifactNode.addDependency(new ArtifactNode("org.apache.commons", "commons-lang3", "3.4"), asSet("compile"));
 
         Artifact artifact = converter.toModel(artifactNode);
 

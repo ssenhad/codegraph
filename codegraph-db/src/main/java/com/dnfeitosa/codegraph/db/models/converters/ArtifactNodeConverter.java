@@ -20,7 +20,6 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
-import com.dnfeitosa.codegraph.db.models.DependencyNode;
 import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import org.springframework.stereotype.Component;
 
@@ -34,17 +33,10 @@ public class ArtifactNodeConverter {
 
         ArtifactNode artifactNode = new ArtifactNode(organization, name, number);
         artifact.getDependencies().forEach(dependency -> {
-            artifactNode.addDependency(toNode(dependency), dependency.getConfigurations());
+            artifactNode.addDependency(toNode(dependency.getArtifact()), dependency.getConfigurations());
         });
 
         return artifactNode;
-    }
-
-    private DependencyNode toNode(Dependency dependency) {
-        String organization = dependency.getOrganization();
-        String name = dependency.getName();
-        String version = dependency.getVersion().getNumber();
-        return new DependencyNode(organization, name, version);
     }
 
     public Artifact toModel(ArtifactNode node) {
@@ -57,7 +49,7 @@ public class ArtifactNodeConverter {
     }
 
     private Dependency toModel(DeclaresRelationship declared) {
-        DependencyNode dependency = declared.getDependency();
+        ArtifactNode dependency = declared.getDependency();
         String organization = dependency.getOrganization();
         String name = dependency.getName();
         String version = dependency.getVersion();

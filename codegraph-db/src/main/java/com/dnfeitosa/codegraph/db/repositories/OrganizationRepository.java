@@ -39,24 +39,25 @@ public class OrganizationRepository {
     }
 
     public Set<String> getAllOrganizations() {
-        String query = " MATCH (x:Artifact) RETURN x.organization AS org " +
-            " UNION " +
-            " MATCH (x:Dependency) RETURN x.organization AS org ";
+        String query = " MATCH (x:Artifact) RETURN x.organization AS org ";
         Result result = session.query(query, new HashMap<>());
         return stream(result.spliterator(), false)
-            .map(r -> r.get("org").toString())
+            .map(r -> toString(r))
             .collect(toSet());
     }
 
+    private String toString(Map<String, Object> r) {
+        Object org = r.get("org");
+        return org != null ? org.toString() : "";
+    }
+
     public Set<String> getOrganizations(String parent) {
-        String query = " MATCH (x:Artifact) WHERE x.organization STARTS WITH {parent} RETURN x.organization AS org " +
-            " UNION " +
-            " MATCH (x:Dependency) WHERE x.organization STARTS WITH {parent} RETURN x.organization AS org ";
+        String query = " MATCH (x:Artifact) WHERE x.organization STARTS WITH {parent} RETURN x.organization AS org ";
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("parent", parent + ".");
         Result result = session.query(query, parameters);
         return stream(result.spliterator(), false)
-            .map(r -> r.get("org").toString())
+            .map(r -> toString(r))
             .collect(toSet());
     }
 }

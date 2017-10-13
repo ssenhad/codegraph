@@ -20,7 +20,6 @@ import java.util.Set;
 
 import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
 import static org.apache.commons.collections4.IterableUtils.find;
-import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertThat;
@@ -97,11 +96,9 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
         {
             AvailableVersionResource versionResource = find(versions, byVersion("1.0"));
             assertThat(versionResource.getVersion(), is("1.0"));
-            assertThat(versionResource.getAvailability(), hasItems("ARTIFACT"));
         }{
             AvailableVersionResource versionResource = find(versions, byVersion("1.1"));
             assertThat(versionResource.getVersion(), is("1.1"));
-            assertThat(versionResource.getAvailability(), hasItems("DEPENDENCY"));
         }
     }
 

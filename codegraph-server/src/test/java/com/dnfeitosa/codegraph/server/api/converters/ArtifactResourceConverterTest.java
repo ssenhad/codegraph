@@ -15,8 +15,6 @@ import org.junit.Test;
 import java.util.List;
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.models.AvailableVersion.Availability.ARTIFACT;
-import static com.dnfeitosa.codegraph.core.models.AvailableVersion.Availability.DEPENDENCY;
 import static com.dnfeitosa.coollections.Coollections.asSet;
 import static java.util.Arrays.asList;
 import static org.apache.commons.collections4.IterableUtils.find;
@@ -84,8 +82,8 @@ public class ArtifactResourceConverterTest {
     @Test
     public void shouldConvertTheAvailableVersionsDataToResource() {
         ArtifactVersions resource = converter.toResource("com.dnfeitosa.codegraph", "codegraph-core", asSet(
-            new AvailableVersion(new Version("1.0"), DEPENDENCY, ARTIFACT),
-            new AvailableVersion(new Version("1.1"), DEPENDENCY)
+            new AvailableVersion(new Version("1.0")),
+            new AvailableVersion(new Version("1.1"))
         ));
 
         ArtifactResource artifact = resource.getArtifact();
@@ -100,11 +98,9 @@ public class ArtifactResourceConverterTest {
         {
             AvailableVersionResource version = find(versions, byVersion("1.0"));
             assertNotNull(version);
-            assertThat(version.getAvailability(), hasItems("DEPENDENCY", "ARTIFACT"));
         }{
             AvailableVersionResource version = find(versions, byVersion("1.1"));
             assertNotNull(version);
-            assertThat(version.getAvailability(), hasItems("DEPENDENCY"));
         }
     }
 

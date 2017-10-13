@@ -30,7 +30,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Set;
 
-import static java.util.Arrays.asList;
 import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 
@@ -82,9 +81,6 @@ public class ArtifactResourceConverter {
     }
 
     private AvailableVersionResource toResource(AvailableVersion version) {
-        Set<String> availability = asList(version.getAvailability()).stream()
-            .map(AvailableVersion.Availability::toString)
-            .collect(toSet());
-        return new AvailableVersionResource(version.getVersion().getNumber(), availability);
+        return new AvailableVersionResource(version.getVersion().getNumber());
     }
 }

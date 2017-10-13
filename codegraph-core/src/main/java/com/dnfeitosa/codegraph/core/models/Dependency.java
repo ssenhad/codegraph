@@ -47,4 +47,8 @@ public class Dependency {
     public Set<String> getConfigurations() {
         return configurations;
     }
+
+    public Artifact getArtifact() {
+        return artifact;
+    }
 }

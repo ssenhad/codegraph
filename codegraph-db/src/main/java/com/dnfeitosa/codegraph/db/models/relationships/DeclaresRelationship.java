@@ -17,7 +17,6 @@
 package com.dnfeitosa.codegraph.db.models.relationships;
 
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
-import com.dnfeitosa.codegraph.db.models.DependencyNode;
 import org.neo4j.ogm.annotation.EndNode;
 import org.neo4j.ogm.annotation.GraphId;
 import org.neo4j.ogm.annotation.RelationshipEntity;
@@ -36,19 +35,19 @@ public class DeclaresRelationship {
     private ArtifactNode artifact;
 
     @EndNode
-    private DependencyNode dependency;
+    private ArtifactNode dependency;
 
     private Set<String> configurations;
 
     public DeclaresRelationship() { }
 
-    public DeclaresRelationship(ArtifactNode artifact, DependencyNode dependency, Set<String> configurations) {
+    public DeclaresRelationship(ArtifactNode artifact, ArtifactNode dependency, Set<String> configurations) {
         this.artifact = artifact;
         this.dependency = dependency;
         this.configurations = configurations;
     }
 
-    public DependencyNode getDependency() {
+    public ArtifactNode getDependency() {
         return dependency;
     }
 

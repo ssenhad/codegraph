@@ -20,34 +20,28 @@ import java.util.Set;
 
 public class Dependency {
 
-    private final String id;
-    private final String name;
-    private final String organization;
-    private final Version version;
+    private final Artifact artifact;
     private final Set<String> configurations;
 
-    public Dependency(String organization, String name, Version version, Set<String> configurations) {
-        this.id = String.format("%s:%s:%s", organization, name, version.getNumber());
-        this.name = name;
-        this.organization = organization;
-        this.version = version;
+    public Dependency(Artifact artifact, Set<String> configurations) {
+        this.artifact = artifact;
         this.configurations = configurations;
     }
 
     public String getId() {
-        return id;
+        return artifact.getId();
     }
 
     public String getOrganization() {
-        return organization;
+        return artifact.getOrganization();
     }
 
     public String getName() {
-        return name;
+        return artifact.getName();
     }
 
     public Version getVersion() {
-        return version;
+        return artifact.getVersion();
     }
 
     public Set<String> getConfigurations() {

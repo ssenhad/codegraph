@@ -61,6 +61,7 @@ public class ArtifactNodeConverter {
         String organization = dependency.getOrganization();
         String name = dependency.getName();
         String version = dependency.getVersion();
-        return new Dependency(organization, name, new Version(version), declared.getConfigurations());
+        Artifact artifact = new Artifact(organization, name, new Version(version));
+        return new Dependency(artifact, declared.getConfigurations());
     }
 }

@@ -37,8 +37,8 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
     @Test
     public void shouldReturnAnArtifactResourceWithItsDependencies() {
         Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0"));
-        artifact.addDependency(new Dependency("org.junit", "junit", new Version("4.12"), asSet("test")));
-        artifact.addDependency(new Dependency("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0"), asSet("compile")));
+        artifact.addDependency(new Dependency(new Artifact("org.junit", "junit", new Version("4.12")), asSet("test")));
+        artifact.addDependency(new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")), asSet("compile")));
         service.save(artifact);
 
         ResponseEntity<ArtifactResource> response = controller.getArtifact("com.dnfeitosa.codegraph", "codegraph-server", "1.0");
@@ -76,10 +76,10 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
     public void shouldReturnAllVersionsOfAnArtifactAndDeclaredDependency() {
         service.save(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")));
         service.save(new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0")) {{
-            addDependency(new Dependency("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.1"), asSet("compile")));
+            addDependency(new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.1")), asSet("compile")));
         }});
         service.save(new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.2")) {{
-            addDependency(new Dependency("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.+"), asSet("compile")));
+            addDependency(new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.+")), asSet("compile")));
         }});
 
         ResponseEntity<ArtifactVersions> response = controller.getVersions("com.dnfeitosa.codegraph", "codegraph-core");

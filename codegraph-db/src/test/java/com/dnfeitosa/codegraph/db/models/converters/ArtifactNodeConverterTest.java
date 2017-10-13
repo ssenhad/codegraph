@@ -29,7 +29,7 @@ public class ArtifactNodeConverterTest {
     @Test
     public void convertsAnArtifactToNode() {
         Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0"));
-        artifact.addDependency(new Dependency("org.apache.commons", "commons-lang3", new Version("3.4"), asSet("compile")));
+        artifact.addDependency(new Dependency(new Artifact("org.apache.commons", "commons-lang3", new Version("3.4")), asSet("compile")));
 
         ArtifactNode node = converter.toNode(artifact);
 

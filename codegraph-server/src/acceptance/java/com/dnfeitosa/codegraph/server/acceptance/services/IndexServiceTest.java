@@ -35,7 +35,7 @@ public class IndexServiceTest extends AcceptanceTestBase {
     public void whenIndexingAnArtifactAndItsDependencies() {
         Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0"));
         Set<String> configurations = asSet("compile");
-        Dependency dependency = new Dependency("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0"), configurations);
+        Dependency dependency = new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")), configurations);
         artifact.addDependency(dependency);
 
         indexService.index(artifact);

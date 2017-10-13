@@ -49,7 +49,7 @@ public class ArtifactResourceConverter {
 
     private Dependency toModel(DeclaredDependency dependency) {
         Version version = new Version(dependency.getVersion());
-        return new Dependency(dependency.getOrganization(), dependency.getName(), version, dependency.getConfigurations());
+        return new Dependency(new Artifact(dependency.getOrganization(), dependency.getName(), version), dependency.getConfigurations());
     }
 
     public ArtifactResource toResource(Artifact artifact) {

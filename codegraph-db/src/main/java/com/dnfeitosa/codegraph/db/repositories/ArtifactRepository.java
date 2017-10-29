@@ -45,13 +45,9 @@ public class ArtifactRepository  {
     }
 
     public void save(ArtifactNode artifact) {
-//        System.out.println("saving single artifact");
         session.save(artifact, 0);
-//        System.out.println("saving dependencies");
         session.save(artifact.getDependencies(), 0);
-//        System.out.println("saving relationships");
         session.save(artifact);
-//        System.out.println("done");
     }
 
     public ArtifactNode load(String organization, String name, String version) {
@@ -74,15 +70,9 @@ public class ArtifactRepository  {
     }
 
     public void save(Set<ArtifactNode> artifacts) {
-//        System.out.println("bulk artifact save");
         session.save(artifacts, 0);
         session.save(collectDependencies(artifacts), 0);
         session.save(artifacts);
-//        System.out.println("done");
-    }
-
-    public void merge(Set<ArtifactNode> artifacts) {
-
     }
 
     private Set<ArtifactNode> collectDependencies(Set<ArtifactNode> artifacts) {

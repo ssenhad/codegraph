@@ -16,9 +16,11 @@
  */
 package com.dnfeitosa.codegraph.core.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
+
+import static com.dnfeitosa.codegraph.core.utils.Arrays.asList;
 
 public class Artifact implements Comparable<Artifact> {
 
@@ -27,10 +29,10 @@ public class Artifact implements Comparable<Artifact> {
     private final String name;
     private final Version version;
 
-    private final List<Dependency> dependencies = new ArrayList<>();
+    private final Set<Dependency> dependencies = new HashSet<>();
 
     public Artifact(String organization, String name, Version version) {
-        this.id = String.format("%s:%s:%s", organization, name, version.getNumber());
+        this.id = id(organization, name, version);
         this.name = name;
         this.organization = organization;
         this.version = version;
@@ -52,11 +54,13 @@ public class Artifact implements Comparable<Artifact> {
         return version;
     }
 
-    public void addDependency(Dependency dependency) {
+    public Artifact addDependency(Dependency dependency, Dependency... dependencies) {
         this.dependencies.add(dependency);
+        this.dependencies.addAll(asList(dependencies));
+        return this;
     }
 
-    public List<Dependency> getDependencies() {
+    public Set<Dependency> getDependencies() {
         return dependencies;
     }
 
@@ -76,5 +80,18 @@ public class Artifact implements Comparable<Artifact> {
     @Override
     public int compareTo(Artifact o) {
         return id.compareTo(o.id);
+    }
+
+    @Override
+    public String toString() {
+        return id;
+    }
+
+    public static String id(String organization, String name, Version version) {
+        return String.format("%s:%s:%s", organization, name, version.getNumber());
+    }
+
+    public String hash() {
+        return getClass().getName() + "@" + Integer.toHexString(hashCode());
     }
 }

@@ -40,7 +40,7 @@ public class ArtifactNode {
     private String name;
     private String version;
 
-    @Relationship(type = "DECLARES")
+    @Relationship(type = "DEPENDS_ON")
     private Set<DeclaresRelationship> declaredDependencies;
 
     ArtifactNode() {

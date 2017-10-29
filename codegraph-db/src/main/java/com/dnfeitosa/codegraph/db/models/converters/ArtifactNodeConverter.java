@@ -17,14 +17,23 @@
 package com.dnfeitosa.codegraph.db.models.converters;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.Artifacts;
 import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
 import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
 public class ArtifactNodeConverter {
+
+    private final Artifacts artifacts;
+
+    @Autowired
+    public ArtifactNodeConverter(Artifacts artifacts) {
+        this.artifacts = artifacts;
+    }
 
     public ArtifactNode toNode(Artifact artifact) {
         String organization = artifact.getOrganization();
@@ -40,7 +49,7 @@ public class ArtifactNodeConverter {
     }
 
     public Artifact toModel(ArtifactNode node) {
-        Artifact artifact = new Artifact(node.getOrganization(), node.getName(), new Version(node.getVersion()));
+        Artifact artifact = artifacts.artifact(node.getOrganization(), node.getName(), new Version(node.getVersion()));
         node.getDeclaredDependencies().forEach(declaredDependency -> {
             Dependency dependency = toModel(declaredDependency);
             artifact.addDependency(dependency);
@@ -53,7 +62,7 @@ public class ArtifactNodeConverter {
         String organization = dependency.getOrganization();
         String name = dependency.getName();
         String version = dependency.getVersion();
-        Artifact artifact = new Artifact(organization, name, new Version(version));
+        Artifact artifact = artifacts.artifact(organization, name, new Version(version));
         return new Dependency(artifact, declared.getConfigurations());
     }
 }

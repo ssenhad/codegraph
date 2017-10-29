@@ -26,13 +26,13 @@ public class ArtifactResource implements Resource {
     private final String organization;
     private final String name;
     private final String version;
-    private final List<DeclaredDependency> dependencies;
+    private final List<DependencyResource> dependencies;
 
     @JsonCreator
     public ArtifactResource(@JsonProperty("organization") String organization,
                             @JsonProperty("name") String name,
                             @JsonProperty("version") String version,
-                            @JsonProperty("dependencies") List<DeclaredDependency> dependencies) {
+                            @JsonProperty("dependencies") List<DependencyResource> dependencies) {
         this.organization = organization;
         this.name = name;
         this.version = version;
@@ -51,7 +51,7 @@ public class ArtifactResource implements Resource {
         return version;
     }
 
-    public List<DeclaredDependency> getDependencies() {
+    public List<DependencyResource> getDependencies() {
         return dependencies;
     }
 }

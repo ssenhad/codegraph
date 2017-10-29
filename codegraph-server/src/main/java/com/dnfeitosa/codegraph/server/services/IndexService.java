@@ -20,6 +20,8 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Set;
+
 @Service
 public class IndexService {
 
@@ -27,11 +29,11 @@ public class IndexService {
 
     @Autowired
     public IndexService(ArtifactService artifactService) {
-
         this.artifactService = artifactService;
     }
 
-    public void index(Artifact artifact) {
+    public void index(Artifact artifact, Set<Artifact> dependencyArtifacts) {
         artifactService.save(artifact);
+        artifactService.save(dependencyArtifacts);
     }
 }

@@ -1,11 +1,6 @@
 package com.dnfeitosa.codegraph.server.acceptance.services;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
-import com.dnfeitosa.codegraph.core.models.Dependency;
-import com.dnfeitosa.codegraph.core.models.Version;
-import com.dnfeitosa.codegraph.db.models.ArtifactNode;
-import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
-import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
 import com.dnfeitosa.codegraph.server.acceptance.AcceptanceTestBase;
 import com.dnfeitosa.codegraph.server.services.IndexService;
 import org.junit.Test;
@@ -13,64 +8,105 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
+import static com.dnfeitosa.codegraph.core.utils.Arrays.asList;
 import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertThat;
 
 public class IndexServiceTest extends AcceptanceTestBase {
 
     @Autowired
     private IndexService indexService;
 
-    @Autowired
-    private ArtifactRepository artifactRepository;
-
     @Test
     public void whenIndexingAnArtifactAndItsDependencies() {
-        Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0"));
-        Set<String> configurations = asSet("compile");
-        Dependency dependency = new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")), configurations);
-        artifact.addDependency(dependency);
+        Artifact artifact = artifact("com.dnfeitosa.codegraph", "codegraph-server", "1.0")
+            .addDependency(dependency("com.dnfeitosa.codegraph", "codegraph-core", "1.0", asSet("compile")));
 
-        indexService.index(artifact);
+        indexService.index(artifact, asSet());
 
-        shouldCreateAnArtifactNodeFor(artifact);
-        shouldCreateTheArtifactNodeFor(dependency);
-        shouldCreateTheRelationshipBetween(artifact, dependency, configurations);
+        db.artifact("com.dnfeitosa.codegraph", "codegraph-server", "1.0")
+            .exists()
+            .hasDependency("com.dnfeitosa.codegraph", "codegraph-core", "1.0", asSet("compile"));
+
+        db.artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0")
+            .exists();
     }
 
-    private void shouldCreateAnArtifactNodeFor(Artifact artifact) {
-        ArtifactNode artifactNode = load(artifact);
+    @Test
+    public void whenIndexingAFullDependencyGraph() {
+        Artifact artifact = artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0");
+        asList(
+            dependency("commons-lang", "commons-lang", "2.6", asSet("compile")),
+            dependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile")),
+            dependency("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile")),
+            dependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile")),
+            dependency("junit", "junit", "4.12", asSet("test")),
+            dependency("org.hamcrest", "hamcrest-core", "1.+", asSet("test"))
+        ).forEach(artifact::addDependency);
 
-        assertThat(artifactNode.getName(), is(artifact.getName()));
-        assertThat(artifactNode.getOrganization(), is(artifact.getOrganization()));
-        assertThat(artifactNode.getVersion(), is(artifact.getVersion().getNumber()));
-    }
+        Set<Artifact> dependencyArtifacts = asSet(
+            artifact("com.dnfeitosa.codegraph", "coollections", "1.0")
+                .addDependency(
+                    dependency("commons-lang", "commons-lang", "2.8", asSet("compile"))
+                ),
+            artifact("org.springframework", "spring-context", "4.2.7.RELEASE")
+                .addDependency(
+                    dependency("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"))
+                ),
+            artifact("org.springframework", "spring-aop", "4.2.7.RELEASE")
+                .addDependency(
+                    dependency("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile")),
+                    dependency("aopalliance", "aopalliance", "1.0", asSet("compile"))
+                ),
+            artifact("org.springframework", "spring-beans", "4.2.7.RELEASE")
+                .addDependency(
+                    dependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"))
+                ),
+            artifact("junit", "junit", "4.12")
+                .addDependency(
+                    dependency("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"))
+                )
+        );
 
-    private void shouldCreateTheArtifactNodeFor(Dependency dependency) {
-        String organization = dependency.getOrganization();
-        String name = dependency.getName();
-        String version = dependency.getVersion().getNumber();
+        indexService.index(artifact, dependencyArtifacts);
 
-        ArtifactNode dependencyNode = artifactRepository.load(organization, name, version);
-        assertThat(dependencyNode.getName(), is(name));
-        assertThat(dependencyNode.getOrganization(), is(organization));
-        assertThat(dependencyNode.getVersion(), is(version));
-    }
+        db.hasArtifact("com.dnfeitosa.codegraph", "coollections", "1.0");
+        db.hasArtifact("org.springframework", "spring-context", "4.2.7.RELEASE");
+        db.hasArtifact("org.springframework", "spring-core", "4.2.7.RELEASE");
+        db.hasArtifact("org.springframework", "spring-aop", "4.2.7.RELEASE");
+        db.hasArtifact("org.springframework", "spring-beans", "4.2.7.RELEASE");
+        db.hasArtifact("junit", "junit", "4.12");
+        db.hasArtifact("org.hamcrest", "hamcrest-core", "1.+");
+        db.hasArtifact("commons-lang", "commons-lang", "2.6");
+        db.hasArtifact("commons-lang", "commons-lang", "2.8");
 
-    private void shouldCreateTheRelationshipBetween(Artifact artifact, Dependency dependency, Set<String> configurations) {
-        ArtifactNode artifactNode = load(artifact);
+        db.artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0")
+            .exists()
+            .hasDependency("commons-lang", "commons-lang", "2.6", asSet("compile"))
+            .hasDependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile"))
+            .hasDependency("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile"))
+            .hasDependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"))
+            .hasDependency("junit", "junit", "4.12", asSet("test"))
+            .hasDependency("org.hamcrest", "hamcrest-core", "1.+", asSet("test"));
 
-        ArtifactNode dependencyNode = new ArtifactNode(dependency.getOrganization(), dependency.getName(), dependency.getVersion().getNumber());
-        assertThat(artifactNode.getDeclaredDependencies(), hasItem(new DeclaresRelationship(artifactNode, dependencyNode, configurations)));
-    }
+        db.artifact("com.dnfeitosa.codegraph", "coollections", "1.0")
+            .exists()
+            .hasDependency("commons-lang", "commons-lang", "2.8", asSet("compile"));
 
-    private ArtifactNode load(Artifact artifact) {
-        String organization = artifact.getOrganization();
-        String name = artifact.getName();
-        String version = artifact.getVersion().getNumber();
+        db.artifact("org.springframework", "spring-context", "4.2.7.RELEASE")
+            .exists()
+            .hasDependency("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"));
 
-        return artifactRepository.load(organization, name, version);
+        db.artifact("org.springframework", "spring-aop", "4.2.7.RELEASE")
+            .exists()
+            .hasDependency("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile"))
+            .hasDependency("aopalliance", "aopalliance", "1.0", asSet("compile"));
+
+        db.artifact("org.springframework", "spring-beans", "4.2.7.RELEASE")
+            .exists()
+            .hasDependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"));
+
+        db.artifact("junit", "junit", "4.12")
+            .exists()
+            .hasDependency("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"));
     }
 }

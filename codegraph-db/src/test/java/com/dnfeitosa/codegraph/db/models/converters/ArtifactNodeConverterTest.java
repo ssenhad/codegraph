@@ -1,6 +1,7 @@
 package com.dnfeitosa.codegraph.db.models.converters;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.Artifacts;
 import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
@@ -8,7 +9,6 @@ import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Set;
 
 import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
@@ -19,16 +19,18 @@ import static org.junit.Assert.assertThat;
 public class ArtifactNodeConverterTest {
 
     private ArtifactNodeConverter converter;
+    private Artifacts artifacts;
 
     @Before
     public void setUp() {
-        converter = new ArtifactNodeConverter();
+        artifacts = new Artifacts();
+        converter = new ArtifactNodeConverter(artifacts);
     }
 
     @Test
     public void convertsAnArtifactToNode() {
-        Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0"));
-        artifact.addDependency(new Dependency(new Artifact("org.apache.commons", "commons-lang3", new Version("3.4")), asSet("compile")));
+        Artifact artifact = artifacts.artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0"));
+        artifact.addDependency(new Dependency(artifacts.artifact("org.apache.commons", "commons-lang3", new Version("3.4")), asSet("compile")));
 
         ArtifactNode node = converter.toNode(artifact);
 
@@ -59,10 +61,10 @@ public class ArtifactNodeConverterTest {
         assertThat(artifact.getName(), is("codegraph-core"));
         assertThat(artifact.getVersion().getNumber(), is("1.0"));
 
-        List<Dependency> dependencies = artifact.getDependencies();
+        Set<Dependency> dependencies = artifact.getDependencies();
         assertThat(dependencies.size(), is(1));
 
-        Dependency dependency = dependencies.get(0);
+        Dependency dependency = $(dependencies).first();
         assertThat(dependency.getOrganization(), is("org.apache.commons"));
         assertThat(dependency.getName(), is("commons-lang3"));
         assertThat(dependency.getVersion().getNumber(), is("3.4"));

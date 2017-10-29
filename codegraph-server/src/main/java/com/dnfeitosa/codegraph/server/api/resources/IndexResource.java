@@ -19,19 +19,25 @@ package com.dnfeitosa.codegraph.server.api.resources;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Set;
+
 public class IndexResource {
 
     private ArtifactResource artifact;
-    private ResolutionResultResource resolutionResult;
+    private Set<ArtifactResource> dependencyArtifacts;
 
     @JsonCreator
     public IndexResource(@JsonProperty("artifact") ArtifactResource artifact,
-                         @JsonProperty("resolutionResult") ResolutionResultResource resolutionResult) {
+                         @JsonProperty("dependencyArtifacts") Set<ArtifactResource> dependencyArtifacts) {
         this.artifact = artifact;
-        this.resolutionResult = resolutionResult;
+        this.dependencyArtifacts = dependencyArtifacts;
     }
 
     public ArtifactResource getArtifact() {
         return artifact;
+    }
+
+    public Set<ArtifactResource> getDependencyArtifacts() {
+        return dependencyArtifacts;
     }
 }

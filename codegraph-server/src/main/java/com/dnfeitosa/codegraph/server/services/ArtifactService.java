@@ -71,4 +71,11 @@ public class ArtifactService {
             .map(nodeConverter::toModel)
             .collect(toSet());
     }
+
+    public void save(Set<Artifact> dependencyArtifacts) {
+        Set<ArtifactNode> artifacts = dependencyArtifacts.stream()
+            .map(nodeConverter::toNode)
+            .collect(toSet());
+        artifactRepository.save(artifacts);
+    }
 }

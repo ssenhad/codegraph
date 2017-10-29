@@ -14,14 +14,22 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dnfeitosa.codegraph.server.main;
+package com.dnfeitosa.codegraph.core.models;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import java.util.HashMap;
+import java.util.Map;
 
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan("com.dnfeitosa.codegraph.*")
-public class CodegraphServerConfiguration {
+public class Artifacts {
+
+    private final Map<String, Artifact> artifacts = new HashMap<>();
+
+    public Artifact artifact(String organization, String name, Version version) {
+        String id = Artifact.id(organization, name, version);
+        if (!artifacts.containsKey(id)) {
+            Artifact artifact = new Artifact(organization, name, version);
+            artifacts.put(id, artifact);
+            return artifact;
+        }
+        return artifacts.get(id);
+    }
 }

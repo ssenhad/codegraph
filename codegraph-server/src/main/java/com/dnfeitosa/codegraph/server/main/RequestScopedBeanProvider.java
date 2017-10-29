@@ -16,12 +16,17 @@
  */
 package com.dnfeitosa.codegraph.server.main;
 
-import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
-import org.springframework.context.annotation.ComponentScan;
-import org.springframework.context.annotation.Configuration;
+import com.dnfeitosa.codegraph.core.models.Artifacts;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Scope;
+import org.springframework.stereotype.Component;
+import org.springframework.web.context.WebApplicationContext;
 
-@Configuration
-@EnableAutoConfiguration
-@ComponentScan("com.dnfeitosa.codegraph.*")
-public class CodegraphServerConfiguration {
+@Component
+public class RequestScopedBeanProvider {
+    @Bean
+    @Scope(WebApplicationContext.SCOPE_REQUEST)
+    public Artifacts getArtifacts() {
+        return new Artifacts();
+    }
 }

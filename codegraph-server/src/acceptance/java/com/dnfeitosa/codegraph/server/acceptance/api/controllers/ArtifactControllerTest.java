@@ -1,14 +1,13 @@
 package com.dnfeitosa.codegraph.server.acceptance.api.controllers;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
-import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.server.acceptance.AcceptanceTestBase;
 import com.dnfeitosa.codegraph.server.api.controllers.ArtifactController;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactVersions;
 import com.dnfeitosa.codegraph.server.api.resources.AvailableVersionResource;
-import com.dnfeitosa.codegraph.server.api.resources.DeclaredDependency;
+import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
 import com.dnfeitosa.codegraph.server.services.ArtifactService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,8 +35,8 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
     @Test
     public void shouldReturnAnArtifactResourceWithItsDependencies() {
         Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0"));
-        artifact.addDependency(new Dependency(new Artifact("org.junit", "junit", new Version("4.12")), asSet("test")));
-        artifact.addDependency(new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")), asSet("compile")));
+        artifact.addDependency(new com.dnfeitosa.codegraph.core.models.Dependency(new Artifact("org.junit", "junit", new Version("4.12")), asSet("test")));
+        artifact.addDependency(new com.dnfeitosa.codegraph.core.models.Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")), asSet("compile")));
         service.save(artifact);
 
         ResponseEntity<ArtifactResource> response = controller.getArtifact("com.dnfeitosa.codegraph", "codegraph-server", "1.0");
@@ -48,16 +47,16 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
         assertThat(artifactResource.getName(), is("codegraph-server"));
         assertThat(artifactResource.getVersion(), is("1.0"));
 
-        List<DeclaredDependency> dependencies = artifactResource.getDependencies();
+        List<DependencyResource> dependencies = artifactResource.getDependencies();
         assertThat(dependencies.size(), is(2));
 
-        DeclaredDependency junit = find(dependencies, d -> "junit".equals(d.getName()));
+        DependencyResource junit = find(dependencies, d -> "junit".equals(d.getName()));
         assertThat(junit.getOrganization(), is("org.junit"));
         assertThat(junit.getName(), is("junit"));
         assertThat(junit.getVersion(), is("4.12"));
         assertThat(junit.getConfigurations(), is(asSet("test")));
 
-        DeclaredDependency codegraphCore = find(dependencies, d -> "codegraph-core".equals(d.getName()));
+        DependencyResource codegraphCore = find(dependencies, d -> "codegraph-core".equals(d.getName()));
         assertThat(codegraphCore.getOrganization(), is("com.dnfeitosa.codegraph"));
         assertThat(codegraphCore.getName(), is("codegraph-core"));
         assertThat(codegraphCore.getVersion(), is("1.0"));
@@ -75,10 +74,10 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
     public void shouldReturnAllVersionsOfAnArtifactAndDeclaredDependency() {
         service.save(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")));
         service.save(new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0")) {{
-            addDependency(new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.1")), asSet("compile")));
+            addDependency(new com.dnfeitosa.codegraph.core.models.Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.1")), asSet("compile")));
         }});
         service.save(new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.2")) {{
-            addDependency(new Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.+")), asSet("compile")));
+            addDependency(new com.dnfeitosa.codegraph.core.models.Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.+")), asSet("compile")));
         }});
 
         ResponseEntity<ArtifactVersions> response = controller.getVersions("com.dnfeitosa.codegraph", "codegraph-core");

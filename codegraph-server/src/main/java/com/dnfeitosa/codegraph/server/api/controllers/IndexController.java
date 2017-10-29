@@ -29,6 +29,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Set;
+
+import static java.util.stream.Collectors.toSet;
 import static org.springframework.web.bind.annotation.RequestMethod.POST;
 
 @RestController
@@ -47,13 +50,24 @@ public class IndexController {
 
     @RequestMapping(value = "/api/index", method = POST)
     public ResponseEntity<ArtifactResource> index(@RequestBody IndexResource indexResource) {
-        ArtifactResource artifactResource = indexResource.getArtifact();
-        index(artifactResource);
+        ArtifactResource artifactResource = indexResource(indexResource);
 
-        Artifact artifact = loadArtifact(artifactResource);
-        ArtifactResource createdArtifact = artifactConverter.toResource(artifact);
+        Artifact loadedArtifact = loadArtifact(artifactResource);
+        ArtifactResource createdArtifact = artifactConverter.toResource(loadedArtifact);
 
         return new ResponseEntity<>(createdArtifact, HttpStatus.CREATED);
+    }
+
+    private ArtifactResource indexResource(@RequestBody IndexResource indexResource) {
+        ArtifactResource artifactResource = indexResource.getArtifact();
+        Artifact artifact = artifactConverter.toModel(artifactResource);
+
+        Set<Artifact> dependencyArtifacts = indexResource.getDependencyArtifacts().stream()
+            .map(artifactConverter::toModel)
+            .collect(toSet());
+
+        indexService.index(artifact, dependencyArtifacts);
+        return artifactResource;
     }
 
     private Artifact loadArtifact(ArtifactResource artifactResource) {
@@ -61,10 +75,5 @@ public class IndexController {
         String name = artifactResource.getName();
         String version = artifactResource.getVersion();
         return artifactService.load(organization, name, version);
-    }
-
-    private void index(ArtifactResource resource) {
-        Artifact artifact = artifactConverter.toModel(resource);
-        indexService.index(artifact);
     }
 }

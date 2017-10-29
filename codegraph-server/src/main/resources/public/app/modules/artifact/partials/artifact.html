@@ -16,27 +16,27 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<div class="row artifact-overview">
+<div class="row artifactSpec-overview">
     <div class="col-md-5">
         <div class="overview">
-            <div class="artifact">
-                <div class="name">{{artifact.name}}:{{artifact.version}}</div>
-                <div class="organization">{{artifact.organization}}</div>
+            <div class="artifactSpec">
+                <div class="name">{{artifactSpec.name}}:{{artifactSpec.version}}</div>
+                <div class="organization">{{artifactSpec.organization}}</div>
             </div>
             <div class="stats row">
                 <!--
                 <div class="stat col-md-4">
-                    <span><a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/classes">{{stats.classes}}</a></span>
+                    <span><a href="#artifactSpecfact.organization}artifactSpecfact.name}artifactSpecfact.version}}/classes">{{stats.classes}}</a></span>
                     <p>classes</p>
                 </div>
                 -->
                 <div class="stat col-md-4">
-                    <span><a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependencies">{{stats.dependencies}}</a></span>
+                    <span><a href="#!/{{artifactSpec.organization}}/{{artifactSpec.name}}/{{artifactSpec.version}}/dependencies">{{stats.dependencies}}</a></span>
                     <p>dependencies</p>
                 </div>
                 <!--
                 <div class="stat col-md-4">
-                    <span><a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependents">{{stats.dependents}}</a></span>
+                    <span><a href="#artifactSpecfact.organization}artifactSpecfact.name}artifactSpecfact.version}}/dependents">{{stats.dependents}}</a></span>
                     <p>dependents</p>
                 </div>
                 -->
@@ -45,7 +45,7 @@
                 <h3>Other versions</h3>
                 <span class="versions">
                     <span ng-repeat="availableVersion in availableVersions">
-                        <a ng-class="{'artifact-unavailable': !availableVersion.availability.contains('ARTIFACT')}" href="#!/{{artifact.organization}}/{{artifact.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
+                        <a ng-class="{'artifactSpec-unavailable': !availableVersion.availability.contains('ARTIFACT')}" href="#!/{{artifactSpec.organization}}/{{artifactSpec.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
                     </span>
                 </span>
             </div>
@@ -53,11 +53,11 @@
     </div>
     <div class="col-md-5">
         <h3>Declared dependencies</h3>
-        <div ng-show="artifact.dependencies.length == 0">
+        <div ng-show="artifactSpec.dependencies.length == 0">
             <i>No dependencies</i>
         </div>
-        <div class="declared-dependencies" ng-show="artifact.dependencies.length > 0">
-            <div class="dependency" ng-repeat="dependency in artifact.dependencies">
+        <div class="declared-dependencies" ng-show="artifactSpec.dependencies.length > 0">
+            <div class="dependency" ng-repeat="dependency in artifactSpec.dependencies">
                 {{dependency.organization}}:{{dependency.name}}:{{dependency.version}}
                 <span class="configurations">
                     <span ng-repeat="configuration in dependency.configurations">{{configuration}}</span>

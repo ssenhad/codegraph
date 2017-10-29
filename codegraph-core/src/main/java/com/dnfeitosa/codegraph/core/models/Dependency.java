@@ -16,6 +16,7 @@
  */
 package com.dnfeitosa.codegraph.core.models;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Dependency {
@@ -50,5 +51,27 @@ public class Dependency {
 
     public Artifact getArtifact() {
         return artifact;
+    }
+
+    @Override
+    public String toString() {
+        return "Dependency{" +
+            "artifact=" + artifact +
+            ", configurations=" + configurations +
+            '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Dependency that = (Dependency) o;
+        return Objects.equals(artifact, that.artifact) &&
+            Objects.equals(configurations, that.configurations);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(artifact, configurations);
     }
 }

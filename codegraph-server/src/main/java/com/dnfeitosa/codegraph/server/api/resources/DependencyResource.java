@@ -16,50 +16,47 @@
  */
 package com.dnfeitosa.codegraph.server.api.resources;
 
-import java.util.ArrayList;
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
-public class DependencyResource implements LinkableResource {
+import java.util.Set;
 
-    private String name;
-    private String organization;
-    private VersionResource version;
-    private List<String> configurations = new ArrayList<>();
+public class DependencyResource {
 
-    public String getName() {
-        return name;
-    }
+    private final String organization;
+    private final String name;
+    private final String version;
+    private final Set<String> configurations;
 
-    public void setName(String name) {
+    @JsonCreator
+    public DependencyResource(@JsonProperty("organization") String organization,
+                              @JsonProperty("name") String name,
+                              @JsonProperty("version") String version,
+                              @JsonProperty("configurations") Set<String> configurations) {
+        this.organization = organization;
         this.name = name;
+        this.version = version;
+        this.configurations = configurations;
     }
 
     public String getOrganization() {
         return organization;
     }
 
-    public void setOrganization(String organization) {
-        this.organization = organization;
+    public String getName() {
+        return name;
     }
 
-    public VersionResource getVersion() {
+    public String getVersion() {
         return version;
     }
 
-    public void setVersion(VersionResource version) {
-        this.version = version;
-    }
-
-    public List<String> getConfigurations() {
+    public Set<String> getConfigurations() {
         return configurations;
     }
 
-    public void setConfigurations(List<String> configurations) {
-        this.configurations = configurations;
-    }
-
     @Override
-    public String getUri() {
-        return null;
+    public String toString() {
+        return String.format("%s:%s:%s(%s)", organization, name, version, configurations);
     }
 }

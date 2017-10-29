@@ -25,7 +25,9 @@ import org.neo4j.ogm.annotation.StartNode;
 import java.util.Objects;
 import java.util.Set;
 
-@RelationshipEntity(type = "DECLARES")
+import static java.lang.String.format;
+
+@RelationshipEntity(type = "DEPENDS_ON")
 public class DeclaresRelationship {
 
     @GraphId
@@ -68,5 +70,10 @@ public class DeclaresRelationship {
 
     public Set<String> getConfigurations() {
         return configurations;
+    }
+
+    @Override
+    public String toString() {
+        return format("(%s)--(%s)-->(%s)", artifact.getId(), configurations, dependency.getId());
     }
 }

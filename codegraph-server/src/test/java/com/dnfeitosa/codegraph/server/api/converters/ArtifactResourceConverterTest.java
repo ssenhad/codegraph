@@ -1,20 +1,20 @@
 package com.dnfeitosa.codegraph.server.api.converters;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.Artifacts;
 import com.dnfeitosa.codegraph.core.models.AvailableVersion;
-import com.dnfeitosa.codegraph.core.models.Dependency;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactVersions;
 import com.dnfeitosa.codegraph.server.api.resources.AvailableVersionResource;
-import com.dnfeitosa.codegraph.server.api.resources.DeclaredDependency;
+import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
 import org.apache.commons.collections4.Predicate;
 import org.junit.Before;
 import org.junit.Test;
 
-import java.util.List;
 import java.util.Set;
 
+import static com.dnfeitosa.coollections.Coollections.$;
 import static com.dnfeitosa.coollections.Coollections.asSet;
 import static java.util.Arrays.asList;
 import static org.apache.commons.collections4.IterableUtils.find;
@@ -32,16 +32,18 @@ public class ArtifactResourceConverterTest {
     private final String version = "extension-version";
 
     private ArtifactResourceConverter converter;
+    private Artifacts artifacts;
 
     @Before
     public void setUp() {
-        converter = new ArtifactResourceConverter();
+        artifacts = new Artifacts();
+        converter = new ArtifactResourceConverter(artifacts);
     }
 
     @Test
     public void shouldConvertAnArtifactResourceToArtifactModel() {
         ArtifactResource resource = new ArtifactResource(organization, name, version, asList(
-            new DeclaredDependency("dependency-organization", "dependency-name", "dependency-version", asSet("compile", "test")))
+            new DependencyResource("dependency-organization", "dependency-name", "dependency-version", asSet("compile", "test")))
         );
 
         Artifact artifact = converter.toModel(resource);
@@ -50,9 +52,9 @@ public class ArtifactResourceConverterTest {
         assertThat(artifact.getOrganization(), is(organization));
         assertThat(artifact.getVersion().getNumber(), is(version));
 
-        List<Dependency> dependencies = artifact.getDependencies();
+        Set<com.dnfeitosa.codegraph.core.models.Dependency> dependencies = artifact.getDependencies();
         assertThat(dependencies.size(), is(1));
-        Dependency dependency = dependencies.get(0);
+        com.dnfeitosa.codegraph.core.models.Dependency dependency = $(dependencies).first();
         assertThat(dependency.getName(), is("dependency-name"));
         assertThat(dependency.getOrganization(), is("dependency-organization"));
         assertThat(dependency.getVersion().getNumber(), is("dependency-version"));
@@ -61,8 +63,8 @@ public class ArtifactResourceConverterTest {
 
     @Test
     public void shouldConvertAnArtifactModelToArtifactResource() {
-        Artifact artifact = new Artifact(organization, name, new Version(version));
-        Dependency dependency = new Dependency(new Artifact("dependency-organization", "dependency-name", new Version("dependency-version")), asSet("compile"));
+        Artifact artifact = artifacts.artifact(organization, name, new Version(version));
+        com.dnfeitosa.codegraph.core.models.Dependency dependency = new com.dnfeitosa.codegraph.core.models.Dependency(artifacts.artifact("dependency-organization", "dependency-name", new Version("dependency-version")), asSet("compile"));
         artifact.addDependency(dependency);
 
         ArtifactResource resource = converter.toResource(artifact);
@@ -73,7 +75,7 @@ public class ArtifactResourceConverterTest {
 
         assertThat(resource.getDependencies().size(), is(1));
 
-        DeclaredDependency dependencyResource = resource.getDependencies().get(0);
+        DependencyResource dependencyResource = resource.getDependencies().get(0);
         assertThat(dependencyResource.getName(), is("dependency-name"));
         assertThat(dependencyResource.getOrganization(), is("dependency-organization"));
         assertThat(dependencyResource.getVersion(), is("dependency-version"));

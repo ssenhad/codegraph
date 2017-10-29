@@ -27,8 +27,8 @@
                 <h5>Versions</h5>
                 <span class="versions" ng-hide="noVersions">
                     <span ng-repeat="availableVersion in availableVersions">
-                        <a class="btn-link" ng-class="{'artifact-unavailable': !availableVersion.availability.contains('ARTIFACT')}"
-                           href="#!/artifacts/{{artifact.organization}}/{{artifact.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
+                        <a class="btn-link" ng-class="{'artifactSpec-unavailable': !availableVersion.availability.contains('ARTIFACT')}"
+                           href="#!/artifacts/{{artifactSpec.organization}}/{{artifactSpec.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
                     </span>
                 </span>
                 <div ng-show="noVersions">

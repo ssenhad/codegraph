@@ -25,6 +25,9 @@ import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import static java.util.stream.Collectors.toSet;
@@ -77,5 +80,20 @@ public class ArtifactService {
             .map(nodeConverter::toNode)
             .collect(toSet());
         artifactRepository.save(artifacts);
+    }
+
+    public Set<ArtifactNode> loadDependencyGraph(String organization, String name, String version) {
+        Map<String, ArtifactNode> nodes = new HashMap<>();
+        artifactRepository.loadDependencyGraph(organization, name, version)
+            .forEach(relationship -> {
+                ArtifactNode artifact = relationship.getArtifact();
+                String artifactId = artifact.getId();
+                if (!nodes.containsKey(artifactId)) {
+                    nodes.put(artifactId, artifact);
+                }
+                nodes.get(artifactId).addDependency(relationship.getDependency(), relationship.getConfigurations());
+            });
+
+        return new HashSet<>(nodes.values());
     }
 }

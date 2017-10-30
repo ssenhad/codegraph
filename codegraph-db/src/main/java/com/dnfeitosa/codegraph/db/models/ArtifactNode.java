@@ -82,8 +82,9 @@ public class ArtifactNode {
         return Objects.hash(id);
     }
 
-    public void addDependency(ArtifactNode dependencyNode, Set<String> configurations) {
+    public ArtifactNode addDependency(ArtifactNode dependencyNode, Set<String> configurations) {
         getDeclaredDependencies().add(new DeclaresRelationship(this, dependencyNode, configurations));
+        return this;
     }
 
     public Set<DeclaresRelationship> getDeclaredDependencies() {
@@ -101,5 +102,9 @@ public class ArtifactNode {
         return getDeclaredDependencies().stream()
             .map(DeclaresRelationship::getDependency)
             .collect(Collectors.toSet());
+    }
+
+    public String toString() {
+        return String.format("%s:(%s)", id, declaredDependencies);
     }
 }

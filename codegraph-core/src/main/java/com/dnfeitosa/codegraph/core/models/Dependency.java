@@ -55,10 +55,7 @@ public class Dependency {
 
     @Override
     public String toString() {
-        return "Dependency{" +
-            "artifact=" + artifact +
-            ", configurations=" + configurations +
-            '}';
+        return String.format("%s (%s)", artifact.getId(), configurations);
     }
 
     @Override

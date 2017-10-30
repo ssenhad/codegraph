@@ -76,4 +76,8 @@ public class DeclaresRelationship {
     public String toString() {
         return format("(%s)--(%s)-->(%s)", artifact.getId(), configurations, dependency.getId());
     }
+
+    public ArtifactNode getArtifact() {
+        return artifact;
+    }
 }

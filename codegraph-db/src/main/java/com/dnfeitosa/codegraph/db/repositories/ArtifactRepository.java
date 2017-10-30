@@ -17,6 +17,7 @@
 package com.dnfeitosa.codegraph.db.repositories;
 
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
+import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Neo4jSession;
@@ -24,6 +25,7 @@ import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -51,7 +53,7 @@ public class ArtifactRepository  {
     }
 
     public ArtifactNode load(String organization, String name, String version) {
-        return session.load(ArtifactNode.class, id(organization, name, version));
+        return session.load(ArtifactNode.class, id(organization, name, version), 100);
     }
 
     public Set<String> getVersions(String organization, String name) {
@@ -78,6 +80,19 @@ public class ArtifactRepository  {
     private Set<ArtifactNode> collectDependencies(Set<ArtifactNode> artifacts) {
         return artifacts.stream()
             .flatMap(a -> a.getDependencies().stream())
+            .collect(toSet());
+    }
+
+    public Set<DeclaresRelationship> loadDependencyGraph(String organization, String name, String version) {
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("id", id(organization, name, version));
+
+        Result result = session.query(" MATCH p=(a:Artifact)-[r:DEPENDS_ON*]->(d:Artifact) " +
+            " WHERE a.id = {id} with a, r, d " +
+            " RETURN r ", parameters);
+
+        return stream(result.queryResults().spliterator(), false)
+            .flatMap(r -> ((Collection<DeclaresRelationship>)r.get("r")).stream())
             .collect(toSet());
     }
 }

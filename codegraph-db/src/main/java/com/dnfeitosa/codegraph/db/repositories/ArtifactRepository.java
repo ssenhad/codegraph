@@ -53,7 +53,7 @@ public class ArtifactRepository  {
     }
 
     public ArtifactNode load(String organization, String name, String version) {
-        return session.load(ArtifactNode.class, id(organization, name, version), 100);
+        return session.load(ArtifactNode.class, id(organization, name, version));
     }
 
     public Set<String> getVersions(String organization, String name) {

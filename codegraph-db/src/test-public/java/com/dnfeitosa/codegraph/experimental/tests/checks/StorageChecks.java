@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dnfeitosa.codegraph.server.acceptance;
+package com.dnfeitosa.codegraph.experimental.tests.checks;
 
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
 import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
@@ -32,12 +32,12 @@ import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 
 @Component
-public class PersistenceAssertions {
+public class StorageChecks {
 
     private ArtifactRepository artifactRepository;
 
     @Autowired
-    public PersistenceAssertions(ArtifactRepository artifactRepository) {
+    public StorageChecks(ArtifactRepository artifactRepository) {
         this.artifactRepository = artifactRepository;
     }
 
@@ -87,8 +87,14 @@ public class PersistenceAssertions {
             return dbArtifact;
         }
 
-        public void hasNoDependencies() {
+        public ArtifactVerification hasNoDependencies() {
             assertTrue(fetch().getDependencies().isEmpty());
+            return this;
+        }
+
+        public ArtifactVerification hasDependencies(int count) {
+            assertThat(fetch().getDependencies().size(), is(count));
+            return this;
         }
     }
 }

@@ -12,3 +12,28 @@ dependencies {
     testCompile 'org.neo4j:neo4j-ogm-embedded-driver:3.0.0'
     testCompile 'org.neo4j:neo4j-ogm-test:3.0.0'
 }
+
+sourceSets {
+    testPublic {
+        java {
+            srcDir 'src/test-public/java'
+        }
+        resources {
+            srcDir 'src/test-public/resources'
+        }
+        compileClasspath += sourceSets.main.runtimeClasspath
+        compileClasspath += sourceSets.test.runtimeClasspath
+    }
+}
+
+
+task testPublicJar(type: Jar, dependsOn: classes) {
+    from(sourceSets.testPublic.output)
+    classifier 'test-public'
+}
+
+configurations.create('testPublic')
+
+artifacts {
+    testPublic testPublicJar
+}

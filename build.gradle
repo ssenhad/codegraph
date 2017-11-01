@@ -14,7 +14,6 @@ buildscript {
     }
 }
 
-
 apply from: "$rootDir/gradle/distribution.gradle"
 
 subprojects {

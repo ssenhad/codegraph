@@ -1,7 +1,7 @@
-package com.dnfeitosa.codegraph.server.acceptance.services;
+package com.dnfeitosa.codegraph.components.server.services;
 
+import com.dnfeitosa.codegraph.components.server.ComponentTestBase;
 import com.dnfeitosa.codegraph.core.models.Artifact;
-import com.dnfeitosa.codegraph.server.acceptance.AcceptanceTestBase;
 import com.dnfeitosa.codegraph.server.services.IndexService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +11,7 @@ import java.util.Set;
 import static com.dnfeitosa.codegraph.core.utils.Arrays.asList;
 import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
 
-public class IndexServiceTest extends AcceptanceTestBase {
+public class IndexServiceTest extends ComponentTestBase {
 
     @Autowired
     private IndexService indexService;
@@ -25,10 +25,12 @@ public class IndexServiceTest extends AcceptanceTestBase {
 
         db.artifact("com.dnfeitosa.codegraph", "codegraph-server", "1.0")
             .exists()
+            .hasDependencies(1)
             .hasDependency("com.dnfeitosa.codegraph", "codegraph-core", "1.0", asSet("compile"));
 
         db.artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0")
-            .exists();
+            .exists()
+            .hasNoDependencies();
     }
 
     @Test
@@ -81,6 +83,7 @@ public class IndexServiceTest extends AcceptanceTestBase {
 
         db.artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0")
             .exists()
+            .hasDependencies(6)
             .hasDependency("commons-lang", "commons-lang", "2.6", asSet("compile"))
             .hasDependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile"))
             .hasDependency("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile"))
@@ -90,23 +93,28 @@ public class IndexServiceTest extends AcceptanceTestBase {
 
         db.artifact("com.dnfeitosa.codegraph", "coollections", "1.0")
             .exists()
+            .hasDependencies(1)
             .hasDependency("commons-lang", "commons-lang", "2.8", asSet("compile"));
 
         db.artifact("org.springframework", "spring-context", "4.2.7.RELEASE")
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"));
 
         db.artifact("org.springframework", "spring-aop", "4.2.7.RELEASE")
             .exists()
+            .hasDependencies(2)
             .hasDependency("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile"))
             .hasDependency("aopalliance", "aopalliance", "1.0", asSet("compile"));
 
         db.artifact("org.springframework", "spring-beans", "4.2.7.RELEASE")
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"));
 
         db.artifact("junit", "junit", "4.12")
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"));
     }
 }

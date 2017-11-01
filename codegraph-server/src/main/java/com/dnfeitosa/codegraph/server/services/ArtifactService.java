@@ -26,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -82,9 +81,9 @@ public class ArtifactService {
         artifactRepository.save(artifacts);
     }
 
-    public Set<ArtifactNode> loadDependencyGraph(String organization, String name, String version) {
+    public Set<Artifact> loadDependencyGraph(String organization, String name, String version) {
         Map<String, ArtifactNode> nodes = new HashMap<>();
-        artifactRepository.loadDependencyGraph(organization, name, version)
+        artifactRepository.loadDependencyGraph(organization, name, version).stream()
             .forEach(relationship -> {
                 ArtifactNode artifact = relationship.getArtifact();
                 String artifactId = artifact.getId();
@@ -94,6 +93,9 @@ public class ArtifactService {
                 nodes.get(artifactId).addDependency(relationship.getDependency(), relationship.getConfigurations());
             });
 
-        return new HashSet<>(nodes.values());
+        return nodes.values()
+            .stream()
+            .map(nodeConverter::toModel)
+            .collect(toSet());
     }
 }

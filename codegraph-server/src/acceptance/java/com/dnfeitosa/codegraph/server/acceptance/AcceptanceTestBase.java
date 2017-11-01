@@ -1,9 +1,9 @@
 package com.dnfeitosa.codegraph.server.acceptance;
 
-import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Artifacts;
-import com.dnfeitosa.codegraph.core.models.Dependency;
-import com.dnfeitosa.codegraph.core.models.Version;
+import com.dnfeitosa.codegraph.experimental.tests.checks.StorageChecks;
+import com.dnfeitosa.codegraph.server.acceptance.api.controllers.ArtifactResourceChecks;
+import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -15,8 +15,6 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import java.util.Set;
-
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(classes = AcceptanceTestConfiguration.class)
 @TestPropertySource({ "classpath:/acceptance-test.properties" })
@@ -25,7 +23,7 @@ import java.util.Set;
 public class AcceptanceTestBase {
 
     @Autowired
-    protected PersistenceAssertions db;
+    protected StorageChecks db;
 
     @Autowired
     protected Session session;
@@ -45,11 +43,7 @@ public class AcceptanceTestBase {
         session.purgeDatabase();
     }
 
-    public Artifact artifact(String organization, String name, String version) {
-        return artifacts.artifact(organization, name, new Version(version));
-    }
-
-    public Dependency dependency(String organization, String name, String version, Set<String> configurations) {
-        return new Dependency(artifact(organization, name, version), configurations);
+    protected ArtifactResourceChecks check(ArtifactResource resource) {
+        return new ArtifactResourceChecks(resource);
     }
 }

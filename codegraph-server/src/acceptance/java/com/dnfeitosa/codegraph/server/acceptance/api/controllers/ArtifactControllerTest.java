@@ -7,14 +7,12 @@ import com.dnfeitosa.codegraph.server.api.controllers.ArtifactController;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactVersions;
 import com.dnfeitosa.codegraph.server.api.resources.AvailableVersionResource;
-import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
 import com.dnfeitosa.codegraph.server.services.ArtifactService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.List;
 import java.util.Set;
 
 import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
@@ -35,7 +33,7 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
     @Test
     public void shouldReturnAnArtifactResourceWithItsDependencies() {
         Artifact artifact = new Artifact("com.dnfeitosa.codegraph", "codegraph-server", new Version("1.0"));
-        artifact.addDependency(new com.dnfeitosa.codegraph.core.models.Dependency(new Artifact("org.junit", "junit", new Version("4.12")), asSet("test")));
+        artifact.addDependency(new com.dnfeitosa.codegraph.core.models.Dependency(new Artifact("junit", "junit", new Version("4.12")), asSet("test")));
         artifact.addDependency(new com.dnfeitosa.codegraph.core.models.Dependency(new Artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0")), asSet("compile")));
         service.save(artifact);
 
@@ -43,24 +41,11 @@ public class ArtifactControllerTest extends AcceptanceTestBase {
 
         assertThat(response.getStatusCode(), is(HttpStatus.OK));
         ArtifactResource artifactResource = response.getBody();
-        assertThat(artifactResource.getOrganization(), is("com.dnfeitosa.codegraph"));
-        assertThat(artifactResource.getName(), is("codegraph-server"));
-        assertThat(artifactResource.getVersion(), is("1.0"));
-
-        List<DependencyResource> dependencies = artifactResource.getDependencies();
-        assertThat(dependencies.size(), is(2));
-
-        DependencyResource junit = find(dependencies, d -> "junit".equals(d.getName()));
-        assertThat(junit.getOrganization(), is("org.junit"));
-        assertThat(junit.getName(), is("junit"));
-        assertThat(junit.getVersion(), is("4.12"));
-        assertThat(junit.getConfigurations(), is(asSet("test")));
-
-        DependencyResource codegraphCore = find(dependencies, d -> "codegraph-core".equals(d.getName()));
-        assertThat(codegraphCore.getOrganization(), is("com.dnfeitosa.codegraph"));
-        assertThat(codegraphCore.getName(), is("codegraph-core"));
-        assertThat(codegraphCore.getVersion(), is("1.0"));
-        assertThat(codegraphCore.getConfigurations(), is(asSet("compile")));
+        check(artifactResource)
+            .is("com.dnfeitosa.codegraph", "codegraph-server", "1.0")
+            .hasDependencies(2)
+            .hasDependency("com.dnfeitosa.codegraph", "codegraph-core", "1.0", asSet("compile"))
+            .hasDependency("junit", "junit", "4.12", asSet("test"));
     }
 
     @Test

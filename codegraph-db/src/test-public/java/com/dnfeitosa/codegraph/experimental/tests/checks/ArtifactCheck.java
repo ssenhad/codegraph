@@ -23,6 +23,7 @@ import com.dnfeitosa.codegraph.core.models.Version;
 import java.util.Set;
 
 import static org.hamcrest.CoreMatchers.hasItem;
+import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertThat;
 
@@ -43,6 +44,11 @@ public class ArtifactCheck {
 
     public ArtifactCheck exists() {
         assertNotNull("Artifact is null", artifact);
+        return this;
+    }
+
+    public ArtifactCheck hasDependencies(int count) {
+        assertThat(artifact.getDependencies().size(), is(count));
         return this;
     }
 }

@@ -86,6 +86,7 @@ public class IndexControllerTest extends AcceptanceTestBase {
 
         db.artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0")
             .exists()
+            .hasDependencies(6)
             .hasDependency("commons-lang", "commons-lang", "2.6", asSet("compile"))
             .hasDependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile"))
             .hasDependency("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile"))
@@ -95,27 +96,33 @@ public class IndexControllerTest extends AcceptanceTestBase {
 
         db.artifact("com.dnfeitosa.codegraph", "coollections", "1.0")
             .exists()
+            .hasDependencies(1)
             .hasDependency("commons-lang", "commons-lang", "2.8", asSet("compile"));
 
         db.artifact("org.springframework", "spring-context", "4.2.7.RELEASE")
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"));
 
         db.artifact("org.springframework", "spring-aop", "4.2.7.RELEASE")
             .exists()
+            .hasDependencies(2)
             .hasDependency("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile"))
             .hasDependency("aopalliance", "aopalliance", "1.0", asSet("compile"));
 
         db.artifact("org.springframework", "spring-beans", "4.2.7.RELEASE")
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"));
 
         db.artifact("junit", "junit", "4.12")
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"));
 
         db.artifact("org.hamcrest", "hamcrest-core", "1.3")
             .exists()
+            .hasDependencies(1)
             .hasNoDependencies();
     }
 }

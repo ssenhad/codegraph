@@ -14,20 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dnfeitosa.codegraph.experimental.tests.finders;
+package com.dnfeitosa.codegraph.components.server;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.Artifacts;
+import com.dnfeitosa.codegraph.core.models.Dependency;
+import com.dnfeitosa.codegraph.core.models.Version;
 
-import java.util.function.Function;
+import java.util.Set;
 
-public class ArtifactFinder extends Finder<Artifact, ArtifactResult> {
+public interface ModelBuilders {
+    Artifacts getArtifacts();
 
-    public ArtifactFinder(String value, Function<Artifact, String> getValue) {
-        super(value, getValue);
+    default Artifact artifact(String organization, String name, String version) {
+        return getArtifacts().artifact(organization, name, new Version(version));
     }
 
-    @Override
-    public ArtifactResult createResult(Artifact value) {
-        return new ArtifactResult(value);
+    default Dependency dependency(String organization, String name, String version, Set<String> configurations) {
+        return new Dependency(artifact(organization, name, version), configurations);
     }
 }

@@ -17,19 +17,9 @@
 package com.dnfeitosa.codegraph.experimental.tests.checks;
 
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
-import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-
-import java.util.Set;
-
-import static java.lang.String.format;
-import static org.hamcrest.CoreMatchers.hasItem;
-import static org.hamcrest.CoreMatchers.is;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 
 @Component
 public class StorageChecks {
@@ -42,59 +32,10 @@ public class StorageChecks {
     }
 
     public void hasArtifact(String organization, String name, String version) {
-        new ArtifactVerification(artifactRepository, new ArtifactNode(organization, name, version)).exists();
+        new ArtifactNodeCheck(artifactRepository, new ArtifactNode(organization, name, version)).exists();
     }
 
-    public ArtifactVerification artifact(String organization, String name, String version) {
-        return new ArtifactVerification(artifactRepository, new ArtifactNode(organization, name, version));
-    }
-
-    public static class ArtifactVerification {
-
-        private final ArtifactRepository artifactRepository;
-        private ArtifactNode artifactSpec;
-        private ArtifactNode dbArtifact;
-
-        public ArtifactVerification(ArtifactRepository artifactRepository, ArtifactNode artifactSpec) {
-            this.artifactRepository = artifactRepository;
-            this.artifactSpec = artifactSpec;
-        }
-
-        public ArtifactVerification exists() {
-            ArtifactNode node = fetch();
-
-            assertNotNull(format("Artifact '%s' not present in database", artifactSpec.getId()), node);
-            assertThat(node.getOrganization(), is(artifactSpec.getOrganization()));
-            assertThat(node.getName(), is(artifactSpec.getName()));
-            assertThat(node.getVersion(), is(artifactSpec.getVersion()));
-            return this;
-        }
-
-        public ArtifactVerification hasDependency(String organization, String name, String version, Set<String> configurations) {
-            ArtifactNode node = fetch();
-
-            assertThat(node.getDeclaredDependencies(), hasItem(
-                new DeclaresRelationship(node, new ArtifactNode(organization, name, version), configurations)
-            ));
-
-            return this;
-        }
-
-        private ArtifactNode fetch() {
-            if (dbArtifact == null) {
-                dbArtifact = artifactRepository.load(artifactSpec.getOrganization(), artifactSpec.getName(), artifactSpec.getVersion());
-            }
-            return dbArtifact;
-        }
-
-        public ArtifactVerification hasNoDependencies() {
-            assertTrue(fetch().getDependencies().isEmpty());
-            return this;
-        }
-
-        public ArtifactVerification hasDependencies(int count) {
-            assertThat(fetch().getDependencies().size(), is(count));
-            return this;
-        }
+    public ArtifactNodeCheck artifact(String organization, String name, String version) {
+        return new ArtifactNodeCheck(artifactRepository, new ArtifactNode(organization, name, version));
     }
 }

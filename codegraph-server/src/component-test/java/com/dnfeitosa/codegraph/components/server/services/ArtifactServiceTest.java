@@ -94,6 +94,7 @@ public class ArtifactServiceTest extends ComponentTestBase {
         find("com.dnfeitosa.codegraph:codegraph-core:1.0").in(artifacts)
             .check()
             .exists()
+            .hasDependencies(6)
             .hasDependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile"))
             .hasDependency("commons-lang", "commons-lang", "2.6", asSet("compile"))
             .hasDependency("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile"))
@@ -104,27 +105,32 @@ public class ArtifactServiceTest extends ComponentTestBase {
         find("com.dnfeitosa.codegraph:coollections:1.0").in(artifacts)
             .check()
             .exists()
+            .hasDependencies(1)
             .hasDependency("commons-lang", "commons-lang", "2.8", asSet("compile"));
 
         find("org.springframework:spring-context:4.2.7.RELEASE").in(artifacts)
             .check()
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"));
 
         find("org.springframework:spring-aop:4.2.7.RELEASE").in(artifacts)
             .check()
             .exists()
+            .hasDependencies(2)
             .hasDependency("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile"))
             .hasDependency("aopalliance", "aopalliance", "1.0", asSet("compile"));
 
         find("org.springframework:spring-beans:4.2.7.RELEASE").in(artifacts)
             .check()
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"));
 
         find("junit:junit:4.12").in(artifacts)
             .check()
             .exists()
+            .hasDependencies(1)
             .hasDependency("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"));
     }
 }

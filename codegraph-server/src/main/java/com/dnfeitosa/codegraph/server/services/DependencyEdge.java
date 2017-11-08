@@ -14,12 +14,32 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dnfeitosa.codegraph.components.server;
+package com.dnfeitosa.codegraph.server.services;
 
-import com.dnfeitosa.codegraph.db.models.ArtifactNode;
+import com.dnfeitosa.codegraph.core.models.Dependency;
+import com.dnfeitosa.codegraph.core.models.Edge;
 
-public interface NodeBuilders {
-    default ArtifactNode artifactNode(String organization, String name, String version) {
-        return new ArtifactNode(organization, name, version);
+import java.util.Set;
+
+public class DependencyEdge implements Edge {
+
+    private final Dependency dependency;
+
+    public DependencyEdge(Dependency dependency) {
+        this.dependency = dependency;
+    }
+
+    @Override
+    public String getStartId() {
+        return dependency.getParent().getId();
+    }
+
+    @Override
+    public String getEndId() {
+        return dependency.getId();
+    }
+
+    public Set<String> getConfigurations() {
+        return dependency.getConfigurations();
     }
 }

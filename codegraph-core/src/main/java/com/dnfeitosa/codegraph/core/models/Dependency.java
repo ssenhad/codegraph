@@ -21,10 +21,12 @@ import java.util.Set;
 
 public class Dependency {
 
+    private Artifact parent;
     private final Artifact artifact;
     private final Set<String> configurations;
 
-    public Dependency(Artifact artifact, Set<String> configurations) {
+    public Dependency(Artifact parent, Artifact artifact, Set<String> configurations) {
+        this.parent = parent;
         this.artifact = artifact;
         this.configurations = configurations;
     }
@@ -51,6 +53,10 @@ public class Dependency {
 
     public Artifact getArtifact() {
         return artifact;
+    }
+
+    public Artifact getParent() {
+        return parent;
     }
 
     @Override

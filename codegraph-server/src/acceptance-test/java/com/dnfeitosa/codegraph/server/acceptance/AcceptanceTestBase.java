@@ -3,7 +3,11 @@ package com.dnfeitosa.codegraph.server.acceptance;
 import com.dnfeitosa.codegraph.core.models.Artifacts;
 import com.dnfeitosa.codegraph.experimental.tests.checks.StorageChecks;
 import com.dnfeitosa.codegraph.server.acceptance.api.controllers.ArtifactResourceChecks;
+import com.dnfeitosa.codegraph.server.acceptance.api.controllers.GraphResourceChecks;
+import com.dnfeitosa.codegraph.server.api.controllers.GraphResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
+import com.dnfeitosa.codegraph.server.test.helpers.ModelBuilders;
+import com.dnfeitosa.codegraph.server.test.helpers.NodeBuilders;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -20,7 +24,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 @TestPropertySource({ "classpath:/acceptance-test.properties" })
 @DirtiesContext(classMode = DirtiesContext.ClassMode.BEFORE_EACH_TEST_METHOD)
 @Ignore
-public class AcceptanceTestBase {
+public class AcceptanceTestBase implements NodeBuilders, ModelBuilders {
 
     @Autowired
     protected StorageChecks db;
@@ -43,7 +47,16 @@ public class AcceptanceTestBase {
         session.purgeDatabase();
     }
 
+    @Override
+    public Artifacts getArtifacts() {
+        return artifacts;
+    }
+
     protected ArtifactResourceChecks check(ArtifactResource resource) {
         return new ArtifactResourceChecks(resource);
+    }
+
+    protected GraphResourceChecks check(GraphResource nodeResource) {
+        return new GraphResourceChecks(nodeResource);
     }
 }

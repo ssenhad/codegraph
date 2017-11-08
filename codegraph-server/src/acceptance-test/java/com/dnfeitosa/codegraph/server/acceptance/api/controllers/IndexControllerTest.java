@@ -12,8 +12,8 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asList;
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
+import static com.dnfeitosa.coollections.Coollections.asSet;
+import static java.util.Arrays.asList;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -24,9 +24,7 @@ public class IndexControllerTest extends AcceptanceTestBase {
 
     @Test
     public void indexesAndReturnTheIndexedArtifact() {
-        List<DependencyResource> dependencies = asList(
-            new DependencyResource("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile"))
-        );
+        List<DependencyResource> dependencies = asList(new DependencyResource("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile")));
 
         ArtifactResource artifact = new ArtifactResource("com.dnfeitosa.codegraph", "codegraph-core", "1.0", dependencies);
 
@@ -45,33 +43,15 @@ public class IndexControllerTest extends AcceptanceTestBase {
 
     @Test
     public void shouldIndexTheArtifactDependencyArtifacts() {
-        List<DependencyResource> dependencies = asList(
-            new DependencyResource("commons-lang", "commons-lang", "2.6", asSet("compile")),
-            new DependencyResource("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile")),
-            new DependencyResource("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile")),
-            new DependencyResource("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile")),
-            new DependencyResource("junit", "junit", "4.12", asSet("test")),
-            new DependencyResource("org.hamcrest", "hamcrest-core", "1.+", asSet("test"))
-        );
+        List<DependencyResource> dependencies = asList(new DependencyResource("commons-lang", "commons-lang", "2.6", asSet("compile")), new DependencyResource("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile")), new DependencyResource("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile")), new DependencyResource("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile")), new DependencyResource("junit", "junit", "4.12", asSet("test")), new DependencyResource("org.hamcrest", "hamcrest-core", "1.+", asSet("test")));
         ArtifactResource artifactResource = new ArtifactResource("com.dnfeitosa.codegraph", "codegraph-core", "1.0", dependencies);
 
         IndexResource indexResource = new IndexResource(artifactResource, asSet(
-            new ArtifactResource("com.dnfeitosa.codegraph", "coollections", "1.0", asList(
-                new DependencyResource("commons-lang", "commons-lang", "2.8", asSet("compile"))
-            )),
-            new ArtifactResource("org.springframework", "spring-context", "4.2.7.RELEASE", asList(
-                new DependencyResource("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"))
-            )),
-            new ArtifactResource("org.springframework", "spring-aop", "4.2.7.RELEASE", asList(
-                new DependencyResource("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile")),
-                new DependencyResource("aopalliance", "aopalliance", "1.0", asSet("compile"))
-            )),
-            new ArtifactResource("org.springframework", "spring-beans", "4.2.7.RELEASE", asList(
-                new DependencyResource("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"))
-            )),
-            new ArtifactResource("junit", "junit", "4.12", asList(
-                new DependencyResource("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"))
-            ))
+            new ArtifactResource("com.dnfeitosa.codegraph", "coollections", "1.0", asList(new DependencyResource("commons-lang", "commons-lang", "2.8", asSet("compile")))),
+            new ArtifactResource("org.springframework", "spring-context", "4.2.7.RELEASE", asList(new DependencyResource("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile")))),
+            new ArtifactResource("org.springframework", "spring-aop", "4.2.7.RELEASE", asList(new DependencyResource("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile")), new DependencyResource("aopalliance", "aopalliance", "1.0", asSet("compile")))),
+            new ArtifactResource("org.springframework", "spring-beans", "4.2.7.RELEASE", asList(new DependencyResource("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile")))),
+            new ArtifactResource("junit", "junit", "4.12", asList(new DependencyResource("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"))))
         ));
 
         ResponseEntity<ArtifactResource> response = controller.index(indexResource);
@@ -122,7 +102,6 @@ public class IndexControllerTest extends AcceptanceTestBase {
 
         db.artifact("org.hamcrest", "hamcrest-core", "1.3")
             .exists()
-            .hasDependencies(1)
             .hasNoDependencies();
     }
 }

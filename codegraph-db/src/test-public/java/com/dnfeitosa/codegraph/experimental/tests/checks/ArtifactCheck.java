@@ -37,7 +37,7 @@ public class ArtifactCheck {
 
     public ArtifactCheck hasDependency(String organization, String name, String version, Set<String> configurations) {
         assertThat(artifact.getDependencies(), hasItem(
-            new Dependency(new Artifact(organization, name, new Version(version)), configurations)
+            new Dependency(artifact, new Artifact(organization, name, new Version(version)), configurations)
         ));
         return this;
     }

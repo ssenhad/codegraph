@@ -1,9 +1,14 @@
 package com.dnfeitosa.codegraph.components.server;
 
+import com.dnfeitosa.codegraph.components.server.services.GraphChecks;
 import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Artifacts;
+import com.dnfeitosa.codegraph.core.models.Graph;
 import com.dnfeitosa.codegraph.experimental.tests.checks.StorageChecks;
 import com.dnfeitosa.codegraph.experimental.tests.finders.ArtifactFinder;
+import com.dnfeitosa.codegraph.server.services.DependencyEdge;
+import com.dnfeitosa.codegraph.server.test.helpers.ModelBuilders;
+import com.dnfeitosa.codegraph.server.test.helpers.NodeBuilders;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -50,5 +55,9 @@ public class ComponentTestBase implements NodeBuilders, ModelBuilders {
 
     protected ArtifactFinder find(String id) {
         return new ArtifactFinder(id, Artifact::getId);
+    }
+
+    protected GraphChecks check(Graph<Artifact, DependencyEdge> graph) {
+        return new GraphChecks(graph);
     }
 }

@@ -22,7 +22,7 @@ testSets {
         dirName = 'component-test'
     }
     acceptanceTest {
-        dirName = 'acceptance'
+        dirName = 'acceptance-test'
     }
 }
 
@@ -44,6 +44,41 @@ configurations {
     all*.exclude group: 'org.slf4j', module: 'slf4j-nop'
 }
 
+configurations.create('testPublic')
+sourceSets {
+    testPublic {
+        java {
+            srcDir 'src/test-public/java'
+        }
+        resources {
+            srcDir 'src/test-public/resources'
+        }
+        compileClasspath += sourceSets.main.compileClasspath
+        runtimeClasspath += sourceSets.main.runtimeClasspath
+    }
+    test {
+        compileClasspath += testPublic.output
+        runtimeClasspath += testPublic.output
+    }
+    componentTest {
+        compileClasspath += testPublic.output
+        runtimeClasspath += testPublic.output
+    }
+    acceptanceTest {
+        compileClasspath += testPublic.output
+        runtimeClasspath += testPublic.output
+    }
+}
+
+task testPublicJar(type: Jar, dependsOn: classes) {
+    from(sourceSets.testPublic.output)
+    classifier 'test-public'
+}
+
+artifacts {
+    testPublic testPublicJar
+}
+
 dependencies {
     compile project(path: ':codegraph-core', configuration: 'compile')
     compile project(':codegraph-db')
@@ -55,6 +90,8 @@ dependencies {
     testCompile 'org.neo4j:neo4j-ogm-embedded-driver:3.0.0'
     testCompile libraries.unitTesting
     testCompile project(path: ':codegraph-db', configuration: 'testPublic')
+
+    testPublicCompile libraries.unitTesting
 
     acceptanceTestCompile project(path: ':codegraph-db', configuration: 'testPublic')
     componentTestCompile project(path: ':codegraph-db', configuration: 'testPublic')

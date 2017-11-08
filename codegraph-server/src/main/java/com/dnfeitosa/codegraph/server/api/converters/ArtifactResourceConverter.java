@@ -50,13 +50,13 @@ public class ArtifactResourceConverter {
         Version version = new Version(resource.getVersion());
 
         Artifact artifact = artifacts.artifact(organization, name, version);
-        resource.getDependencies().forEach(dependency -> artifact.addDependency(toModel(dependency)));
+        resource.getDependencies().forEach(dependency -> artifact.addDependency(toModel(dependency), dependency.getConfigurations()));
         return artifact;
     }
 
-    private com.dnfeitosa.codegraph.core.models.Dependency toModel(DependencyResource dependency) {
+    private Artifact toModel(DependencyResource dependency) {
         Version version = new Version(dependency.getVersion());
-        return new com.dnfeitosa.codegraph.core.models.Dependency(artifacts.artifact(dependency.getOrganization(), dependency.getName(), version), dependency.getConfigurations());
+        return artifacts.artifact(dependency.getOrganization(), dependency.getName(), version);
     }
 
     public ArtifactResource toResource(Artifact artifact) {

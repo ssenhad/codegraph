@@ -12,7 +12,7 @@ import org.mockito.runners.MockitoJUnitRunner;
 
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
+import static org.apache.shiro.util.CollectionUtils.asSet;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;

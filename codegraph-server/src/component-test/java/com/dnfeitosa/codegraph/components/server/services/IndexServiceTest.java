@@ -8,8 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asList;
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
+import static com.dnfeitosa.coollections.Coollections.asSet;
 
 public class IndexServiceTest extends ComponentTestBase {
 
@@ -19,7 +18,7 @@ public class IndexServiceTest extends ComponentTestBase {
     @Test
     public void whenIndexingAnArtifactAndItsDependencies() {
         Artifact artifact = artifact("com.dnfeitosa.codegraph", "codegraph-server", "1.0")
-            .addDependency(dependency("com.dnfeitosa.codegraph", "codegraph-core", "1.0", asSet("compile")));
+            .addDependency(artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0"), asSet("compile"));
 
         indexService.index(artifact, asSet());
 
@@ -35,38 +34,31 @@ public class IndexServiceTest extends ComponentTestBase {
 
     @Test
     public void whenIndexingAFullDependencyGraph() {
-        Artifact artifact = artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0");
-        asList(
-            dependency("commons-lang", "commons-lang", "2.6", asSet("compile")),
-            dependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile")),
-            dependency("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile")),
-            dependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile")),
-            dependency("junit", "junit", "4.12", asSet("test")),
-            dependency("org.hamcrest", "hamcrest-core", "1.+", asSet("test"))
-        ).forEach(artifact::addDependency);
+        Artifact artifact = artifact("com.dnfeitosa.codegraph", "codegraph-core", "1.0")
+            .addDependency(artifact("org.hamcrest", "hamcrest-core", "1.+"), asSet("test"))
+            .addDependency(artifact("junit", "junit", "4.12"), asSet("test"))
+            .addDependency(artifact("org.springframework", "spring-core", "4.2.7.RELEASE"), asSet("compile"))
+            .addDependency(artifact("org.springframework", "spring-context", "4.2.7.RELEASE"), asSet("compile"))
+            .addDependency(artifact("com.dnfeitosa.codegraph", "coollections", "1.0"), asSet("compile"))
+            .addDependency(artifact("commons-lang", "commons-lang", "2.6"), asSet("compile"));
+
 
         Set<Artifact> dependencyArtifacts = asSet(
             artifact("com.dnfeitosa.codegraph", "coollections", "1.0")
-                .addDependency(
-                    dependency("commons-lang", "commons-lang", "2.8", asSet("compile"))
-                ),
+                .addDependency(artifact("commons-lang", "commons-lang", "2.8"), asSet("compile")),
+
             artifact("org.springframework", "spring-context", "4.2.7.RELEASE")
-                .addDependency(
-                    dependency("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"))
-                ),
+                .addDependency(artifact("org.springframework", "spring-aop", "4.2.7.RELEASE"), asSet("compile")),
+
             artifact("org.springframework", "spring-aop", "4.2.7.RELEASE")
-                .addDependency(
-                    dependency("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile")),
-                    dependency("aopalliance", "aopalliance", "1.0", asSet("compile"))
-                ),
+                .addDependency(artifact("org.springframework", "spring-beans", "4.2.7.RELEASE"), asSet("compile"))
+                .addDependency(artifact("aopalliance", "aopalliance", "1.0"), asSet("compile")),
+
             artifact("org.springframework", "spring-beans", "4.2.7.RELEASE")
-                .addDependency(
-                    dependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"))
-                ),
+                .addDependency(artifact("org.springframework", "spring-core", "4.2.7.RELEASE"), asSet("compile")),
+
             artifact("junit", "junit", "4.12")
-                .addDependency(
-                    dependency("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"))
-                )
+                .addDependency(artifact("org.hamcrest", "hamcrest-core", "1.3"), asSet("compile"))
         );
 
         indexService.index(artifact, dependencyArtifacts);

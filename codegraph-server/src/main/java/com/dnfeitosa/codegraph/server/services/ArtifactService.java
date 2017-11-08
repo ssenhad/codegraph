@@ -18,14 +18,18 @@ package com.dnfeitosa.codegraph.server.services;
 
 import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.AvailableVersion;
+import com.dnfeitosa.codegraph.core.models.Graph;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
 import com.dnfeitosa.codegraph.db.models.converters.ArtifactNodeConverter;
+import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import com.dnfeitosa.codegraph.db.repositories.ArtifactRepository;
+import com.dnfeitosa.coollections.Streams;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
@@ -81,9 +85,36 @@ public class ArtifactService {
         artifactRepository.save(artifacts);
     }
 
-    public Set<Artifact> loadDependencyGraph(String organization, String name, String version) {
+    public Graph<Artifact, DependencyEdge> loadDependencyGraph(String organization, String name, String version) {
+        Artifact root = load(organization, name, version);
+        if (root == null) {
+            return null;
+        }
+
+        Set<ArtifactNode> nodes = groupArtifacts(organization, name, version);
+        Set<Artifact> artifacts = nodes.stream()
+            .map(nodeConverter::toModel)
+            .collect(toSet());
+
+        Set<DependencyEdge> edges = artifacts.stream()
+            .flatMap(a -> a.getDependencies().stream())
+            .map(DependencyEdge::new)
+            .collect(toSet());
+        return new Graph<>(root, collectNodes(artifacts), edges);
+    }
+
+    private Set<Artifact> collectNodes(Set<Artifact> artifacts) {
+        return Streams.concat(
+            artifacts.stream(),
+            artifacts.stream().flatMap(a -> a.getDependencies().stream().map(d -> d.getArtifact()))
+        ).collect(toSet());
+
+    }
+
+    private Set<ArtifactNode> groupArtifacts(String organization, String name, String version) {
         Map<String, ArtifactNode> nodes = new HashMap<>();
-        artifactRepository.loadDependencyGraph(organization, name, version).stream()
+        Set<DeclaresRelationship> declaresRelationships = artifactRepository.loadDependencyGraph(organization, name, version);
+        declaresRelationships.stream()
             .forEach(relationship -> {
                 ArtifactNode artifact = relationship.getArtifact();
                 String artifactId = artifact.getId();
@@ -92,10 +123,6 @@ public class ArtifactService {
                 }
                 nodes.get(artifactId).addDependency(relationship.getDependency(), relationship.getConfigurations());
             });
-
-        return nodes.values()
-            .stream()
-            .map(nodeConverter::toModel)
-            .collect(toSet());
+        return new HashSet<>(nodes.values());
     }
 }

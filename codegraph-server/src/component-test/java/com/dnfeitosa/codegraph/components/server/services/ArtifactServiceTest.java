@@ -3,16 +3,18 @@ package com.dnfeitosa.codegraph.components.server.services;
 import com.dnfeitosa.codegraph.components.server.ComponentTestBase;
 import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.AvailableVersion;
+import com.dnfeitosa.codegraph.core.models.Graph;
 import com.dnfeitosa.codegraph.core.models.Version;
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
 import com.dnfeitosa.codegraph.server.services.ArtifactService;
+import com.dnfeitosa.codegraph.server.services.DependencyEdge;
 import org.junit.Test;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
+import static com.dnfeitosa.coollections.Coollections.asSet;
 import static org.hamcrest.CoreMatchers.hasItems;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
@@ -88,49 +90,47 @@ public class ArtifactServiceTest extends ComponentTestBase {
             session.save(artifact);
         }
 
-        Set<Artifact> artifacts = artifactService.loadDependencyGraph("com.dnfeitosa.codegraph", "codegraph-core", "1.0");
-        assertThat(artifacts.size(), is(6));
+        Graph<Artifact, DependencyEdge> dependencyGraph = artifactService.loadDependencyGraph("com.dnfeitosa.codegraph", "codegraph-core", "1.0");
 
-        find("com.dnfeitosa.codegraph:codegraph-core:1.0").in(artifacts)
-            .check()
-            .exists()
-            .hasDependencies(6)
-            .hasDependency("com.dnfeitosa.codegraph", "coollections", "1.0", asSet("compile"))
-            .hasDependency("commons-lang", "commons-lang", "2.6", asSet("compile"))
-            .hasDependency("org.springframework", "spring-context", "4.2.7.RELEASE", asSet("compile"))
-            .hasDependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"))
-            .hasDependency("junit", "junit", "4.12", asSet("test"))
-            .hasDependency("org.hamcrest", "hamcrest-core", "1.+", asSet("test"));
-
-        find("com.dnfeitosa.codegraph:coollections:1.0").in(artifacts)
-            .check()
-            .exists()
-            .hasDependencies(1)
-            .hasDependency("commons-lang", "commons-lang", "2.8", asSet("compile"));
-
-        find("org.springframework:spring-context:4.2.7.RELEASE").in(artifacts)
-            .check()
-            .exists()
-            .hasDependencies(1)
-            .hasDependency("org.springframework", "spring-aop", "4.2.7.RELEASE", asSet("compile"));
-
-        find("org.springframework:spring-aop:4.2.7.RELEASE").in(artifacts)
-            .check()
-            .exists()
-            .hasDependencies(2)
-            .hasDependency("org.springframework", "spring-beans", "4.2.7.RELEASE", asSet("compile"))
-            .hasDependency("aopalliance", "aopalliance", "1.0", asSet("compile"));
-
-        find("org.springframework:spring-beans:4.2.7.RELEASE").in(artifacts)
-            .check()
-            .exists()
-            .hasDependencies(1)
-            .hasDependency("org.springframework", "spring-core", "4.2.7.RELEASE", asSet("compile"));
-
-        find("junit:junit:4.12").in(artifacts)
-            .check()
-            .exists()
-            .hasDependencies(1)
-            .hasDependency("org.hamcrest", "hamcrest-core", "1.3", asSet("compile"));
+        check(dependencyGraph)
+            .hasRoot("com.dnfeitosa.codegraph:codegraph-core:1.0")
+            .hasNodes(12)
+                .hasNode("com.dnfeitosa.codegraph:codegraph-core:1.0")
+                .hasNode("com.dnfeitosa.codegraph:coollections:1.0")
+                .hasNode("commons-lang:commons-lang:2.6")
+                .hasNode("commons-lang:commons-lang:2.8")
+                .hasNode("org.springframework:spring-context:4.2.7.RELEASE")
+                .hasNode("org.springframework:spring-core:4.2.7.RELEASE")
+                .hasNode("org.springframework:spring-aop:4.2.7.RELEASE")
+                .hasNode("org.springframework:spring-beans:4.2.7.RELEASE")
+                .hasNode("aopalliance:aopalliance:1.0")
+                .hasNode("junit:junit:4.12")
+                .hasNode("org.hamcrest:hamcrest-core:1.3")
+                .hasNode("org.hamcrest:hamcrest-core:1.+")
+            .hasEdges(12)
+                .hasEdge("com.dnfeitosa.codegraph:codegraph-core:1.0", "com.dnfeitosa.codegraph:coollections:1.0", edge -> {
+                })
+                .hasEdge("com.dnfeitosa.codegraph:codegraph-core:1.0", "commons-lang:commons-lang:2.6", edge -> {
+                })
+                .hasEdge("com.dnfeitosa.codegraph:codegraph-core:1.0", "org.springframework:spring-context:4.2.7.RELEASE", edge -> {
+                })
+                .hasEdge("com.dnfeitosa.codegraph:codegraph-core:1.0", "org.springframework:spring-core:4.2.7.RELEASE", edge -> {
+                })
+                .hasEdge("com.dnfeitosa.codegraph:codegraph-core:1.0", "junit:junit:4.12", edge -> {
+                })
+                .hasEdge("com.dnfeitosa.codegraph:codegraph-core:1.0", "org.hamcrest:hamcrest-core:1.+", edge -> {
+                })
+                .hasEdge("com.dnfeitosa.codegraph:coollections:1.0", "commons-lang:commons-lang:2.8", edge -> {
+                })
+                .hasEdge("org.springframework:spring-context:4.2.7.RELEASE", "org.springframework:spring-aop:4.2.7.RELEASE", edge -> {
+                })
+                .hasEdge("org.springframework:spring-aop:4.2.7.RELEASE", "org.springframework:spring-beans:4.2.7.RELEASE", edge -> {
+                })
+                .hasEdge("org.springframework:spring-aop:4.2.7.RELEASE", "aopalliance:aopalliance:1.0", edge -> {
+                })
+                .hasEdge("org.springframework:spring-beans:4.2.7.RELEASE", "org.springframework:spring-core:4.2.7.RELEASE", edge -> {
+                })
+                .hasEdge("junit:junit:4.12", "org.hamcrest:hamcrest-core:1.3", edge -> {
+                });
     }
 }

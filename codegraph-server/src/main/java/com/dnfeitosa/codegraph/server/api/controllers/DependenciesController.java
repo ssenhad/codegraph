@@ -16,43 +16,42 @@
  */
 package com.dnfeitosa.codegraph.server.api.controllers;
 
-import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
-import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
+import com.dnfeitosa.codegraph.core.models.Artifact;
+import com.dnfeitosa.codegraph.core.models.Graph;
+import com.dnfeitosa.codegraph.server.api.converters.GraphResourceConverter;
 import com.dnfeitosa.codegraph.server.services.ArtifactService;
+import com.dnfeitosa.codegraph.server.services.DependencyEdge;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import java.util.Set;
-
 @Controller
 public class DependenciesController {
 
     private ArtifactService artifactService;
+    private GraphResourceConverter graphResourceConverter;
 
     @Autowired
-    public DependenciesController(ArtifactService artifactService) {
+    public DependenciesController(ArtifactService artifactService, GraphResourceConverter graphResourceConverter) {
         this.artifactService = artifactService;
+        this.graphResourceConverter = graphResourceConverter;
     }
 
     @RequestMapping(method = RequestMethod.GET, path = "/api/artifacts/{organization}/{name}/{version}/dependency-graph")
-    public ResponseEntity<DependencyGraphResource> getDependencyGraph(@PathVariable("organization") String organization,
-                                                                      @PathVariable("name") String name,
-                                                                      @PathVariable("version") String version) {
-        artifactService.loadDependencyGraph(organization, name, version);
-        return null;
+    public ResponseEntity<GraphResource> getDependencyGraph(@PathVariable("organization") String organization,
+                                                            @PathVariable("name") String name,
+                                                            @PathVariable("version") String version) {
+
+        Graph<Artifact, DependencyEdge> dependencyGraph = artifactService.loadDependencyGraph(organization, name, version);
+        if (dependencyGraph == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        GraphResource graphResource = graphResourceConverter.toResource(dependencyGraph);
+        return ResponseEntity.ok(graphResource);
     }
 
-    public static class DependencyGraphResource {
-        private ArtifactResource root;
-        private Set<EdgeResource> edges;
-    }
-
-    public static class EdgeResource {
-        private ArtifactResource start;
-        private Set<DependencyResource> targets;
-    }
 }

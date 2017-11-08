@@ -14,19 +14,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dnfeitosa.codegraph.core.utils;
+package com.dnfeitosa.codegraph.core.models;
 
-import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
-public class Arrays {
+public class Graph<N extends Node, E extends Edge> {
+    private N root;
+    private Set<N> nodes;
 
-    public static <T> List<T> asList(T... items) {
-        return java.util.Arrays.asList(items);
+    private Set<E> edges;
+
+    public Graph(N root, Set<N> nodes, Set<E> edges) {
+        this.root = root;
+        this.nodes = nodes;
+        this.edges = edges;
     }
 
-    public static <T> Set<T> asSet(T... items) {
-        return new HashSet<>(asList(items));
+    public Set<N> getNodes() {
+        return nodes;
+    }
+
+    public Set<E> getEdges() {
+        return edges;
+    }
+
+    public N getRoot() {
+        return root;
     }
 }

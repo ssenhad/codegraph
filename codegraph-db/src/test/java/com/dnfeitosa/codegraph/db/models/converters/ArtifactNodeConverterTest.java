@@ -11,8 +11,8 @@ import org.junit.Test;
 
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asSet;
 import static com.dnfeitosa.coollections.Coollections.$;
+import static com.dnfeitosa.coollections.Coollections.asSet;
 import static org.hamcrest.CoreMatchers.is;
 import static org.junit.Assert.assertThat;
 
@@ -30,7 +30,7 @@ public class ArtifactNodeConverterTest {
     @Test
     public void convertsAnArtifactToNode() {
         Artifact artifact = artifacts.artifact("com.dnfeitosa.codegraph", "codegraph-core", new Version("1.0"));
-        artifact.addDependency(new Dependency(artifacts.artifact("org.apache.commons", "commons-lang3", new Version("3.4")), asSet("compile")));
+        artifact.addDependency(artifacts.artifact("org.apache.commons", "commons-lang3", new Version("3.4")), asSet("compile"));
 
         ArtifactNode node = converter.toNode(artifact);
 

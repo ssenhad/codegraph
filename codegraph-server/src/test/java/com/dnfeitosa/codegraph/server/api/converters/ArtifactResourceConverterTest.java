@@ -64,8 +64,7 @@ public class ArtifactResourceConverterTest {
     @Test
     public void shouldConvertAnArtifactModelToArtifactResource() {
         Artifact artifact = artifacts.artifact(organization, name, new Version(version));
-        com.dnfeitosa.codegraph.core.models.Dependency dependency = new com.dnfeitosa.codegraph.core.models.Dependency(artifacts.artifact("dependency-organization", "dependency-name", new Version("dependency-version")), asSet("compile"));
-        artifact.addDependency(dependency);
+        artifact.addDependency(artifacts.artifact("dependency-organization", "dependency-name", new Version("dependency-version")), asSet("compile"));
 
         ArtifactResource resource = converter.toResource(artifact);
 

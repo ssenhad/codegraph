@@ -20,15 +20,12 @@ import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
-import static com.dnfeitosa.codegraph.core.utils.Arrays.asList;
-
-public class Artifact implements Comparable<Artifact> {
+public class Artifact implements Node, Comparable<Artifact> {
 
     private final String id;
     private final String organization;
     private final String name;
     private final Version version;
-
     private final Set<Dependency> dependencies = new HashSet<>();
 
     public Artifact(String organization, String name, Version version) {
@@ -54,9 +51,8 @@ public class Artifact implements Comparable<Artifact> {
         return version;
     }
 
-    public Artifact addDependency(Dependency dependency, Dependency... dependencies) {
-        this.dependencies.add(dependency);
-        this.dependencies.addAll(asList(dependencies));
+    public Artifact addDependency(Artifact dependency, Set<String> configurations) {
+        dependencies.add(new Dependency(this, dependency, configurations));
         return this;
     }
 

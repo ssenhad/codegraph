@@ -23,13 +23,16 @@ import com.dnfeitosa.codegraph.db.models.ArtifactNode;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Provider;
+
+
 @Component
 public class ArtifactNodeConverter {
 
-    private final Artifacts artifacts;
+    private final Provider<Artifacts> artifacts;
 
     @Autowired
-    public ArtifactNodeConverter(Artifacts artifacts) {
+    public ArtifactNodeConverter(Provider<Artifacts> artifacts) {
         this.artifacts = artifacts;
     }
 
@@ -47,7 +50,7 @@ public class ArtifactNodeConverter {
     }
 
     public Artifact toModel(ArtifactNode node) {
-        Artifact artifact = artifacts.artifact(node.getOrganization(), node.getName(), new Version(node.getVersion()));
+        Artifact artifact = artifacts.get().artifact(node.getOrganization(), node.getName(), new Version(node.getVersion()));
         node.getDeclaredDependencies().forEach(declaredDependency -> {
             artifact.addDependency(toModel(declaredDependency.getDependency()), declaredDependency.getConfigurations());
         });

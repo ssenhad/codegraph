@@ -18,13 +18,16 @@ package com.dnfeitosa.codegraph.server.main;
 
 import com.dnfeitosa.codegraph.core.models.Artifacts;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.springframework.web.context.WebApplicationContext;
 
 @Component
 public class RequestScopedBeanProvider {
+
     @Bean
+    @Lazy
     @Scope(WebApplicationContext.SCOPE_REQUEST)
     public Artifacts getArtifacts() {
         return new Artifacts();

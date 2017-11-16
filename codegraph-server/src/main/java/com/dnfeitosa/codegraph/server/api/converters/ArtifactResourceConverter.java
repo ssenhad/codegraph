@@ -27,6 +27,7 @@ import com.dnfeitosa.codegraph.server.api.resources.DependencyResource;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import javax.inject.Provider;
 import java.util.Collections;
 import java.util.List;
 import java.util.Set;
@@ -37,10 +38,10 @@ import static java.util.stream.Collectors.toSet;
 @Component
 public class ArtifactResourceConverter {
 
-    private Artifacts artifacts;
+    private Provider<Artifacts> artifacts;
 
     @Autowired
-    public ArtifactResourceConverter(Artifacts artifacts) {
+    public ArtifactResourceConverter(Provider<Artifacts> artifacts) {
         this.artifacts = artifacts;
     }
 
@@ -49,14 +50,14 @@ public class ArtifactResourceConverter {
         String organization = resource.getOrganization();
         Version version = new Version(resource.getVersion());
 
-        Artifact artifact = artifacts.artifact(organization, name, version);
+        Artifact artifact = artifacts.get().artifact(organization, name, version);
         resource.getDependencies().forEach(dependency -> artifact.addDependency(toModel(dependency), dependency.getConfigurations()));
         return artifact;
     }
 
     private Artifact toModel(DependencyResource dependency) {
         Version version = new Version(dependency.getVersion());
-        return artifacts.artifact(dependency.getOrganization(), dependency.getName(), version);
+        return artifacts.get().artifact(dependency.getOrganization(), dependency.getName(), version);
     }
 
     public ArtifactResource toResource(Artifact artifact) {

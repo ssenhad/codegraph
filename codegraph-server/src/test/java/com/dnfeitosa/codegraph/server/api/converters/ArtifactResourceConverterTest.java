@@ -37,7 +37,7 @@ public class ArtifactResourceConverterTest {
     @Before
     public void setUp() {
         artifacts = new Artifacts();
-        converter = new ArtifactResourceConverter(artifacts);
+        converter = new ArtifactResourceConverter(() -> artifacts);
     }
 
     @Test

@@ -24,7 +24,7 @@ public class ArtifactNodeConverterTest {
     @Before
     public void setUp() {
         artifacts = new Artifacts();
-        converter = new ArtifactNodeConverter(artifacts);
+        converter = new ArtifactNodeConverter(() -> artifacts);
     }
 
     @Test

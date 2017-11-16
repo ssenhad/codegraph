@@ -15,7 +15,8 @@ dependencies {
     compile project(':codegraph-core')
 
     compile libraries.spring.base
-    compile group: 'javax.validation', name: 'validation-api', version: '1.1.0.Final'
+    compile 'javax.inject:javax.inject:1'
+    compile 'javax.validation:validation-api:1.1.0.Final'
 
     compile 'org.neo4j:neo4j-ogm-core:3.0.0'
     compile 'org.neo4j:neo4j-ogm-http-driver:3.0.0'

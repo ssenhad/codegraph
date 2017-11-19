@@ -18,15 +18,15 @@
 -->
 <div class="viewer full-height">
     <div class="sidebar">
-        <div class="artifactSpec">
-            <div class="name">{{artifactSpec.name}}:{{artifactSpec.version}}</div>
-            <div class="organization">{{artifactSpec.organization}}</div>
+        <div class="artifact">
+            <div class="name">{{artifact.name}}:{{artifact.version}}</div>
+            <div class="organization">{{artifact.organization}}</div>
         </div>
         <div class="controls btn-group">
-            <div class="btn btn-xs btn-default" ng-click="directDependencies(artifactSpec)">Dependencies</div>
-            <div class="btn btn-xs btn-default" ng-click="directDependencies(artifactSpec)">Dependency Graph</div>
-            <!--<div class="btn btn-default" ng-click="directDependencartifactSpecfact)">Consumers</div>-->
-            <!--<div class="btn btn-default" ng-click="directDependencartifactSpecfact)">Consumers Graph</div>-->
+            <div class="btn btn-xs btn-default" ng-click="directDependencies(artifact)">Dependencies</div>
+            <div class="btn btn-xs btn-default" ng-click="directDependencies(artifact)">Dependency Graph</div>
+            <!--<div class="btn btn-default" ng-click="directDependencartifactfact)">Consumers</div>-->
+            <!--<div class="btn btn-default" ng-click="directDependencartifactfact)">Consumers Graph</div>-->
         </div>
     </div>
     <div class="viewarea" id="viewarea">

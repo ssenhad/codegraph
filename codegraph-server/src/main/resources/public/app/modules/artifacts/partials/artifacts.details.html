@@ -18,7 +18,7 @@
 -->
 <div class="panel panel-default" ng-hide="noDetails">
     <div class="panel-heading">
-        <span><b>{{artifactSpec.version}}</b></span>
+        <span><b>{{artifact.version}}</b></span>
     </div>
     <div class="panel-body">
         <div class="row">
@@ -26,7 +26,7 @@
                 <div class="row">
                     <div class="col-md-2">
                         <div class="panel panel-default text-center">
-                            <a href="#!/{{artifactSpec.organization}}/{{artifactSpec.name}}/{{artifactSpec.version}}/dependency-graph">
+                            <a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependency-graph">
                                 <div class="panel-heading">
                                     <i class="fa fa-sitemap fa-1x"></i>
                                     <div>Dependency Graph</div>
@@ -36,7 +36,7 @@
                     </div>
                     <div class="col-md-2">
                         <div class="panel panel-default text-center">
-                            <a href="#!/{{artifactSpec.organization}}/{{artifactSpec.name}}/{{artifactSpec.version}}/dependents-graph">
+                            <a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependents-graph">
                                 <div class="panel-heading">
                                     <i class="fa fa-sitemap fa-1x"></i>
                                     <div>Dependents Graph</div>
@@ -47,10 +47,10 @@
                 </div>
                 <div class="panel panel-default">
                     <div class="panel-heading"><b>Declared dependencies</b></div>
-                        <div class="panel-body" ng-show="!artifactSpec.dependencies">
+                        <div class="panel-body" ng-show="!artifact.dependencies">
                             <i>No dependencies</i>
                         </div>
-                        <table ng-show="artifactSpec.dependencies.length > 0" class="table table-condensed table-responsive">
+                        <table ng-show="artifact.dependencies.length > 0" class="table table-condensed table-responsive">
                             <thead>
                                 <tr>
                                     <th>Organization</th>
@@ -60,7 +60,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr class="dependency" ng-repeat="dependency in artifactSpec.dependencies | orderBy: ['configurations', 'organization', 'name']">
+                                <tr class="dependency" ng-repeat="dependency in artifact.dependencies | orderBy: ['configurations', 'organization', 'name']">
                                     <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.organization}}</a></td>
                                     <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.name}}</a></td>
                                     <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.version}}</a></td>

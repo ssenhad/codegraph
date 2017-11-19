@@ -16,6 +16,6 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<div ng-repeat="artifactSpec in artifacts">
-    <a ng-href="#!/{{artifactSpec.organization}}/{{artifactSpec.name}}/{{artifactSpec.version}}">{{artifactSpec.organization}}:{{artifactSpec.name}}:{{artifactSpec.version}}</a>
+<div ng-repeat="artifact in artifacts">
+    <a ng-href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}">{{artifact.organization}}:{{artifact.name}}:{{artifact.version}}</a>
 </div>

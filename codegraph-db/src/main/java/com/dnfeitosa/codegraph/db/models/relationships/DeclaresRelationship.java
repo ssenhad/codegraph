@@ -18,7 +18,7 @@ package com.dnfeitosa.codegraph.db.models.relationships;
 
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
 import org.neo4j.ogm.annotation.EndNode;
-import org.neo4j.ogm.annotation.GraphId;
+import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
@@ -30,9 +30,6 @@ import static java.lang.String.format;
 @RelationshipEntity(type = "DEPENDS_ON")
 public class DeclaresRelationship {
 
-    @GraphId
-    private Long _id;
-
     @StartNode
     private ArtifactNode artifact;
 
@@ -41,9 +38,13 @@ public class DeclaresRelationship {
 
     private Set<String> configurations;
 
+    @Id
+    private String id;
+
     public DeclaresRelationship() { }
 
     public DeclaresRelationship(ArtifactNode artifact, ArtifactNode dependency, Set<String> configurations) {
+        this.id = String.format("%s->depends->%s", artifact.getId(), dependency.getId());
         this.artifact = artifact;
         this.dependency = dependency;
         this.configurations = configurations;
@@ -51,6 +52,10 @@ public class DeclaresRelationship {
 
     public ArtifactNode getDependency() {
         return dependency;
+    }
+
+    public String getId() {
+        return id;
     }
 
     @Override

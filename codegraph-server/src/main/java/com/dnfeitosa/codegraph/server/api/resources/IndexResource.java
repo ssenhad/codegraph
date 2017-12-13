@@ -21,6 +21,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.Set;
 
+import static com.dnfeitosa.coollections.Coollections.notNull;
+
 public class IndexResource {
 
     private ArtifactResource artifact;
@@ -38,6 +40,6 @@ public class IndexResource {
     }
 
     public Set<ArtifactResource> getDependencyArtifacts() {
-        return dependencyArtifacts;
+        return notNull(dependencyArtifacts);
     }
 }

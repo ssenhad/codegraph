@@ -105,6 +105,9 @@ public class ArtifactNode {
     }
 
     public String toString() {
-        return String.format("%s:(%s)", id, declaredDependencies);
+        if (declaredDependencies != null) {
+            return String.format("%s:(%s)", id, declaredDependencies);
+        }
+        return id;
     }
 }

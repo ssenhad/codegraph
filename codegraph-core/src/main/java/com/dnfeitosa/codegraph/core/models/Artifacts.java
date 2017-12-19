@@ -32,4 +32,8 @@ public class Artifacts {
         }
         return artifacts.get(id);
     }
+
+    public void clear() {
+        artifacts.clear();
+    }
 }

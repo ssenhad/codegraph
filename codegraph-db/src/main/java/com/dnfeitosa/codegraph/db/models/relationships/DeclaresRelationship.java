@@ -22,6 +22,7 @@ import org.neo4j.ogm.annotation.Id;
 import org.neo4j.ogm.annotation.RelationshipEntity;
 import org.neo4j.ogm.annotation.StartNode;
 
+import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
@@ -30,32 +31,32 @@ import static java.lang.String.format;
 @RelationshipEntity(type = "DEPENDS_ON")
 public class DeclaresRelationship {
 
+    @Id
+    private String id;
+
     @StartNode
     private ArtifactNode artifact;
 
     @EndNode
     private ArtifactNode dependency;
 
-    private Set<String> configurations;
-
-    @Id
-    private String id;
+    private Set<String> configurations = Collections.emptySet();
 
     public DeclaresRelationship() { }
 
     public DeclaresRelationship(ArtifactNode artifact, ArtifactNode dependency, Set<String> configurations) {
-        this.id = String.format("%s->depends->%s", artifact.getId(), dependency.getId());
+        this.id = String.format("%s->%s", artifact.getId(), dependency.getId());
         this.artifact = artifact;
         this.dependency = dependency;
         this.configurations = configurations;
     }
 
-    public ArtifactNode getDependency() {
-        return dependency;
-    }
-
     public String getId() {
         return id;
+    }
+
+    public ArtifactNode getDependency() {
+        return dependency;
     }
 
     @Override

@@ -34,6 +34,6 @@ public class IndexService {
 
     public void index(Artifact artifact, Set<Artifact> dependencyArtifacts) {
         artifactService.save(artifact);
-        artifactService.save(dependencyArtifacts);
+        artifactService.saveDependencies(dependencyArtifacts);
     }
 }

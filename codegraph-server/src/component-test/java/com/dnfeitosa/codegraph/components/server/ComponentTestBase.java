@@ -5,7 +5,6 @@ import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Artifacts;
 import com.dnfeitosa.codegraph.core.models.Graph;
 import com.dnfeitosa.codegraph.experimental.tests.checks.StorageChecks;
-import com.dnfeitosa.codegraph.experimental.tests.finders.ArtifactFinder;
 import com.dnfeitosa.codegraph.server.services.DependencyEdge;
 import com.dnfeitosa.codegraph.server.test.helpers.ModelBuilders;
 import com.dnfeitosa.codegraph.server.test.helpers.NodeBuilders;
@@ -28,7 +27,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 public class ComponentTestBase implements NodeBuilders, ModelBuilders {
 
     @Autowired
-    private Session session;
+    protected Session session;
 
     @Autowired
     protected StorageChecks db;
@@ -51,10 +50,6 @@ public class ComponentTestBase implements NodeBuilders, ModelBuilders {
     @Override
     public Artifacts getArtifacts() {
         return artifacts;
-    }
-
-    protected ArtifactFinder find(String id) {
-        return new ArtifactFinder(id, Artifact::getId);
     }
 
     protected GraphChecks check(Graph<Artifact, DependencyEdge> graph) {

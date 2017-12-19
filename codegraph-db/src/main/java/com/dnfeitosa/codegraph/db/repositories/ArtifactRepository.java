@@ -18,6 +18,7 @@ package com.dnfeitosa.codegraph.db.repositories;
 
 import com.dnfeitosa.codegraph.db.models.ArtifactNode;
 import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
+import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Neo4jSession;
@@ -28,10 +29,12 @@ import org.springframework.stereotype.Repository;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
 import static com.dnfeitosa.codegraph.db.Node.id;
+import static java.util.stream.Collectors.toList;
 import static java.util.stream.Collectors.toSet;
 import static java.util.stream.StreamSupport.stream;
 import static org.neo4j.ogm.cypher.ComparisonOperator.EQUALS;
@@ -71,12 +74,6 @@ public class ArtifactRepository  {
         return new HashSet<>(session.loadAll(ArtifactNode.class, filter));
     }
 
-    public void save(Set<ArtifactNode> artifacts) {
-        session.save(artifacts, 0);
-        session.save(collectDependencies(artifacts), 0);
-        session.save(artifacts);
-    }
-
     private Set<ArtifactNode> collectDependencies(Set<ArtifactNode> artifacts) {
         return artifacts.stream()
             .flatMap(a -> a.getDependencies().stream())
@@ -94,5 +91,26 @@ public class ArtifactRepository  {
         return stream(result.queryResults().spliterator(), false)
             .flatMap(r -> ((Collection<DeclaresRelationship>)r.get("r")).stream())
             .collect(toSet());
+    }
+
+    public Collection<ArtifactNode> loadAll(Set<String> ids) {
+        Filter filter = new Filter("id", ComparisonOperator.IN, ids);
+        return session.loadAll(ArtifactNode.class, filter, 0);
+    }
+
+    public void saveRelationshipsWithoutProperties(Set<ArtifactNode> artifacts) {
+        List<Map<Object, Object>> rows = artifacts.stream().flatMap(n -> n.getDeclaredDependencies().stream()).map(rel -> {
+            Map<Object, Object> params = new HashMap<>();
+            params.put("startNodeId", rel.getArtifact().getId());
+            params.put("endNodeId", rel.getDependency().getId());
+            params.put("id", rel.getId());
+            return params;
+        }).collect(toList());
+
+        session.save(artifacts, 0);
+
+        Map<String, Object> parameters = new HashMap<>();
+        parameters.put("rows", rows);
+        session.query("UNWIND {rows} as row MATCH (startNode:Artifact) WHERE startNode.id = row.startNodeId MATCH (endNode:Artifact) WHERE endNode.id = row.endNodeId MERGE (startNode)-[rel:`DEPENDS_ON` {`id`: row.`id`} ]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type", parameters);
     }
 }

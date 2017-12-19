@@ -68,12 +68,13 @@ public class ArtifactNodeCheck {
     }
 
     public ArtifactNodeCheck hasNoDependencies() {
-        assertTrue(fetch().getDependencies().isEmpty());
+        assertTrue(fetch().getDeclaredDependencies().isEmpty());
         return this;
     }
 
     public ArtifactNodeCheck hasDependencies(int count) {
-        assertThat(fetch().getDependencies().size(), is(count));
+        Set<DeclaresRelationship> dependencies = fetch().getDeclaredDependencies();
+        assertThat(dependencies.toString(), dependencies.size(), is(count));
         return this;
     }
 }

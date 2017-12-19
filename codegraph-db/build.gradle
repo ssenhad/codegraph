@@ -18,12 +18,10 @@ dependencies {
     compile 'javax.inject:javax.inject:1'
     compile 'javax.validation:validation-api:1.1.0.Final'
 
-    compile 'org.neo4j:neo4j-ogm-core:3.0.0'
-    compile 'org.neo4j:neo4j-ogm-http-driver:3.0.0'
+    compile libraries.neo4jOgm
 
     testCompile libraries.spring.test
-    testCompile 'org.neo4j:neo4j-ogm-embedded-driver:3.0.0'
-    testCompile 'org.neo4j:neo4j-ogm-test:3.0.0'
+    testCompile libraries.neo4jOgmTest
 
     testPublicCompile libraries.unitTesting
 }

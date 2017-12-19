@@ -17,6 +17,11 @@
 package com.dnfeitosa.codegraph.server.main;
 
 import com.dnfeitosa.codegraph.core.models.Artifacts;
+import org.neo4j.ogm.config.AutoIndexMode;
+import org.neo4j.ogm.config.Configuration;
+import org.neo4j.ogm.session.Session;
+import org.neo4j.ogm.session.SessionFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.context.annotation.Scope;
@@ -31,5 +36,18 @@ public class RequestScopedBeanProvider {
     @Scope(WebApplicationContext.SCOPE_REQUEST)
     public Artifacts getArtifacts() {
         return new Artifacts();
+    }
+
+    @Bean
+    @Lazy
+    @Scope(WebApplicationContext.SCOPE_REQUEST)
+    public Session getSession(@Value("${neo4j.database.uri}") String databaseURI) {
+        Configuration configuration = new Configuration.Builder()
+            .autoIndex(AutoIndexMode.ASSERT.getName())
+            .uri(databaseURI)
+            .build();
+
+        SessionFactory sessionFactory = new SessionFactory(configuration, "com.dnfeitosa.codegraph.db.models");
+        return sessionFactory.openSession();
     }
 }

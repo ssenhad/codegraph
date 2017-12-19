@@ -14,9 +14,7 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dnfeitosa.codegraph.server.api.controllers;
-
-import com.dnfeitosa.codegraph.core.models.Version;
+package com.dnfeitosa.codegraph.server.api.resources;
 
 public class ArtifactNodeResource extends NodeResource {
 

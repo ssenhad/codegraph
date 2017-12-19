@@ -16,9 +16,9 @@
  */
 package com.dnfeitosa.codegraph.server.acceptance.api.controllers;
 
-import com.dnfeitosa.codegraph.server.api.controllers.EdgeResource;
-import com.dnfeitosa.codegraph.server.api.controllers.GraphResource;
-import com.dnfeitosa.codegraph.server.api.controllers.NodeResource;
+import com.dnfeitosa.codegraph.server.api.resources.EdgeResource;
+import com.dnfeitosa.codegraph.server.api.resources.GraphResource;
+import com.dnfeitosa.codegraph.server.api.resources.NodeResource;
 
 import java.util.function.Consumer;
 

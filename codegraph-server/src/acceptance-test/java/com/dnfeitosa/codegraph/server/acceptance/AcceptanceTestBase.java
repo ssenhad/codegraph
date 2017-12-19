@@ -4,7 +4,7 @@ import com.dnfeitosa.codegraph.core.models.Artifacts;
 import com.dnfeitosa.codegraph.experimental.tests.checks.StorageChecks;
 import com.dnfeitosa.codegraph.server.acceptance.api.controllers.ArtifactResourceChecks;
 import com.dnfeitosa.codegraph.server.acceptance.api.controllers.GraphResourceChecks;
-import com.dnfeitosa.codegraph.server.api.controllers.GraphResource;
+import com.dnfeitosa.codegraph.server.api.resources.GraphResource;
 import com.dnfeitosa.codegraph.server.api.resources.ArtifactResource;
 import com.dnfeitosa.codegraph.server.test.helpers.ModelBuilders;
 import com.dnfeitosa.codegraph.server.test.helpers.NodeBuilders;

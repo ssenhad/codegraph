@@ -14,33 +14,23 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.dnfeitosa.codegraph.server.api.controllers;
+package com.dnfeitosa.codegraph.server.api.resources;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+public class NodeResource {
 
-public class EdgeResource {
+    private String id;
+    private String type;
 
-    private final Map<String, Object> attributes = new HashMap<>();
-    private final NodeReference start;
-    private final NodeReference end;
-
-    public EdgeResource(NodeReference start, NodeReference end, Set<String> configurations) {
-        this.start = start;
-        this.end = end;
-        this.attributes.put("configurations", configurations);
+    public NodeResource(String id, String type) {
+        this.id = id;
+        this.type = type;
     }
 
-    public NodeReference getEnd() {
-        return end;
+    public String getId() {
+        return id;
     }
 
-    public NodeReference getStart() {
-        return start;
-    }
-
-    public Map<String, Object> getAttributes() {
-        return attributes;
+    public String getType() {
+        return type;
     }
 }

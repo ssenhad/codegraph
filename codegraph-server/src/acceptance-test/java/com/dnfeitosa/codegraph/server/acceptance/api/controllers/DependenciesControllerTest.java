@@ -2,7 +2,7 @@ package com.dnfeitosa.codegraph.server.acceptance.api.controllers;
 
 import com.dnfeitosa.codegraph.server.acceptance.AcceptanceTestBase;
 import com.dnfeitosa.codegraph.server.api.controllers.DependenciesController;
-import com.dnfeitosa.codegraph.server.api.controllers.GraphResource;
+import com.dnfeitosa.codegraph.server.api.resources.GraphResource;
 import com.dnfeitosa.codegraph.server.services.ArtifactService;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;

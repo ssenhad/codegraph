@@ -16,7 +16,7 @@
  */
 package com.dnfeitosa.codegraph.server.acceptance.api.controllers;
 
-import com.dnfeitosa.codegraph.server.api.controllers.EdgeResource;
+import com.dnfeitosa.codegraph.server.api.resources.EdgeResource;
 
 import static org.hamcrest.Matchers.hasEntry;
 import static org.junit.Assert.assertNotNull;

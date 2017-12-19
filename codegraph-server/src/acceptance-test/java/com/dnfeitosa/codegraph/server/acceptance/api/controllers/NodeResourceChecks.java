@@ -16,8 +16,8 @@
  */
 package com.dnfeitosa.codegraph.server.acceptance.api.controllers;
 
-import com.dnfeitosa.codegraph.server.api.controllers.ArtifactNodeResource;
-import com.dnfeitosa.codegraph.server.api.controllers.NodeResource;
+import com.dnfeitosa.codegraph.server.api.resources.ArtifactNodeResource;
+import com.dnfeitosa.codegraph.server.api.resources.NodeResource;
 
 import static org.hamcrest.CoreMatchers.instanceOf;
 import static org.hamcrest.CoreMatchers.is;

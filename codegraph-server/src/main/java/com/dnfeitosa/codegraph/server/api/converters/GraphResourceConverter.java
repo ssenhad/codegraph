@@ -19,11 +19,11 @@ package com.dnfeitosa.codegraph.server.api.converters;
 import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Graph;
 import com.dnfeitosa.codegraph.core.models.Version;
-import com.dnfeitosa.codegraph.server.api.controllers.ArtifactNodeResource;
-import com.dnfeitosa.codegraph.server.api.controllers.EdgeResource;
-import com.dnfeitosa.codegraph.server.api.controllers.GraphResource;
-import com.dnfeitosa.codegraph.server.api.controllers.NodeReference;
-import com.dnfeitosa.codegraph.server.api.controllers.NodeResource;
+import com.dnfeitosa.codegraph.server.api.resources.ArtifactNodeResource;
+import com.dnfeitosa.codegraph.server.api.resources.EdgeResource;
+import com.dnfeitosa.codegraph.server.api.resources.GraphResource;
+import com.dnfeitosa.codegraph.server.api.resources.NodeReference;
+import com.dnfeitosa.codegraph.server.api.resources.NodeResource;
 import com.dnfeitosa.codegraph.server.services.DependencyEdge;
 import org.springframework.stereotype.Component;
 

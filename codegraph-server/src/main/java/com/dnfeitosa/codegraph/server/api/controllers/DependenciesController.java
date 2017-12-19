@@ -19,6 +19,7 @@ package com.dnfeitosa.codegraph.server.api.controllers;
 import com.dnfeitosa.codegraph.core.models.Artifact;
 import com.dnfeitosa.codegraph.core.models.Graph;
 import com.dnfeitosa.codegraph.server.api.converters.GraphResourceConverter;
+import com.dnfeitosa.codegraph.server.api.resources.GraphResource;
 import com.dnfeitosa.codegraph.server.services.ArtifactService;
 import com.dnfeitosa.codegraph.server.services.DependencyEdge;
 import org.springframework.beans.factory.annotation.Autowired;

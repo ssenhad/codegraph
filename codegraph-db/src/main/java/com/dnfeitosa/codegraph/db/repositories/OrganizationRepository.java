@@ -21,6 +21,7 @@ import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.inject.Provider;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -31,19 +32,23 @@ import static java.util.stream.StreamSupport.stream;
 @Repository
 public class OrganizationRepository {
 
-    private Session session;
+    private Provider<Session> session;
 
     @Autowired
-    public OrganizationRepository(Session session) {
+    public OrganizationRepository(Provider<Session> session) {
         this.session = session;
     }
 
     public Set<String> getAllOrganizations() {
         String query = " MATCH (x:Artifact) RETURN x.organization AS org ";
-        Result result = session.query(query, new HashMap<>());
+        Result result = getSession().query(query, new HashMap<>());
         return stream(result.spliterator(), false)
             .map(r -> toString(r))
             .collect(toSet());
+    }
+
+    private Session getSession() {
+        return session.get();
     }
 
     private String toString(Map<String, Object> r) {
@@ -55,7 +60,7 @@ public class OrganizationRepository {
         String query = " MATCH (x:Artifact) WHERE x.organization STARTS WITH {parent} RETURN x.organization AS org ";
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("parent", parent + ".");
-        Result result = session.query(query, parameters);
+        Result result = getSession().query(query, parameters);
         return stream(result.spliterator(), false)
             .map(r -> toString(r))
             .collect(toSet());

@@ -40,14 +40,19 @@ public class RequestScopedBeanProvider {
 
     @Bean
     @Lazy
-    @Scope(WebApplicationContext.SCOPE_REQUEST)
-    public Session getSession(@Value("${neo4j.database.uri}") String databaseURI) {
+    public SessionFactory getSessionFactory(@Value("${neo4j.database.uri}") String databaseURI) {
         Configuration configuration = new Configuration.Builder()
             .autoIndex(AutoIndexMode.ASSERT.getName())
             .uri(databaseURI)
             .build();
 
-        SessionFactory sessionFactory = new SessionFactory(configuration, "com.dnfeitosa.codegraph.db.models");
+        return new SessionFactory(configuration, "com.dnfeitosa.codegraph.db.models");
+    }
+
+    @Bean
+    @Lazy
+    @Scope(WebApplicationContext.SCOPE_REQUEST)
+    public Session getSession(SessionFactory sessionFactory) {
         return sessionFactory.openSession();
     }
 }

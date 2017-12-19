@@ -21,11 +21,11 @@ import com.dnfeitosa.codegraph.db.models.relationships.DeclaresRelationship;
 import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.model.Result;
-import org.neo4j.ogm.session.Neo4jSession;
 import org.neo4j.ogm.session.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.inject.Provider;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -42,28 +42,32 @@ import static org.neo4j.ogm.cypher.ComparisonOperator.EQUALS;
 @Repository
 public class ArtifactRepository  {
 
-    private final Neo4jSession session;
+    private final Provider<Session> session;
 
     @Autowired
-    public ArtifactRepository(Session session) {
-        this.session = (Neo4jSession) session;
+    public ArtifactRepository(Provider<Session> session) {
+        this.session = session;
     }
 
     public void save(ArtifactNode artifact) {
-        session.save(artifact, 0);
-        session.save(artifact.getDependencies(), 0);
-        session.save(artifact);
+        getSession().save(artifact, 0);
+        getSession().save(artifact.getDependencies(), 0);
+        getSession().save(artifact);
+    }
+
+    private Session getSession() {
+        return session.get();
     }
 
     public ArtifactNode load(String organization, String name, String version) {
-        return session.load(ArtifactNode.class, id(organization, name, version));
+        return getSession().load(ArtifactNode.class, id(organization, name, version));
     }
 
     public Set<String> getVersions(String organization, String name) {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("organization", organization);
         parameters.put("name", name);
-        Result result = session.query("MATCH (a:Artifact { organization: {organization},  name: {name}}) return a.version as version", parameters);
+        Result result = getSession().query("MATCH (a:Artifact { organization: {organization},  name: {name}}) return a.version as version", parameters);
         return stream(result.spliterator(), false)
             .map(r -> r.get("version").toString())
             .collect(toSet());
@@ -71,7 +75,7 @@ public class ArtifactRepository  {
 
     public Set<ArtifactNode> getArtifactsFromOrganization(String organization) {
         Filter filter = new Filter("organization", EQUALS, organization);
-        return new HashSet<>(session.loadAll(ArtifactNode.class, filter));
+        return new HashSet<>(getSession().loadAll(ArtifactNode.class, filter));
     }
 
     private Set<ArtifactNode> collectDependencies(Set<ArtifactNode> artifacts) {
@@ -84,7 +88,7 @@ public class ArtifactRepository  {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("id", id(organization, name, version));
 
-        Result result = session.query(" MATCH p=(a:Artifact)-[r:DEPENDS_ON*]->(d:Artifact) " +
+        Result result = getSession().query(" MATCH p=(a:Artifact)-[r:DEPENDS_ON*]->(d:Artifact) " +
             " WHERE a.id = {id} with a, r, d " +
             " RETURN r ", parameters);
 
@@ -95,7 +99,7 @@ public class ArtifactRepository  {
 
     public Collection<ArtifactNode> loadAll(Set<String> ids) {
         Filter filter = new Filter("id", ComparisonOperator.IN, ids);
-        return session.loadAll(ArtifactNode.class, filter, 0);
+        return getSession().loadAll(ArtifactNode.class, filter, 0);
     }
 
     public void saveRelationshipsWithoutProperties(Set<ArtifactNode> artifacts) {
@@ -107,10 +111,10 @@ public class ArtifactRepository  {
             return params;
         }).collect(toList());
 
-        session.save(artifacts, 0);
+        getSession().save(artifacts, 0);
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("rows", rows);
-        session.query("UNWIND {rows} as row MATCH (startNode:Artifact) WHERE startNode.id = row.startNodeId MATCH (endNode:Artifact) WHERE endNode.id = row.endNodeId MERGE (startNode)-[rel:`DEPENDS_ON` {`id`: row.`id`} ]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type", parameters);
+        getSession().query("UNWIND {rows} as row MATCH (startNode:Artifact) WHERE startNode.id = row.startNodeId MATCH (endNode:Artifact) WHERE endNode.id = row.endNodeId MERGE (startNode)-[rel:`DEPENDS_ON` {`id`: row.`id`} ]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type", parameters);
     }
 }

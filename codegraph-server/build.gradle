@@ -31,7 +31,7 @@ bootRun {
 }
 
 springBoot {
-    mainClass = 'com.dnfeitosa.codegraph.server.main.CodegraphServer'
+    mainClass = 'co.degraph.server.main.CodegraphServer'
 }
 
 repositories {

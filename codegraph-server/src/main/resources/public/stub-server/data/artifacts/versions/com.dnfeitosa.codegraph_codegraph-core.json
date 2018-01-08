@@ -1,7 +1,7 @@
 {
     "artifact": {
         "name": "codegraph-core",
-        "organization": "com.dnfeitosa.codegraph",
+        "organization": "co.degraph",
         "dependencies": []
     },
     "versions": [{

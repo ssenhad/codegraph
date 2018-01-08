@@ -1,6 +1,6 @@
 {
     "name": "codegraph-core",
-    "organization": "com.dnfeitosa.codegraph",
+    "organization": "co.degraph",
     "version": "0.0.1",
     "dependencies": [
         {
@@ -13,7 +13,7 @@
         },
         {
             "name": "coollections",
-            "organization": "com.dnfeitosa.codegraph",
+            "organization": "co.degraph",
             "version": "0.0.1",
             "configurations": [
                 "compile"

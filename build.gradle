@@ -23,7 +23,7 @@ subprojects {
     apply plugin: 'idea'
     apply plugin: "com.github.hierynomus.license"
 
-    group = 'com.dnfeitosa.codegraph'
+    group = 'co.degraph'
     version = "${distribution.versions.major}.${distribution.versions.get(project.name)}-${distribution.versions.modifier}"
 
     targetCompatibility = 1.8

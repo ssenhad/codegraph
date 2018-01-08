@@ -1,14 +1,14 @@
 {
     "root": {
         "name": "codegraph-server",
-        "organization": "com.dnfeitosa.codegraph",
+        "organization": "co.degraph",
         "version": "0.0.1"
     },
     "edges": [
         {
             "source": {
                 "name": "codegraph-server",
-                "organization": "com.dnfeitosa.codegraph",
+                "organization": "co.degraph",
                 "version": "0.0.1"
             },
             "targets": [
@@ -22,7 +22,7 @@
                 },
                 {
                     "name": "codegraph-core",
-                    "organization": "com.dnfeitosa.codegraph",
+                    "organization": "co.degraph",
                     "version": "0.0.1",
                     "configurations": [
                         "compile"
@@ -30,7 +30,7 @@
                 },
                 {
                     "name": "codegraph-db",
-                    "organization": "com.dnfeitosa.codegraph",
+                    "organization": "co.degraph",
                     "version": "0.0.1",
                     "configurations": [
                         "compile"
@@ -38,7 +38,7 @@
                 },
                 {
                     "name": "coollections",
-                    "organization": "com.dnfeitosa.codegraph",
+                    "organization": "co.degraph",
                     "version": "0.0.1",
                     "configurations": [
                         "compile"
@@ -113,7 +113,7 @@
         {
             "source": {
                 "name": "codegraph-core",
-                "organization": "com.dnfeitosa.codegraph",
+                "organization": "co.degraph",
                 "version": "0.0.1"
             },
             "targets": [
@@ -127,7 +127,7 @@
                 },
                 {
                     "name": "coollections",
-                    "organization": "com.dnfeitosa.codegraph",
+                    "organization": "co.degraph",
                     "version": "0.0.1",
                     "configurations": [
                         "compile"

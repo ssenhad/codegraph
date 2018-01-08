@@ -1,0 +1,10 @@
+{
+    "nodes": [
+        {
+            "id": "co.degraph",
+            "name": "co.degraph",
+            "type": "organization",
+            "parent": "co"
+        }
+    ]
+}

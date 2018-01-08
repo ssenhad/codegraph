@@ -16,6 +16,8 @@
  */
 package com.dnfeitosa.codegraph.server.ui.resources;
 
+import java.util.Objects;
+
 public class TreeNode implements Comparable<TreeNode> {
 
     private String id;
@@ -49,5 +51,31 @@ public class TreeNode implements Comparable<TreeNode> {
 
     public String getParent() {
         return parent;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        TreeNode treeNode = (TreeNode) o;
+        return Objects.equals(id, treeNode.id) &&
+            Objects.equals(name, treeNode.name) &&
+            Objects.equals(type, treeNode.type) &&
+            Objects.equals(parent, treeNode.parent);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, type, parent);
+    }
+
+    @Override
+    public String toString() {
+        return "TreeNode{" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", type='" + type + '\'' +
+            ", parent='" + parent + '\'' +
+            '}';
     }
 }

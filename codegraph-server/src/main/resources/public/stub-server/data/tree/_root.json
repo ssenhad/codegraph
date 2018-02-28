@@ -1,8 +1,8 @@
 {
     "nodes": [
         {
-            "id": "com",
-            "name": "com",
+            "id": "co",
+            "name": "co",
             "type": "organization",
             "parent": "#"
         },

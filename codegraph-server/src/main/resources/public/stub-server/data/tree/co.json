@@ -2,7 +2,7 @@
     "nodes": [
         {
             "id": "co.degraph",
-            "name": "co.degraph",
+            "name": "degraph",
             "type": "organization",
             "parent": "co"
         }

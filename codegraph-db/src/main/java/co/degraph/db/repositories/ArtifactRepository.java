@@ -18,7 +18,6 @@ package co.degraph.db.repositories;
 
 import co.degraph.db.models.ArtifactNode;
 import co.degraph.db.models.relationships.DeclaresRelationship;
-import org.neo4j.ogm.cypher.ComparisonOperator;
 import org.neo4j.ogm.cypher.Filter;
 import org.neo4j.ogm.model.Result;
 import org.neo4j.ogm.session.Session;
@@ -67,7 +66,9 @@ public class ArtifactRepository  {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("organization", organization);
         parameters.put("name", name);
-        Result result = getSession().query("MATCH (a:Artifact { organization: {organization},  name: {name}}) return a.version as version", parameters);
+        Result result = getSession().query(
+            " MATCH (a:Artifact { organization: {organization},  name: {name}}) " +
+            " RETURN a.version as version", parameters);
         return stream(result.spliterator(), false)
             .map(r -> r.get("version").toString())
             .collect(toSet());
@@ -88,18 +89,16 @@ public class ArtifactRepository  {
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("id", id(organization, name, version));
 
-        Result result = getSession().query(" MATCH p=(a:Artifact)-[r:DEPENDS_ON*]->(d:Artifact) " +
+        Result result = getSession().query(
+            " MATCH p=(a:Artifact)-[r:DEPENDS_ON*]->(d:Artifact) " +
             " WHERE a.id = {id} with a, r, d " +
-            " RETURN r ", parameters);
+            " RETURN r, d ", parameters);
 
         return stream(result.queryResults().spliterator(), false)
-            .flatMap(r -> ((Collection<DeclaresRelationship>)r.get("r")).stream())
+            .flatMap(r -> {
+                return ((Collection<DeclaresRelationship>) r.get("r")).stream();
+            })
             .collect(toSet());
-    }
-
-    public Collection<ArtifactNode> loadAll(Set<String> ids) {
-        Filter filter = new Filter("id", ComparisonOperator.IN, ids);
-        return getSession().loadAll(ArtifactNode.class, filter, 0);
     }
 
     public void saveRelationshipsWithoutProperties(Set<ArtifactNode> artifacts) {
@@ -115,6 +114,11 @@ public class ArtifactRepository  {
 
         Map<String, Object> parameters = new HashMap<>();
         parameters.put("rows", rows);
-        getSession().query("UNWIND {rows} as row MATCH (startNode:Artifact) WHERE startNode.id = row.startNodeId MATCH (endNode:Artifact) WHERE endNode.id = row.endNodeId MERGE (startNode)-[rel:`DEPENDS_ON` {`id`: row.`id`} ]->(endNode) RETURN row.relRef as ref, ID(rel) as id, row.type as type", parameters);
+        getSession().query(
+            " UNWIND {rows} as row " +
+            " MATCH (startNode:Artifact) WHERE startNode.id = row.startNodeId " +
+            " MATCH (endNode:Artifact) WHERE endNode.id = row.endNodeId " +
+            " MERGE (startNode)-[rel:`DEPENDS_ON` {`id`: row.`id`} ]->(endNode) " +
+            " RETURN row.relRef as ref, ID(rel) as id, row.type as type ", parameters);
     }
 }

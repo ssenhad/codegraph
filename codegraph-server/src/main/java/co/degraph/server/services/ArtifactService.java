@@ -16,6 +16,7 @@
  */
 package co.degraph.server.services;
 
+import co.degraph.coollections.Streams;
 import co.degraph.core.models.Artifact;
 import co.degraph.core.models.AvailableVersion;
 import co.degraph.core.models.Graph;
@@ -24,7 +25,6 @@ import co.degraph.db.models.ArtifactNode;
 import co.degraph.db.models.converters.ArtifactNodeConverter;
 import co.degraph.db.models.relationships.DeclaresRelationship;
 import co.degraph.db.repositories.ArtifactRepository;
-import co.degraph.coollections.Streams;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

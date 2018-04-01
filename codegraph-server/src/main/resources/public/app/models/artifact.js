@@ -15,19 +15,24 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 class Artifact {
-    constructor(name, organization, version, dependencies) {
+    constructor(id, name, organization, version, dependencies) {
+        this.id = id;
         this.name = name;
         this.organization = organization;
         this.version = version;
         this.dependencies = dependencies || [];
     }
+
+    addDependency(dependency) {
+        this.dependencies.push(dependency);
+    }
 }
 
 class Dependency {
-    constructor(artifact, configurations, resolvedVersion) {
+    constructor(artifact, configurations) {
         this.artifact = artifact;
+        this.id = artifact.id;
         this.configurations = configurations;
-        this.resolvedVersion = resolvedVersion;
     }
 }
 
@@ -38,10 +43,7 @@ class Node {
 
     get id() {
         if (this.value instanceof Artifact) {
-            return `${this.value.organization}:${this.value.name}`;
-        }
-        if (this.value instanceof Dependency) {
-            return `${this.value.artifact.organization}:${this.value.artifact.name}`;
+            return `${this.value.id}`;
         }
         throw "Not supposed to come here";
     }

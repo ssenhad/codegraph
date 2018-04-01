@@ -57,6 +57,11 @@ angular
                 }
             }
         });
+        $stateProvider.state('viewer', {
+            url: '/viewer/{organization}/{name}/{version}/dependency-graph',
+            templateUrl: 'app/modules/viewer/partials/viewer.html',
+            controller: 'ViewerController'
+        });
         /*
         $routeProvider.when('/', {
             templateUrl: 'app/modules/index/partials/index.html',

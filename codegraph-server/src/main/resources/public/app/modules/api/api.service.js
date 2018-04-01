@@ -43,10 +43,6 @@ angular.module('Codegraph.api')
             return this.get('/api/artifacts');
         };
 
-        this.directDependencies = function (artifact) {
-            return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}/dependencies`)
-        };
-
         this.dependencyGraph = function (artifact) {
             return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}/dependency-graph`)
         };

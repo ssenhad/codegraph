@@ -15,12 +15,13 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 'use strict';
+
 angular.module('Codegraph.viewer')
-    .controller('ViewerController', function ($scope, $routeParams, api) {
+    .controller('ViewerController', function ($scope, $state, $stateParams, $location, api) {
         $scope.artifact = {
-            organization: $routeParams.organization,
-            name: $routeParams.name,
-            version: $routeParams.version
+            organization: $stateParams.organization,
+            name: $stateParams.name,
+            version: $stateParams.version
         };
 
         function stylesheet() {
@@ -28,8 +29,8 @@ angular.module('Codegraph.viewer')
                 .selector('node')
                 .css({
                     'shape': 'ellipse',
-                    'width': 'mapData(label.length, 1, 50, 80, 200)',
-                    'content': 'data(label)',
+                    'width': 'mapData(name.length, 1, 50, 80, 200)',
+                    'content': 'data(name)',
                     'text-valign': 'center',
                     'color': 'black',
                     'background-color': '#e7e7e7',
@@ -68,22 +69,32 @@ angular.module('Codegraph.viewer')
                 });
         }
 
-        function toGraph(artifact) {
-            let dependencies = artifact.dependencies;
-            let nodes = dependencies.map(function (dep) {
-                return { data: new Node(dep) };
-            });
-            nodes.push({ data: new Node(artifact) });
+        function toArtifact(data) {
+            return new Artifact(data.id, data.name, data.organization, data.version, [])
+        }
 
-            let edges = dependencies.map(function (dep) {
-                return { data: new Edge(new Node(artifact), new Node(dep)) };
+        function toGraph(data) {
+            const nodes = data.nodes
+                .map(toArtifact)
+                .map((node) => {
+                return { data: node };
+            });
+
+            nodes.forEach((artifact) => {
+                artifacts[artifact.data.id] = new Node(artifact.data);
+            });
+
+            const edges = data.edges.map(function (edge) {
+                return { data: new Edge(artifacts[edge.start.id], new Dependency(artifacts[edge.end.id]), edge.attributes.configurations) };
             });
 
             return { nodes: nodes, edges: edges };
         }
 
-        function renderGraph(artifact) {
-            let graph = toGraph(artifact);
+        var artifacts = {};
+
+        function render(graph) {
+
             let cy = cytoscape({
                 container: document.querySelector('#viewarea'),
 
@@ -104,12 +115,11 @@ angular.module('Codegraph.viewer')
             });
             cy.$('node').qtip({
                 content: function () {
-                    let value = this.data('value');
+                    let value = this.data();
                     if (value instanceof Dependency) {
                         return `
                             <div>
                                 <div>Declared: ${value.artifact.version}</div>
-                                <div>Resolved: ${value.resolvedVersion}</div>
                             </div>
                         `;
                     }
@@ -143,16 +153,8 @@ angular.module('Codegraph.viewer')
             cy.navigator();
         }
 
-        $scope.directDependencies = function () {
-            function toDependency(dep) {
-                let artifact = new Artifact(dep.name, dep.organization, dep.version.declared);
-                return new Dependency(artifact, dep.configurations, dep.version.resolved);
-            }
-
-            api.directDependencies($scope.artifact).then(function (data) {
-                let dependencies = data.artifact.dependencies.map(toDependency);
-                let artifact = new Artifact(data.artifact.name, data.artifact.organization, data.artifact.version, dependencies);
-                renderGraph(artifact);
-            });
-        }
+        api.dependencyGraph($scope.artifact).then((data) => {
+            const graph = toGraph(data);
+            render(graph);
+        });
     });

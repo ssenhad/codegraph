@@ -24,6 +24,7 @@ app.use(express.static('../'));
 
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
+    res.setHeader("Content-Type", "application/json;charset=UTF-8");
     return next();
 });
 

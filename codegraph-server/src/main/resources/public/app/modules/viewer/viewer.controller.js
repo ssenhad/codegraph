@@ -34,6 +34,8 @@ angular.module('Codegraph.viewer')
                     'text-valign': 'center',
                     'color': 'black',
                     'background-color': '#e7e7e7',
+                    'border-width': '0.5',
+                    'border-color': '#000',
                     'text-outline-color': '#999',
                     'font-size': '0.7em'
                 })
@@ -50,9 +52,9 @@ angular.module('Codegraph.viewer')
                 .css({
                     'curve-style': 'bezier',
                     'target-arrow-shape': 'triangle',
-                    'target-arrow-color': '#ccc',
+                    'target-arrow-color': '#000',
                     'arrow-scale': 0.6,
-                    'line-color': '#ccc',
+                    'line-color': '#000',
                     'width': 0.5
                 })
                 .selector(':selected')

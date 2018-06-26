@@ -49,7 +49,6 @@ node {
 
 .viewer .artifact {
     border-bottom: solid 2px #e7e7e7;
-    text-align: right;
 }
 
 .viewer .artifact .name {

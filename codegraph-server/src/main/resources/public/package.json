@@ -6,7 +6,7 @@
     "author": "Diego Feitosa <dnfeitosa@gmail.com>",
     "license": "AGPL-3.0",
     "devDependencies": {
-        "bower": "~1.8",
+        "bower": "~1.8.4",
         "express": "^4.14.1",
         "grunt": "~1.0",
         "grunt-cli": "~1.2",

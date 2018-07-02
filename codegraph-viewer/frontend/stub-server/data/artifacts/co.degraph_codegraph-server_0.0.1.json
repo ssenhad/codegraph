@@ -1,0 +1,103 @@
+{
+    "name": "codegraph-server",
+    "organization": "co.degraph",
+    "version": "0.0.1",
+    "dependencies": [
+        {
+            "name": "commons-lang",
+            "organization": "commons-lang",
+            "version": "2.6",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "codegraph-core",
+            "organization": "co.degraph",
+            "version": "0.0.1",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "codegraph-db",
+            "organization": "co.degraph",
+            "version": "0.0.1",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "coollections",
+            "organization": "co.degraph",
+            "version": "0.0.1",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "spring-boot-starter",
+            "organization": "org.springframework.boot",
+            "version": "1.3.6.RELEASE",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "spring-boot-starter-actuator",
+            "organization": "org.springframework.boot",
+            "version": "1.3.6.RELEASE",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "spring-boot-starter-web",
+            "organization": "org.springframework.boot",
+            "version": "1.3.6.RELEASE",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "spring-boot-starter-jetty",
+            "organization": "org.springframework.boot",
+            "version": "1.3.6.RELEASE",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "spring-data-neo4j",
+            "organization": "org.springframework.data",
+            "version": "3.4.4.RELEASE",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "spring-data-neo4j-rest",
+            "organization": "org.springframework.data",
+            "version": "3.4.4.RELEASE",
+            "configurations": [
+                "compile"
+            ]
+        },
+        {
+            "name": "junit",
+            "organization": "junit",
+            "version": "4.12",
+            "configurations": [
+                "test"
+            ]
+        },
+        {
+            "name": "mockito-core",
+            "organization": "org.mockito",
+            "version": "1.10.19",
+            "configurations": [
+                "test"
+            ]
+        }
+    ]
+}

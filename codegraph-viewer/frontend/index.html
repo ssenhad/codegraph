@@ -1,0 +1,101 @@
+<!--
+
+    Copyright (C) 2015-2018 Diego Feitosa [dnfeitosa@gmail.com]
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<!DOCTYPE html>
+<html lang="en" ng-app="Codegraph">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Codegraph</title>
+
+    <link href="/components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/components/components-font-awesome/css/font-awesome.min.css" rel="stylesheet">
+    <link href="/components/qtip2/jquery.qtip.css" rel="stylesheet">
+    <link href="/components/cytoscape-navigator/cytoscape.js-navigator.css" rel="stylesheet">
+    <link href="/components/jstree/dist/themes/default/style.css" rel="stylesheet">
+    <link href="/css/codegraph.css" rel="stylesheet">
+    <link href="/css/codegraph-artifacts.css" rel="stylesheet">
+    <link href="/css/codegraph-viewer.css" rel="stylesheet">
+    <link href="/css/bootstrap-overrides.css" rel="stylesheet">
+</head>
+<body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+                        aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#"><strong>Codegraph</strong></a>
+            </div>
+            <ul class="nav navbar-nav">
+                <li><a href="/#!/artifacts">Artifacts</a></li>
+            </ul>
+            <form class="navbar-form navbar-right">
+                <div class="form-group form-group-sm">
+                    <div class="input-group">
+                        <div class="input-group-addon"><i class="glyphicon glyphicon-search"></i></div>
+                        <input type="text" name="artifact" class="form-control" placeholder="Artifact">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </nav>
+
+    <div class="container-fluid full-height">
+        <ui-view></ui-view>
+    </div>
+
+    <script src="/components/jquery/dist/jquery.min.js"></script>
+    <script src="/components/angular/angular.min.js"></script>
+    <script src="/components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="/components/bootstrap/dist/js/bootstrap.min.js"></script>
+    <script src="/components/angular-bootstrap/ui-bootstrap.min.js"></script>
+    <script src="/components/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+    <script src="/components/qtip2/jquery.qtip.js"></script>
+    <script src="/components/lodash/lodash.js"></script>
+    <script src="/components/graphlib/dist/graphlib.core.min.js"></script>
+    <script src="/components/dagre/dist/dagre.core.min.js"></script>
+    <script src="/components/cytoscape/dist/cytoscape.js"></script>
+    <script src="/components/cytoscape-dagre/cytoscape-dagre.js"></script>
+    <script src="/components/cytoscape-navigator/cytoscape-navigator.js"></script>
+    <script src="/components/cytoscape-qtip/cytoscape-qtip.js"></script>
+    <script src="/components/jstree/dist/jstree.js"></script>
+    <script src="/components/ng-js-tree/dist/ngJsTree.js"></script>
+
+    <script src="/app/extensions.js"></script>
+    <script src="/app/models/artifact.js"></script>
+    <script src="/app/modules/api/api.module.js"></script>
+    <script src="/app/modules/api/api.service.js"></script>
+    <script src="/app/modules/index/index.module.js"></script>
+    <script src="/app/modules/index/index.service.js"></script>
+    <script src="/app/modules/index/index.controller.js"></script>
+    <script src="/app/modules/artifact/artifact.module.js"></script>
+    <script src="/app/modules/artifacts/artifacts.module.js"></script>
+    <script src="/app/modules/artifacts/artifacts.tree.controller.js"></script>
+    <script src="/app/modules/artifacts/artifacts.artifact.controller.js"></script>
+    <script src="/app/modules/artifacts/artifacts.details.controller.js"></script>
+    <script src="/app/modules/viewer/viewer.module.js"></script>
+    <script src="/app/modules/viewer/viewer.controller.js"></script>
+    <script src="/app/app.js"></script>
+</body>
+</html>

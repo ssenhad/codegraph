@@ -1,0 +1,58 @@
+{
+    "artifacts": [
+        {
+            "id": 1,
+            "name": "codegraph-server",
+            "organization": "co.degraph",
+            "version": "0.0.1"
+        },
+        {
+            "id": 2,
+            "name": "codegraph-core",
+            "organization": "co.degraph",
+            "version": "0.0.1"
+        },
+        {
+            "id": 3,
+            "name": "codegraph-db",
+            "organization": "co.degraph",
+            "version": "0.0.1"
+        },
+        {
+            "id": 4,
+            "name": "coollections",
+            "organization": "co.degraph",
+            "version": "0.0.1"
+        },
+        {
+            "name": "commons-lang",
+            "organization": "commons-lang",
+            "version": "2.6"
+        },
+        {
+            "name": "spring-core",
+            "organization": "org.springframework",
+            "version": "4.2.7.RELEASE"
+        },
+        {
+            "name": "spring-context",
+            "organization": "org.springframework",
+            "version": "4.2.7.RELEASE"
+        },
+        {
+            "name": "log4j",
+            "organization": "log4j",
+            "version": "1.2.17"
+        },
+        {
+            "name": "jdom",
+            "organization": "org.jdom",
+            "version": "2.0.2"
+        },
+        {
+            "name": "jaxen",
+            "organization": "jaxen",
+            "version": "1.1.6"
+        }
+    ]
+}

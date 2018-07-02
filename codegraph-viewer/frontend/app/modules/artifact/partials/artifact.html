@@ -1,0 +1,68 @@
+<!--
+
+    Copyright (C) 2015-2018 Diego Feitosa [dnfeitosa@gmail.com]
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<div class="row artifact-overview">
+    <div class="col-md-5">
+        <div class="overview">
+            <div class="artifact">
+                <div class="name">{{artifact.name}}:{{artifact.version}}</div>
+                <div class="organization">{{artifact.organization}}</div>
+            </div>
+            <div class="stats row">
+                <!--
+                <div class="stat col-md-4">
+                    <span><a href="#artifactfact.organization}artifactfact.name}artifactfact.version}}/classes">{{stats.classes}}</a></span>
+                    <p>classes</p>
+                </div>
+                -->
+                <div class="stat col-md-4">
+                    <span><a href="#!/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependencies">{{stats.dependencies}}</a></span>
+                    <p>dependencies</p>
+                </div>
+                <!--
+                <div class="stat col-md-4">
+                    <span><a href="#artifactfact.organization}artifactfact.name}artifactfact.version}}/dependents">{{stats.dependents}}</a></span>
+                    <p>dependents</p>
+                </div>
+                -->
+            </div>
+            <div class="all-versions">
+                <h3>Other versions</h3>
+                <span class="versions">
+                    <span ng-repeat="availableVersion in availableVersions">
+                        <a ng-class="{'artifact-unavailable': !availableVersion.availability.contains('ARTIFACT')}" href="#!/{{artifact.organization}}/{{artifact.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
+                    </span>
+                </span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <h3>Declared dependencies</h3>
+        <div ng-show="artifact.dependencies.length == 0">
+            <i>No dependencies</i>
+        </div>
+        <div class="declared-dependencies" ng-show="artifact.dependencies.length > 0">
+            <div class="dependency" ng-repeat="dependency in artifact.dependencies">
+                {{dependency.organization}}:{{dependency.name}}:{{dependency.version}}
+                <span class="configurations">
+                    <span ng-repeat="configuration in dependency.configurations">{{configuration}}</span>
+                </span>
+            </div>
+        </div>
+    </div>
+</div>

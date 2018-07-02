@@ -1,0 +1,38 @@
+<!--
+
+    Copyright (C) 2015-2018 Diego Feitosa [dnfeitosa@gmail.com]
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<div class="viewer full-height">
+    <div class="sidebar">
+        <div class="artifact">
+            <div class="organization">{{artifact.organization}}</div>
+            <div class="name">{{artifact.name}}:{{artifact.version}}</div>
+        </div>
+        <div class="controls btn-group">
+            <!--<div class="btn btn-xs btn-default" ng-click="directDependencies(artifact)">Dependencies</div>-->
+            <!--<div class="btn btn-xs btn-default" ng-click="directDependencies(artifact)">Dependency Graph</div>-->
+            <!--<div class="btn btn-default" ng-click="directDependencartifactfact)">Consumers</div>-->
+            <!--<div class="btn btn-default" ng-click="directDependencartifactfact)">Consumers Graph</div>-->
+        </div>
+    </div>
+    <div class="viewarea" id="viewarea">
+        <div class="loading text-center" ng-show="requesting">
+            <div><img src="/images/ring.gif"/></div>
+            <div class="message">Hang tight. This may take a while.</div>
+        </div>
+    </div>
+</div>

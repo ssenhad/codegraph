@@ -1,0 +1,85 @@
+<!--
+
+    Copyright (C) 2015-2018 Diego Feitosa [dnfeitosa@gmail.com]
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
+-->
+<div class="panel panel-default" ng-hide="noDetails">
+    <div class="panel-heading">
+        <span><b>{{artifact.version}}</b></span>
+    </div>
+    <div class="panel-body">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="row">
+                    <div class="col-md-2">
+                        <div class="panel panel-default text-center">
+                            <a href="#!/viewer/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependency-graph">
+                                <div class="panel-heading">
+                                    <i class="fa fa-sitemap fa-1x"></i>
+                                    <div>Dependency Graph</div>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+                    <!--<div class="col-md-2">-->
+                        <!--<div class="panel panel-default text-center">-->
+                            <!--<a href="#!/viewer/{{artifact.organization}}/{{artifact.name}}/{{artifact.version}}/dependents-graph">-->
+                                <!--<div class="panel-heading">-->
+                                    <!--<i class="fa fa-sitemap fa-1x"></i>-->
+                                    <!--<div>Dependents Graph</div>-->
+                                <!--</div>-->
+                            <!--</a>-->
+                        <!--</div>-->
+                    <!--</div>-->
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><b>Declared dependencies</b></div>
+                        <div class="panel-body" ng-show="!artifact.dependencies">
+                            <i>No dependencies</i>
+                        </div>
+                        <table ng-show="artifact.dependencies.length > 0" class="table table-condensed table-responsive">
+                            <thead>
+                                <tr>
+                                    <th>Organization</th>
+                                    <th>Name</th>
+                                    <th>Version</th>
+                                    <th>Configurations</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="dependency" ng-repeat="dependency in artifact.dependencies | orderBy: ['configurations', 'organization', 'name']">
+                                    <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.organization}}</a></td>
+                                    <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.name}}</a></td>
+                                    <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.version}}</a></td>
+                                    <td>
+                                        <span class="configuration text-center" ng-repeat="configuration in dependency.configurations">{{configuration}}</span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading"><b>Info & Warnings</b></div>
+                    <div class="panel-body">
+                        <div>
+                            <i>Nothing to show</i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

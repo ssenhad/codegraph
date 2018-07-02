@@ -1,0 +1,10 @@
+{
+    "nodes": [
+        {
+            "id": "org.springframework",
+            "name": "springframework",
+            "type": "organization",
+            "parent": "org"
+        }
+    ]
+}

@@ -1,0 +1,16 @@
+{
+    "nodes": [
+        {
+            "id": "org.springframework.spring-context",
+            "name": "spring-context",
+            "type": "artifact",
+            "parent": "org.springframework"
+        },
+        {
+            "id": "org.springframework.spring-core",
+            "name": "spring-core",
+            "type": "artifact",
+            "parent": "org.springframework"
+        }
+    ]
+}

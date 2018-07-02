@@ -1,0 +1,17 @@
+plugins {
+    id "com.moowork.grunt" version "1.1.1"
+}
+
+node {
+    version = '10.5.0'
+    download = true
+    yarnWorkDir = file("$projectDir/frontend")
+    nodeModulesDir = file("$projectDir/frontend")
+}
+
+grunt {
+    workDir = file("$projectDir/frontend")
+}
+
+grunt_build.dependsOn yarn_install
+build.dependsOn grunt_build

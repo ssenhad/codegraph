@@ -9,7 +9,6 @@ buildscript {
 }
 
 plugins {
-    id "com.moowork.grunt" version "1.1.1"
     id 'org.unbroken-dome.test-sets' version '1.4.0'
 }
 
@@ -97,19 +96,13 @@ dependencies {
     componentTestCompile project(path: ':codegraph-db', configuration: 'testPublic')
 }
 
-node {
-    yarnWorkDir = file("$projectDir/src/main/resources/public")
-    nodeModulesDir = file("$projectDir/src/main/resources/public")
+jar {
+    from('../codegraph-viewer/frontend/dist') {
+        into 'static'
+    }
 }
 
-grunt {
-    workDir = file("$projectDir/src/main/resources/public")
-}
-
-grunt_build.dependsOn yarn_install
-build.dependsOn grunt_build
-bootRepackage.mustRunAfter grunt_build
-groupFiles.dependsOn bootRepackage
+jar.dependsOn ':codegraph-viewer:build'
 
 build.dependsOn componentTest, acceptanceTest
 acceptanceTest.mustRunAfter test

@@ -22,3 +22,8 @@ codegraph-server/src/main/resources/public/node_modules
 codegraph-server/src/main/resources/public/yarn-latest
 .DS_Store
 classes
+
+codegraph-viewer/frontend/node_modules
+codegraph-viewer/frontend/components
+
+dist

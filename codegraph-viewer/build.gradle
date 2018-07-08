@@ -1,0 +1,6 @@
+plugins {
+    id "com.moowork.node" version "1.2.0"
+}
+
+apply from: "$projectDir/frontend/frontend.gradle"
+apply from: "$projectDir/api/api.gradle"

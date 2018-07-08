@@ -102,6 +102,8 @@ jar {
     }
 }
 
+jar.dependsOn ':codegraph-viewer:build'
+
 build.dependsOn componentTest, acceptanceTest
 acceptanceTest.mustRunAfter test
 componentTest.mustRunAfter test

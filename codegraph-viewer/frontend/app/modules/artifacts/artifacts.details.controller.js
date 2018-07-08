@@ -16,6 +16,8 @@
  */
 'use strict';
 
+const angular = require('angular');
+
 angular.module('Codegraph.artifacts')
     .controller('ArtifactDetailsController', function ($scope, $stateParams, $state, api) {
         function displayArtifact(artifact) {

@@ -1,17 +1,6 @@
 plugins {
-    id "com.moowork.grunt" version "1.1.1"
+    id "com.moowork.node" version "1.2.0"
 }
 
-node {
-    version = '10.5.0'
-    download = true
-    yarnWorkDir = file("$projectDir/frontend")
-    nodeModulesDir = file("$projectDir/frontend")
-}
-
-grunt {
-    workDir = file("$projectDir/frontend")
-}
-
-grunt_build.dependsOn yarn_install
-build.dependsOn grunt_build
+apply from: "$projectDir/frontend/frontend.gradle"
+apply from: "$projectDir/api/api.gradle"

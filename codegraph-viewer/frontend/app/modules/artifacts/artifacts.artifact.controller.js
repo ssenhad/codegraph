@@ -16,6 +16,8 @@
  */
 'use strict';
 
+const angular = require('angular');
+
 angular.module('Codegraph.artifacts')
     .controller('ArtifactController', function ($scope, $state, $stateParams, $location, api) {
         api.getVersions($stateParams.organization, $stateParams.name).then(function (data) {

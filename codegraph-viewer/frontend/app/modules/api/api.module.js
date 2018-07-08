@@ -16,6 +16,8 @@
  */
 'use strict';
 
+const angular = require('angular');
+
 angular.module('Codegraph.api', [])
     .config(function ($httpProvider) {
         $httpProvider.defaults.headers = {

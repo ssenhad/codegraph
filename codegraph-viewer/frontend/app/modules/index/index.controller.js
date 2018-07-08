@@ -16,6 +16,8 @@
  */
 'use strict';
 
+const angular = require('angular');
+
 angular.module('Codegraph.index')
     .controller('IndexController', function ($scope, api) {
         // api.artifacts().then(function (response) {

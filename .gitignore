@@ -25,3 +25,5 @@ classes
 
 codegraph-viewer/frontend/node_modules
 codegraph-viewer/frontend/components
+
+dist

@@ -16,6 +16,8 @@
  */
 'use strict';
 
+const angular = require('angular');
+
 angular.module('Codegraph.api')
     .service('api', function ($http, $q) {
         this.get = function (url) {

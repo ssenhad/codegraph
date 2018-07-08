@@ -16,6 +16,8 @@
  */
 'use strict';
 
+import { Artifact, Node, Edge, Dependency } from '../../models/artifact';
+
 angular.module('Codegraph.viewer')
     .controller('ViewerController', function ($scope, $state, $stateParams, $location, api) {
         $scope.artifact = {
@@ -115,42 +117,42 @@ angular.module('Codegraph.viewer')
                     padding: 1
                 }
             });
-            cy.$('node').qtip({
-                content: function () {
-                    let value = this.data();
-                    if (value instanceof Dependency) {
-                        return `
-                            <div>
-                                <div>Declared: ${value.artifact.version}</div>
-                            </div>
-                        `;
-                    }
-                    if (value instanceof Artifact) {
-                        return `
-                            <div>
-                                <div>Version: ${value.version}</div>
-                            </div>
-                        `;
-                    }
-                },
-                position: {
-                    my: 'top center',
-                    at: 'bottom center'
-                },
-                show: {
-                    event: 'mouseover'
-                },
-                hide: {
-                    event: 'mouseout'
-                },
-                style: {
-                    classes: 'qtip-bootstrap',
-                    tip: {
-                        width: 16,
-                        height: 8
-                    }
-                }
-            });
+            // cy.$('node').qtip({
+            //     content: function () {
+            //         let value = this.data();
+            //         if (value instanceof Dependency) {
+            //             return `
+            //                 <div>
+            //                     <div>Declared: ${value.artifact.version}</div>
+            //                 </div>
+            //             `;
+            //         }
+            //         if (value instanceof Artifact) {
+            //             return `
+            //                 <div>
+            //                     <div>Version: ${value.version}</div>
+            //                 </div>
+            //             `;
+            //         }
+            //     },
+            //     position: {
+            //         my: 'top center',
+            //         at: 'bottom center'
+            //     },
+            //     show: {
+            //         event: 'mouseover'
+            //     },
+            //     hide: {
+            //         event: 'mouseout'
+            //     },
+            //     style: {
+            //         classes: 'qtip-bootstrap',
+            //         tip: {
+            //             width: 16,
+            //             height: 8
+            //         }
+            //     }
+            // });
 
             cy.navigator();
         }

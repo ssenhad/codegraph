@@ -76,6 +76,10 @@ class Graph {
     }
 }
 
-
-
-
+export {
+    Artifact,
+    Dependency,
+    Node,
+    Edge,
+    Graph
+}

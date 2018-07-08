@@ -17,10 +17,22 @@
 var express = require('express');
 var fs = require('fs');
 var path = require('path');
+var webpack = require('webpack');
+var proxy = require('http-proxy-middleware');
+var config = require('../webpack.config');
+var history = require('connect-history-api-fallback');
+
+var compiler = webpack(config);
 
 var app = express();
 
+// app.use(proxy('/api', { target: 'http://localhost:3000', changeOrigin: false }));
+
+
+app.use(require('webpack-dev-middleware')(compiler, { noInfo: true /*, publicPath: config.output.publicPath*/ }));
 app.use(express.static('../'));
+
+app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
@@ -71,7 +83,7 @@ app.get('/ui/tree/nodes', function (req, res) {
 });
 
 app.listen(3000, function () {
-    console.log('Codegraph Server Stub');
+    console.log('Codegraph Dev Server');
 });
 
 

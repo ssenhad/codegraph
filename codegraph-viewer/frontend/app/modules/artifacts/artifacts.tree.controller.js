@@ -16,6 +16,8 @@
  */
 'use strict';
 
+const angular = require('angular');
+
 angular.module('Codegraph.artifacts')
     .controller('TreeController', function ($interval, $scope, $state, $stateParams, $location, api) {
         var toJsTreeNode = function (node) {

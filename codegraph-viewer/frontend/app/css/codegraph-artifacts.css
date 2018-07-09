@@ -76,10 +76,28 @@
 .artifacts .tree {
     background-color: #f8f8f8;
     border: solid 1px #e7e7e7;
-    padding-top: 10px;
 }
 
-.section {
-    padding-left: 10px;
-    padding-right: 10px;
+.sidebar {
+    background-color: #f8f8f8;
+    border: solid 1px #e7e7e7;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100;
+    padding: 60px 0 0;
+}
+
+.sidebar h3 {
+
+}
+
+.sidebar-sticky {
+    top: 0;
+    height: calc(100vh - 60px);
+    padding-top: 0.5em;
+    overflow-x: hidden;
+    overflow-y: auto;
+    position: sticky;
 }

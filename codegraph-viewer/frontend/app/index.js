@@ -14,13 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+
+import 'bootstrap';
+
 require('./router');
-require('./css/bootstrap-overrides.css');
+// require('./css/bootstrap-overrides.css');
 require('./css/codegraph.css');
 require('./css/codegraph-artifacts.css');
-require('./css/codegraph-viewer.css');
-
+// require('./css/codegraph-viewer.css');
+//
 require('jstree/dist/themes/default/style.css');
-require('bootstrap/dist/css/bootstrap.min.css');
-require('components-font-awesome/css/font-awesome.css');
 

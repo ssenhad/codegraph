@@ -67,10 +67,10 @@ angular.module('Codegraph.artifacts')
             },
             types: {
                 default: {
-                    icon: 'glyphicon glyphicon-folder-close'
+                    icon: 'fas fa-folder'
                 },
                 artifact: {
-                    icon: 'glyphicon glyphicon-file'
+                    icon: 'fas fa-file'
                 }
             },
             massload: {

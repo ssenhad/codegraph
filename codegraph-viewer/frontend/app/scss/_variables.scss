@@ -1,0 +1,3 @@
+@import "~bootstrap/scss/variables";
+
+$top-padding: $navbar-brand-height + ($navbar-padding-y * 2 /* top & bottom */) + ($navbar-brand-padding-y * 2 /* top & bottom */) !default;

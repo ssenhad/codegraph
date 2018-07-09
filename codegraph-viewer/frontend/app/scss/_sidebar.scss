@@ -1,0 +1,32 @@
+@import "variables";
+
+.sidebar {
+  background-color: $gray-100;
+  border-right: solid 1px $gray-400;
+  position: sticky;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  z-index: 100;
+  height: calc(100vh - #{$top-padding});
+  overflow-x: hidden;
+  overflow-y: auto;
+  padding-left: 0;
+  padding-right: 0;
+
+  .title, .content {
+  }
+
+  .title {
+    padding: 10px 15px 5px 15px;
+    background-color: $gray-200;
+    color: $gray-600;
+  }
+
+  .content {
+    padding: 20px 15px 5px 15px;
+  }
+}
+
+
+

@@ -18,10 +18,8 @@
 import 'bootstrap';
 
 require('./router');
-// require('./css/bootstrap-overrides.css');
-require('./css/codegraph.css');
 require('./css/codegraph-artifacts.css');
 require('./css/codegraph-viewer.css');
-//
+
 require('jstree/dist/themes/default/style.css');
 

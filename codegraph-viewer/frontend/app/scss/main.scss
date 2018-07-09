@@ -1,4 +1,14 @@
-@import "custom";
 @import "~bootstrap/scss/bootstrap";
+
+@import "variables";
+@import "reset";
+@import "custom";
+@import "sidebar";
+
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/fa-solid";
+
+.cgr-contents {
+  padding-top: $top-padding;
+}
+

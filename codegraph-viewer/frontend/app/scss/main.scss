@@ -3,6 +3,7 @@
 @import "variables";
 @import "reset";
 @import "sidebar";
+@import "viewer";
 
 @import "~@fortawesome/fontawesome-free/scss/fontawesome";
 @import "~@fortawesome/fontawesome-free/scss/fa-solid";
@@ -13,10 +14,12 @@ body {
 
 .cgr-container {
   padding-top: $cgr-top-padding;
+  height: 100%;
 }
 
 .cgr-contents {
-  padding: 20px 15px 5px 15px;
+  padding: 20px 10px 5px 10px;
+  margin-left: auto;
 
   .cgr-section {
     padding-top: 10px;
@@ -32,9 +35,4 @@ body {
 .cgr-title {
   padding: 10px 15px 5px 15px;
   background-color: $gray-100;
-}
-
-.cgr-artifact-overview {
-  padding: 0;
-  margin-left: auto;
 }

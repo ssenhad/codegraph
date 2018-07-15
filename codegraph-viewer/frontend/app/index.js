@@ -20,7 +20,7 @@ import 'bootstrap';
 
 /* Codegraph imports */
 import './router'
-require('./css/codegraph-viewer.css');
+// require('./css/codegraph-viewer.css');
 
 require('jstree/dist/themes/default/style.css');
 

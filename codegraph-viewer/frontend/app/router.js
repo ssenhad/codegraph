@@ -13,8 +13,6 @@ require('./modules/api/api.service');
 require('./modules/index/index.module');
 require('./modules/index/index.service');
 require('./modules/index/index.controller');
-require('./modules/artifact/artifact.module');
-require('./modules/artifact/artifact.module');
 require('./modules/artifacts/artifacts.module');
 require('./modules/artifacts/artifacts.tree.controller');
 require('./modules/artifacts/artifacts.artifact.controller');
@@ -28,7 +26,6 @@ angular
         'ngJsTree',
         'ui.bootstrap',
         'Codegraph.api',
-        'Codegraph.artifact',
         'Codegraph.artifacts',
         'Codegraph.index',
         'Codegraph.viewer',

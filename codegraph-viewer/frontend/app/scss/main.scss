@@ -1,0 +1,38 @@
+@import "overrides";
+@import "~bootstrap/scss/bootstrap";
+@import "variables";
+@import "reset";
+@import "sidebar";
+@import "viewer";
+
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/fa-solid";
+
+body {
+  color: $gray-900;
+}
+
+.cgr-container {
+  padding-top: $cgr-top-padding;
+  height: 100%;
+}
+
+.cgr-contents {
+  padding: 20px 10px 5px 10px;
+  margin-left: auto;
+
+  .cgr-section {
+    padding-top: 10px;
+    padding-bottom: 25px;
+  }
+
+  .cgr-section-split {
+    border-bottom: solid 2px $cgr-border-color;
+    margin-bottom: 30px;
+  }
+}
+
+.cgr-title {
+  padding: 10px 15px 5px 15px;
+  background-color: $gray-100;
+}

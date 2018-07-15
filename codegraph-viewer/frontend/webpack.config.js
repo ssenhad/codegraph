@@ -8,12 +8,12 @@ module.exports = {
     mode: 'development',
     entry: [
         './app/index.js',
+        './app/scss/main.scss',
         'webpack-hot-middleware/client'
     ],
     output: {
         filename: 'bundle.js',
-        path: path.resolve(__dirname, 'dist'),
-        // publicPath: 'http://localhost:3000/'
+        path: path.resolve(__dirname, 'dist')
     },
     plugins: [
         new CleanWebpackPlugin(['dist']),
@@ -37,6 +37,26 @@ module.exports = {
     module: {
         rules: [
             {
+                test: /\.scss$/,
+                use: [
+                    // { loader: 'style-loader' },
+                    { loader: MiniCssExtractPlugin.loader },
+                    { loader: 'css-loader' },
+                    {
+                        loader: 'postcss-loader',
+                        options: {
+                            plugins: function () {
+                                return [
+                                    require('precss'),
+                                    require('autoprefixer'),
+                                ];
+                            }
+                        }
+                    },
+                    { loader: 'sass-loader' }
+                ]
+            },
+            {
                 test: /\.css$/,
                 use: [
                     {
@@ -58,11 +78,5 @@ module.exports = {
         alias: {
             jquery: "jquery/src/jquery"
         }
-    },
-    devServer: {
-        proxy: {
-            '/ui': 'http://localhost:3000'
-        }
     }
-
 };

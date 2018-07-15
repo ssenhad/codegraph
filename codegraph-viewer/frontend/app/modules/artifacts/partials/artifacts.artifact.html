@@ -16,27 +16,20 @@
     along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
 -->
-<div class="overview">
-    <div class="all-versions">
-        <div class="panel">
-            <div class="panel-heading">
-                <h1>{{$stateParams.name}}</h1>
-                <h4>{{$stateParams.organization}}</h4>
-            </div>
-            <div class="panel-body">
-                <h5>Versions</h5>
-                <span class="versions" ng-hide="noVersions">
-                    <span ng-repeat="availableVersion in availableVersions">
-                        <a class="btn-link" ng-class="{'artifact-unavailable': !availableVersion.availability.contains('ARTIFACT')}"
-                           href="#!/artifacts/{{artifact.organization}}/{{artifact.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
-                    </span>
-                </span>
-                <div ng-show="noVersions">
-                    <i>Nothing to show</i>
-                </div>
-            </div>
+<div class="cgr-title shadow-sm">
+    <h2>{{$stateParams.organization}}:{{$stateParams.name}}</h2>
+</div>
+<div class="cgr-contents cgr-artifact">
+    <div class="cgr-section cgr-section-split cgr-artifact-versions">
+        <h4>Versions</h4>
+        <span ng-hide="noVersions">
+            <span ng-repeat="availableVersion in availableVersions">
+                <a class="btn-link" href="#!/artifacts/{{artifact.organization}}/{{artifact.name}}/{{availableVersion.version}}">{{availableVersion.version}}{{$last ? '' : ', '}}</a>
+            </span>
+        </span>
+        <div ng-show="noVersions">
+            <i>Nothing to show</i>
         </div>
     </div>
-</div>
-<div class="details" ui-view="details">
+    <div ui-view="details"></div>
 </div>

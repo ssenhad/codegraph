@@ -15,10 +15,11 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
+/* 3rd party imports */
 import 'bootstrap';
 
-require('./router');
-require('./css/codegraph-artifacts.css');
+/* Codegraph imports */
+import './router'
 require('./css/codegraph-viewer.css');
 
 require('jstree/dist/themes/default/style.css');

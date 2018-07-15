@@ -1,29 +1,20 @@
 @import "variables";
 
-.sidebar {
+.cgr-sidebar {
   background-color: $gray-100;
-  border-right: solid 1px $gray-400;
+  border-right: solid 1px $cgr-border-color;
   position: sticky;
   top: 0;
   bottom: 0;
   left: 0;
   z-index: 100;
-  height: calc(100vh - #{$top-padding});
+  height: calc(100vh - #{$cgr-top-padding});
   overflow-x: hidden;
   overflow-y: auto;
   padding-left: 0;
   padding-right: 0;
 
-  .title {
-    padding: 10px 15px 5px 15px;
+  .cgr-title {
     background-color: $gray-200;
-    color: $gray-600;
-  }
-
-  .content {
-    padding: 20px 15px 5px 15px;
   }
 }
-
-
-

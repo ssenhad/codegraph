@@ -13,6 +13,7 @@ module.exports = {
     ],
     output: {
         filename: 'bundle.js',
+        publicPath: '/',
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
@@ -36,6 +37,11 @@ module.exports = {
     ],
     module: {
         rules: [
+            {
+                test: /\.(js|jsx)$/,
+                exclude: /node_modules/,
+                use: ['babel-loader']
+            },
             {
                 test: /\.scss$/,
                 use: [

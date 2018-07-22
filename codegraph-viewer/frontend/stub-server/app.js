@@ -15,34 +15,21 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 var express = require('express');
-var fs = require('fs');
-var path = require('path');
 var webpack = require('webpack');
-var proxy = require('http-proxy-middleware');
 var config = require('../webpack.config');
-var history = require('connect-history-api-fallback');
 
 var compiler = webpack(config);
 
 var app = express();
 
-// app.use(proxy('/api', { target: 'http://localhost:3000', changeOrigin: false }));
-
-
-app.use(require('webpack-dev-middleware')(compiler, { noInfo: true /*, publicPath: config.output.publicPath*/ }));
+app.use(require('webpack-dev-middleware')(compiler, { noInfo: true }));
 app.use(express.static('../'));
-
-app.use(require('webpack-hot-middleware')(compiler));
 
 app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Origin", "*");
     res.setHeader("Content-Type", "application/json;charset=UTF-8");
     return next();
 });
-
-// app.get('/api/artifacts', function (req, res) {
-//     res.sendFile("data/artifacts.json", {root: __dirname});
-// });
 
 app.get('/api/artifacts/:organization/:artifact/:version/dependencies', function (req, res) {
     var organization = req.params['organization'];

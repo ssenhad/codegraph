@@ -7,7 +7,7 @@ module.exports = function (config) {
             './dist/index.js',
             './app/extensions.js',
 
-            './test/unit/**/*.js'
+            './test/app/**/*.js'
         ],
         reporters: ['progress'],
         autoWatch: false,

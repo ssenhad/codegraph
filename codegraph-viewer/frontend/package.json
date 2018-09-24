@@ -9,7 +9,7 @@
     "scripts": {
         "build": "webpack && npm run test:unit",
         "dev": "node stub-server/app.js",
-        "test:unit": "karma start test/karma.unit.conf.js --single-run"
+        "test:unit": "jest"
     },
     "devDependencies": {
         "@fortawesome/fontawesome-free": "^5.1.0",

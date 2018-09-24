@@ -53,6 +53,7 @@
         "webpack-hot-middleware": "^2.22.2"
     },
     "dependencies": {
+        "@dnfeitosa/react-treee": "0.0.1",
         "angular": "~1.6",
         "angular-route": "~1.6",
         "angular-ui-bootstrap": "~0.14",

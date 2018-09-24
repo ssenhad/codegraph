@@ -18,9 +18,40 @@
 /* 3rd party imports */
 import 'bootstrap';
 
-/* Codegraph imports */
-import './router'
-// require('./css/codegraph-viewer.css');
+import 'jstree/dist/themes/default/style.css';
 
-require('jstree/dist/themes/default/style.css');
+import {HashRouter, Switch, Route} from 'react-router-dom';
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import Navigation from './components/navigation/navigation';
+import Artifacts from './modules/artifacts/artifacts';
+
+const Main = () => (
+    <div className="container-fluid cgr-container">
+        <Switch>
+            <Route path="/viewer" component={Viewer} />
+            <Route path="/artifacts" component={Artifacts} />
+        </Switch>
+    </div>
+);
+
+const App = () => (
+    <React.Fragment>
+        <Navigation />
+        <Main />
+    </React.Fragment>
+);
+
+class Viewer extends React.Component {
+    render() {
+        return <div>Viewer</div>
+    }
+}
+
+ReactDOM.render((
+    <HashRouter>
+        <App />
+    </HashRouter>
+), document.getElementById("root"));
 

@@ -61,7 +61,7 @@ app.get('/api/artifacts/:organization/:artifact/:version/dependency-graph', func
 app.get('/ui/tree/nodes', function (req, res) {
     var parent = req.query['parent'];
 
-    if (parent == '') {
+    if (!parent) {
         res.sendFile(`data/tree/_root.json`, {root: __dirname});
         return;
     }

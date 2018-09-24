@@ -17,7 +17,8 @@
 
 -->
 <!DOCTYPE html>
-<html lang="en" ng-app="Codegraph">
+<html lang="en">
+<!--<html lang="en" ng-app="Codegraph">-->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -26,27 +27,31 @@
     <title>Codegraph</title>
 </head>
 <body>
-    <nav class="navbar navbar-dark navbar-expand-lg navbar-expand fixed-top bg-dark shadow">
-        <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#topBar" aria-expanded="false" aria-controls="topBar">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <a class="navbar-brand" href="#"><strong>Codegraph</strong></a>
 
-        <div class="collapse navbar-collapse">
-            <ul class="navbar-nav mr-auto px-3">
-                <li class="nav-item text-nowrap">
-                    <a class="nav-link" href="/#!/artifacts">Artifacts</a>
-                </li>
-            </ul>
-            <form class="form-inline mt-2 mt-md-0">
-                <input type="text" name="artifact" class="form-control mr-sm-2" placeholder="Search...">
-                <button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>
-            </form>
-        </div>
-    </nav>
+<div id="root">
+    <!--<div class="container-fluid cgr-container">-->
+        <!--&lt;!&ndash;<ui-view></ui-view>&ndash;&gt;-->
+    <!--</div>-->
+</div>
+    <!--<nav class="navbar navbar-dark navbar-expand-lg navbar-expand fixed-top bg-dark shadow">-->
+        <!--<button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#topBar" aria-expanded="false" aria-controls="topBar">-->
+            <!--<span class="navbar-toggler-icon"></span>-->
+        <!--</button>-->
+        <!--<a class="navbar-brand" href="#"><strong>Codegraph</strong></a>-->
 
-    <div class="container-fluid cgr-container">
-        <ui-view></ui-view>
-    </div>
+        <!--<div class="collapse navbar-collapse">-->
+            <!--<ul class="navbar-nav mr-auto px-3">-->
+                <!--<li class="nav-item text-nowrap">-->
+                    <!--<a class="nav-link" href="/#/artifacts">Artifacts</a>-->
+                <!--</li>-->
+            <!--</ul>-->
+            <!--<form class="form-inline mt-2 mt-md-0">-->
+                <!--<input type="text" name="artifact" class="form-control mr-sm-2" placeholder="Search..." />-->
+                <!--<button class="btn btn-outline-primary my-2 my-sm-0" type="submit"><i class="fas fa-search"></i></button>-->
+            <!--</form>-->
+        <!--</div>-->
+    <!--</nav>-->
+
+
 </body>
 </html>

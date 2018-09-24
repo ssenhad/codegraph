@@ -1,0 +1,9 @@
+/* Bootstrap overrides */
+$primary:       #B70000;
+$spacer: 1rem !default;
+$navbar-padding-y:                  ($spacer / 5) !default;
+$navbar-padding-x:                  $spacer !default;
+
+@import "~bootstrap/scss/functions";
+@import "~bootstrap/scss/variables";
+@import "~bootstrap/scss/mixins";

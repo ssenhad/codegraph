@@ -27,11 +27,20 @@ import ReactDOM from 'react-dom';
 import Navigation from './components/navigation/navigation';
 import Artifacts from './modules/artifacts/artifacts';
 
+const _404 = () => {
+    return (
+        <span>Ooops... 404</span>
+    )
+};
+
 const Main = () => (
     <div className="container-fluid cgr-container">
         <Switch>
             <Route path="/viewer" component={Viewer} />
-            <Route path="/artifacts" component={Artifacts} />
+            <Route path="/artifacts" exact component={Artifacts} />
+            <Route path="/artifacts/:organization/:name" exact component={Artifacts} />
+            <Route path="/artifacts/:organization/:name/:version" component={Artifacts} />
+            <Route component={_404} />
         </Switch>
     </div>
 );

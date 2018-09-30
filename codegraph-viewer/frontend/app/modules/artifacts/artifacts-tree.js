@@ -29,6 +29,7 @@ class ArtifactsTree extends React.Component {
     }
 
     onSelect(artifactNode) {
+        this.props.onSelect(artifactNode);
         this.setState({ artifactNode });
     }
 

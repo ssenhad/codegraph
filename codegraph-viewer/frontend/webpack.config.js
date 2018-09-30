@@ -8,8 +8,7 @@ module.exports = {
     mode: 'development',
     entry: [
         './app/index.js',
-        './app/scss/main.scss',
-        'webpack-hot-middleware/client'
+        './app/scss/main.scss'
     ],
     output: {
         filename: 'bundle.js',

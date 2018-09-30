@@ -127,7 +127,7 @@ angular.module('Codegraph.viewer')
             //                 </div>
             //             `;
             //         }
-            //         if (value instanceof Artifact) {
+            //         if (value instanceof ArtifactOverview) {
             //             return `
             //                 <div>
             //                     <div>Version: ${value.version}</div>

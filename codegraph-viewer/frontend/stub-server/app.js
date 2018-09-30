@@ -22,7 +22,7 @@ var compiler = webpack(config);
 
 var app = express();
 
-app.use(require('webpack-dev-middleware')(compiler, { noInfo: true }));
+app.use(require('webpack-dev-middleware')(compiler, { noInfo: true, hot: true, inline: true }));
 app.use(express.static('../'));
 
 app.use(function (req, res, next) {

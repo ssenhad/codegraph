@@ -1,0 +1,15 @@
+{
+    "artifact": {
+        "name": "codegraph-db",
+        "organization": "co.degraph",
+        "dependencies": []
+    },
+    "versions": [{
+        "version": "0.0.2",
+        "availability": ["DEPENDENCY", "ARTIFACT"]
+    },{
+        "version": "2.0-RELEASE",
+        "availability": ["DEPENDENCY"]
+    }]
+}
+

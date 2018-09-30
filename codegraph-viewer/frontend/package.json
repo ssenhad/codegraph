@@ -69,6 +69,7 @@
         "jstree": "~3.3",
         "ng-js-tree": "^0.0.10",
         "popper.js": "^1.14.3",
-        "react": "^16.5.1"
+        "react": "^16.5.1",
+        "shallowequal": "^1.1.0"
     }
 }

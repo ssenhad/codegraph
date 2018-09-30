@@ -46,11 +46,11 @@ angular.module('Codegraph.api')
         };
 
         this.dependencyGraph = function (artifact) {
-            return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}/dependency-graph`)
+            return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}/dependency-graph`);
         };
 
         this.getArtifact = function (artifact) {
-            return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}`)
+            return this.get(`/api/artifacts/${artifact.organization}/${artifact.name}/${artifact.version}`);
         };
 
         this.getVersions = function (organization, name) {

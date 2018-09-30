@@ -18,7 +18,7 @@
 -->
 <div class="cgr-artifact-details" ng-hide="noDetails">
     <h3><i>{{artifact.version}}</i> details</h3>
-    </div>
+
         <div class="cgr-section">
             <div ng-show="artifact.dependencies.length == 0">
                 <i>No dependencies</i>
@@ -48,9 +48,7 @@
                             <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.organization}}</a></td>
                             <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.name}}</a></td>
                             <td><a href="#!/artifacts/{{dependency.organization}}/{{dependency.name}}/{{dependency.version}}">{{dependency.version}}</a></td>
-                            <td>
-                                <span class="configuration text-center" ng-repeat="configuration in dependency.configurations">{{configuration}}</span>
-                            </td>
+                            <td><span class="configuration text-center" ng-repeat="configuration in dependency.configurations">{{configuration}}</span></td>
                         </tr>
                     </tbody>
                 </table>

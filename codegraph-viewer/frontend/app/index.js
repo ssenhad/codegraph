@@ -18,8 +18,6 @@
 /* 3rd party imports */
 import 'bootstrap';
 
-import 'jstree/dist/themes/default/style.css';
-
 import {HashRouter, Switch, Route} from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom';

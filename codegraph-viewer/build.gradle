@@ -4,3 +4,11 @@ plugins {
 
 apply from: "$projectDir/frontend/frontend.gradle"
 apply from: "$projectDir/api/api.gradle"
+
+sourceSets {
+    js {
+        resources {
+            srcDir 'frontend'
+        }
+    }
+}

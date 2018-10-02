@@ -2,9 +2,11 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
+import Content, { Section } from '../../components/content';
+
 const DependenciesTable = ({ artifact }) => {
     return (
-        <table className="table table-sm table-responsive-lg">
+        <table className="table table-sm table-bordered table-responsive-lg">
             <thead>
                 <tr>
                     <th>Organization</th>
@@ -53,24 +55,19 @@ export default class ArtifactDetails extends React.Component {
         }
 
         return (
-            <div className="cgr-artifact-details">
-                <h3><i>{artifact.version}</i> details</h3>
-                <div className="cgr-section">
-                    <div>
-                        <Toolbar artifact={artifact} />
-                        <h4 className=""><b>Declared dependencies</b></h4>
-                        <DependenciesTable artifact={artifact} />
-                    </div>
-                </div>
-                <div className="cgr-section">
-                    <div className="panel-heading"><b>Info & Warnings</b></div>
-                    <div className="panel-body">
-                        <div>
-                            <i>Nothing to show</i>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            <Content header={`${artifact.version} details`}>
+                <Section>
+                    <Toolbar artifact={artifact} />
+                </Section>
+
+                <Section header="Declared dependencies">
+                    <DependenciesTable artifact={artifact} />
+                </Section>
+
+                <Section header="Info & Warnings">
+                    <i>Nothing to show</i>
+                </Section>
+            </Content>
         );
     }
 }

@@ -6,8 +6,8 @@ const ArtifactTitle = ({ artifact }) => {
     }
 
     return (
-        <div className="cgr-title shadow-sm">
-            {artifact.organization}:{artifact.name}
+        <div className="cgr-text-heading text-primary">
+            <i>{artifact.organization}:{artifact.name}</i>
         </div>
     );
 };

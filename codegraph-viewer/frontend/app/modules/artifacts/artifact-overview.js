@@ -6,6 +6,14 @@ import ArtifactTitle from './artifact-title';
 import ArtifactVersions from './artifact-versions';
 import ArtifactDetails from './artifact-details';
 
+const ContentsHead = (props) => {
+    return (
+        <div className={`cgr-contents-head ${props.className}`}>
+            {props.children}
+        </div>
+    );
+};
+
 export default class ArtifactOverview extends React.Component {
 
     constructor() {
@@ -25,15 +33,15 @@ export default class ArtifactOverview extends React.Component {
     }
 
     render() {
-        const { artifact, versions, details } = this.state;
+        const { versions, details } = this.state;
 
         return (
             <React.Fragment>
-                <ArtifactTitle artifact={this.props.artifact} />
-                <div className="">
+                <ContentsHead className="shadow-sm">
+                    <ArtifactTitle artifact={this.props.artifact} />
                     <ArtifactVersions artifact={this.props.artifact} versions={versions} />
-                    <ArtifactDetails artifact={details} />
-                </div>
+                </ContentsHead>
+                <ArtifactDetails artifact={details} />
             </React.Fragment>
         )
     }

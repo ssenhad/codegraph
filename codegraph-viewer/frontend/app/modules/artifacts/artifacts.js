@@ -1,8 +1,8 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
+import Container from '../../components/container';
 import Sidebar from '../../components/sidebar';
-import Page from '../../components/page';
 import Contents from '../../components/contents';
 
 import ArtifactsTree from './artifacts-tree';
@@ -31,14 +31,14 @@ class Artifacts extends React.Component {
     render() {
         const { artifact } = this.state;
         return (
-            <Page>
+            <Container>
                 <Sidebar title="Artifacts">
                     <ArtifactsTree onSelect={this.select} />
                 </Sidebar>
                 <Contents>
                     <ArtifactOverview artifact={artifact} key={`${artifact.organization}:${artifact.name}:${artifact.version}`}/>
                 </Contents>
-            </Page>
+            </Container>
         );
     }
 

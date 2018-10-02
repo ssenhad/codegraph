@@ -8,7 +8,7 @@ module.exports = {
     mode: 'development',
     entry: [
         './app/index.js',
-        './app/scss/main.scss'
+        './app/scss/index.scss'
     ],
     output: {
         filename: 'bundle.js',

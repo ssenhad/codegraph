@@ -1,0 +1,62 @@
+@import "bootstrap-overrides";
+@import "~bootstrap/scss/bootstrap";
+@import "treee-overrides";
+@import "~@dnfeitosa/react-treee/lib/scss/themes/default";
+@import "variables";
+@import "reset";
+@import "sidebar";
+@import "viewer";
+@import "~@fortawesome/fontawesome-free/scss/fontawesome";
+@import "~@fortawesome/fontawesome-free/scss/solid";
+
+body {
+  color: $gray-900;
+}
+
+.cgr-container {
+  padding-top: $cgr-top-padding;
+  height: 100%;
+}
+
+.cgr-contents-head {
+  padding: 10px;
+  background-color: $gray-100;
+  border-bottom: solid 1px $cgr-border-color;
+}
+
+.cgr-contents {
+  padding: 0;
+  margin-left: auto;
+}
+
+.cgr-content {
+  padding: 10px;
+}
+
+.cgr-content-section {
+  padding-bottom: 25px;
+}
+
+.cgr-content-section:last-child {
+  padding-bottom: 0;
+}
+
+.cgr-text-heading {
+  font-size: $font-size-base * 1.5;
+  font-weight: 600;
+  padding: 15px 0 15px;
+}
+
+.cgr-text-sub-heading {
+  font-size: $font-size-base * 1.25;
+  font-weight: 600;
+  padding-bottom: 5px;
+}
+
+.cgr-text {
+  font-size: $font-size-base;
+}
+
+.cgr-text-sm {
+  font-size: $font-size-base * .875;
+}

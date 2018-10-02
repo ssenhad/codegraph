@@ -14,15 +14,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+import axios from 'axios';
 
-const angular = require('angular');
+class ApiService {
+    get(url) {
+        return axios.get(url).then((response) => {
+            return response.data;
+        }).catch((error) => {
+            throw error.response;
+        });
+    }
 
-angular.module('Codegraph.index')
-    .controller('IndexController', function ($scope, api) {
-        // api.artifacts().then(function (response) {
-        //     $scope.artifacts = response.artifacts;
-        // });
+    artifactTree(parent) {
+        return this.get(`/ui/tree/nodes?parent=${ parent ? parent : ''}`);
+    }
 
-        console.log('index');
-    });
+    getArtifactVersions({ organization, name }) {
+        return this.get(`/api/artifacts/${organization}/${name}/versions`);
+    }
+
+    getArtifact({ organization, name, version }) {
+        return this.get(`/api/artifacts/${organization}/${name}/${version}`);
+    }
+}
+
+export default new ApiService();

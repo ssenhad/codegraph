@@ -14,16 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+import React from 'react';
 
-const angular = require('angular');
-
-angular.module('Codegraph.artifacts')
-    .controller('ArtifactController', function ($scope, $state, $stateParams, $location, api) {
-        api.getVersions($stateParams.organization, $stateParams.name).then(function (data) {
-            $scope.availableVersions = data.versions;
-            $scope.artifact = $stateParams;
-        }).catch(function (response) {
-            $scope.noVersions = true;
-        });
-    });
+export default class Contents extends React.Component {
+    render() {
+        return (
+            <div className="col-sm-12 col-md-7 col-lg-9 col-xl-9 cgr-contents">
+                {this.props.children}
+            </div>
+        );
+    }
+}

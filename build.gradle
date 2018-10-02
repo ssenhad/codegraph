@@ -39,20 +39,18 @@ subprojects {
     license {
         header = rootProject.file('HEADER')
         excludes([
-            '**/*.json',
+            '**/*.gradle',
             '**/*.properties',
             '**/*.xml',
-            '**/public/node_modules/**/*.*',
-            '**/public/yarn-latest/**/*.*',
-            '**/public/components/**/*.*',
-
             '**/*Test.java',
             '**/*TestConfiguration.java',
             '**/*TestBase.java',
-            '**/*test.js',
 
+            '**/*.json',
+            '**/node_modules/**/*.*',
             '**/Gruntfile.js',
-            '**/karma.conf.js',
+            '**/test/**/*.js',
+            '**/dist/*'
         ])
     }
 

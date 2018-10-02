@@ -14,11 +14,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+import React from 'react';
 
-const angular = require('angular');
+const Content = (props) => {
+    return (
+        <div className="cgr-content">
+            {props.header && (
+                <div className="cgr-text-heading text-dark">
+                    {props.header}
+                </div>
+            )}
+            {props.children}
+        </div>
+    );
+};
 
-angular.module('Codegraph.index')
-    .service('indexService', function () {
+const Section = (props) => {
+    return (
+        <div className="cgr-content-section">
+            {props.header && (
+                <div className="cgr-text-sub-heading">{props.header}</div>
+            )}
+            {props.children}
+        </div>
+    );
+};
 
-    });
+export { Section };
+export default Content;

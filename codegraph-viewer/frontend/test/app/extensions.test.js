@@ -1,3 +1,5 @@
+require('../../app/extensions');
+
 describe('Array extensions', function () {
     var array;
     beforeEach(function () {
@@ -26,20 +28,5 @@ describe('Array extensions', function () {
             expect(array).toEqual(['a', 'c', 123]);
         });
         */
-    });
-
-    describe('flattening an array', function () {
-        it('should return the elements contained in inner array', function () {
-            var array = ['a', ['b', 'c', ['d']]];
-
-            expect(array.flatten()).toEqual(['a', 'b', 'c', ['d']]);
-        });
-    });
-
-    describe('checking whether an array contains an element', function () {
-        it('should report its presence or absence', function () {
-            expect(array.contains('a')).toBeTruthy();
-            expect(array.contains('e')).toBeFalsy();
-        });
     });
 });

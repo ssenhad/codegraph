@@ -26,5 +26,5 @@ jobs:
     - stage: License header validation
       script: ./gradlew license
     - stage: Build and Test
-      script: ./gradlew -i clean build
+      script: ./gradlew -i clean build -x license
 

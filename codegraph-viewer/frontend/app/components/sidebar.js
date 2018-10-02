@@ -14,8 +14,20 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+import React from 'react';
 
-const angular = require('angular');
+export default class Sidebar extends React.Component {
 
-angular.module('Codegraph.artifacts', []);
+    render() {
+        return (
+            <div className="col-sm-12 col-md-5 col-lg-3 col-xl-3 d-md-block cgr-sidebar-fixed">
+                <div className="cgr-sidebar">
+                    <div className="cgr-sidebar-title">{this.props.title}</div>
+                    <div className="cgr-sidebar-contents">
+                        {this.props.children}
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}

@@ -14,14 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-'use strict';
+import React from 'react';
 
-const angular = require('angular');
-
-angular.module('Codegraph.api', [])
-    .config(function ($httpProvider) {
-        $httpProvider.defaults.headers = {
-            'post': { 'Content-Type': 'application/json' },
-            'put':  { 'Content-Type': 'application/json' }
-        }
-    });
+export default class Container extends React.Component {
+    render() {
+        return (
+            <div className="container-fluid cgr-container">
+                <div className="row">
+                    {this.props.children}
+                </div>
+            </div>
+        );
+    }
+}

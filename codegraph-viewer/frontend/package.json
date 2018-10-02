@@ -9,25 +9,33 @@
     "scripts": {
         "build": "webpack && npm run test:unit",
         "dev": "node stub-server/app.js",
-        "test:unit": "karma start test/karma.unit.conf.js --single-run"
+        "test:unit": "jest"
     },
     "devDependencies": {
-        "@fortawesome/fontawesome-free": "^5.1.0",
-        "angular-mocks": "~1.6",
+        "babel-core": "^6.26.3",
+        "babel-jest": "^23.6.0",
+        "babel-loader": "^7.1.5",
+        "babel-preset-env": "^1.7.0",
+        "babel-preset-react": "^6.24.1",
+        "babel-preset-stage-2": "^6.24.1",
         "clean-webpack-plugin": "^0.1.19",
         "css-loader": "^0.28.11",
+        "enzyme": "^3.6.0",
+        "enzyme-adapter-react-16": "^1.5.0",
+        "enzyme-to-json": "^3.3.4",
         "express": "^4.14.1",
         "file-loader": "^1.1.11",
         "html-loader": "^0.5.5",
         "html-webpack-plugin": "^3.2.0",
         "jasmine-core": "~2.6",
-        "karma": "^2.0.4",
-        "karma-chrome-launcher": "~2.1",
-        "karma-jasmine": "~1.1",
+        "jest": "^23.6.0",
         "mini-css-extract-plugin": "^0.4.1",
         "node-sass": "^4.9.2",
         "postcss-loader": "^2.1.5",
         "precss": "^3.1.2",
+        "react-dom": "^16.5.1",
+        "react-router-dom": "^4.3.1",
+        "react-test-renderer": "^16.5.1",
         "requirejs": "~2.3",
         "sass-loader": "^7.0.3",
         "style-loader": "^0.21.0",
@@ -38,10 +46,9 @@
         "webpack-hot-middleware": "^2.22.2"
     },
     "dependencies": {
-        "angular": "~1.6",
-        "angular-route": "~1.6",
-        "angular-ui-bootstrap": "~0.14",
-        "angular-ui-router": "^1.0.6",
+        "@fortawesome/fontawesome-free": "^5.1.0",
+        "@dnfeitosa/react-treee": "0.0.1",
+        "axios": "^0.18.0",
         "bootstrap": "^4.1.1",
         "cytoscape": "~3.1",
         "cytoscape-dagre": "~1.6",
@@ -49,8 +56,8 @@
         "cytoscape-qtip": "~2.7",
         "dagre": "^0.8.2",
         "jquery": "^2.0",
-        "jstree": "~3.3",
-        "ng-js-tree": "^0.0.10",
-        "popper.js": "^1.14.3"
+        "popper.js": "^1.14.3",
+        "react": "^16.5.1",
+        "shallowequal": "^1.1.0"
     }
 }

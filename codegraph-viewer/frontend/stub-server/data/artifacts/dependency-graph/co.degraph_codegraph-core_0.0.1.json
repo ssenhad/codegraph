@@ -1,0 +1,60 @@
+{
+    "root": {
+        "id": "co.degraph:codegraph-core:0.0.1",
+        "type": "artifact",
+        "name": "codegraph-core",
+        "organization": "co.degraph",
+        "version": "0.0.1"
+    },
+    "nodes": [
+        {
+            "id": "co.degraph:codegraph-core:0.0.1",
+            "type": "artifact",
+            "name": "codegraph-server",
+            "organization": "co.degraph",
+            "version": "0.0.1"
+        },
+        {
+            "id": "commons-lang:commons-lang:2.6",
+            "type": "artifact",
+            "name": "commons-lang",
+            "organization": "commons-lang",
+            "version": "2.6"
+        },
+        {
+            "id": "co.degraph:codegraph-db:0.0.1",
+            "type": "artifact",
+            "name": "codegraph-db",
+            "organization": "co.degraph",
+            "version": "0.0.1"
+        }
+    ],
+    "edges": [
+        {
+            "attributes": {
+                "configurations": [
+                    "compile"
+                ]
+            },
+            "start": {
+                "id": "co.degraph:codegraph-core:0.0.1"
+            },
+            "end": {
+                "id": "commons-lang:commons-lang:2.6"
+            }
+        },
+        {
+            "attributes": {
+                "configurations": [
+                    "compile"
+                ]
+            },
+            "start": {
+                "id": "co.degraph:codegraph-core:0.0.1"
+            },
+            "end": {
+                "id": "co.degraph:codegraph-db:0.0.1"
+            }
+        }
+    ]
+}

@@ -36,6 +36,10 @@ class ApiService {
     getArtifact({ organization, name, version }) {
         return this.get(`/api/artifacts/${organization}/${name}/${version}`);
     }
+
+    dependencyGraph({ organization, name, version }) {
+        return this.get(`/api/artifacts/${organization}/${name}/${version}/dependency-graph`);
+    }
 }
 
 export default new ApiService();

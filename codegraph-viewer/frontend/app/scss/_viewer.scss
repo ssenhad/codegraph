@@ -4,5 +4,41 @@
 
 .cgr-viewer,
 #viewarea {
-  height: 100%;
+  height: calc(100vh - #{$cgr-top-padding});
+}
+
+.node {
+    cursor: default;
+}
+
+.organizations .controls span {
+    cursor: pointer;
+}
+
+
+#viewarea svg {
+  width: 100%;
+  height: calc(100vh - #{$cgr-top-padding});
+}
+
+text {
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.node rect {
+  rx: 10;
+  ry: 10;
+}
+
+.node rect, .node ellipse, .node circle, .node polygon {
+    stroke: #000000;
+    fill: #fff;
+    stroke-width: 0.75px;
+    stroke-linecap: round;
+}
+
+.edgePath path {
+    stroke: #000000;
+    stroke-width: 0.75px;
 }

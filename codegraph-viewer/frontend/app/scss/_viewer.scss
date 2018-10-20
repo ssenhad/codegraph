@@ -1,22 +1,4 @@
-.cgr-viewer .cgr-contents {
-  padding: 0;
-}
-
-.cgr-viewer,
-#viewarea {
-  height: calc(100vh - #{$cgr-top-padding});
-}
-
-.node {
-    cursor: default;
-}
-
-.organizations .controls span {
-    cursor: pointer;
-}
-
-
-#viewarea svg {
+svg.view {
   width: 100%;
   height: calc(100vh - #{$cgr-top-padding});
 }
@@ -24,6 +6,10 @@
 text {
     font-weight: 300;
     font-size: 14px;
+}
+
+.node {
+    cursor: default;
 }
 
 .node rect {
@@ -38,7 +24,25 @@ text {
     stroke-linecap: round;
 }
 
+.edgePath path:hover {
+    stroke: #636363;
+    stroke-width: 1.75px;
+    margin: 5px;
+}
+
 .edgePath path {
-    stroke: #000000;
-    stroke-width: 0.75px;
+  stroke: #000000;
+  stroke-width: 0.75px;
+}
+
+.disop {
+  height: 0px;
+  overflow: scroll;
+  transition: height 0.3s ease-out;
+}
+
+.disop.visible {
+  transition: height 0.3s ease-out;
+  max-height: 100px;
+  height: 100px;
 }

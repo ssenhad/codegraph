@@ -32,7 +32,7 @@ const _404 = () => {
     )
 };
 
-const Main = () => (
+const Routes = () => (
     <Switch>
         <Route path="/artifacts" exact component={Artifacts} />
         <Route path="/artifacts/:organization/:name" exact component={Artifacts} />
@@ -45,7 +45,7 @@ const Main = () => (
 const App = () => (
     <React.Fragment>
         <Navbar />
-        <Main />
+        <Routes />
     </React.Fragment>
 );
 

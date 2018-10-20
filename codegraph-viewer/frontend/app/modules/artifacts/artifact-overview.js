@@ -24,7 +24,7 @@ import ArtifactDetails from './artifact-details';
 
 const ContentsHead = (props) => {
     return (
-        <div className={`cgr-contents-head ${props.className}`}>
+        <div className={`cgr-contents-head w-100 ${props.className}`}>
             {props.children}
         </div>
     );

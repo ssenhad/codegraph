@@ -1,24 +1,12 @@
 @import "variables";
 
-
 .cgr-sidebar-fixed {
-  position: fixed;
-  top: $cgr-top-padding;
-  bottom: 0;
-  left: 0;
-  z-index: 100;
-  padding-left: 0;
-  padding-right: 0;
+  width: 350px;
 
   .cgr-sidebar {
     background-color: $gray-100;
     border-right: solid 1px $cgr-border-color;
-    position: sticky;
-    top: 0;
-    left: 0;
     height: calc(100vh - #{$cgr-top-padding});
-    overflow-x: hidden;
-    overflow-y: auto;
 
     .cgr-sidebar-title {
       padding: 10px 5px 5px 15px;

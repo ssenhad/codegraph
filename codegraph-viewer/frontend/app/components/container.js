@@ -19,10 +19,8 @@ import React from 'react';
 export default class Container extends React.Component {
     render() {
         return (
-            <div className="container-fluid cgr-container">
-                <div className="row">
-                    {this.props.children}
-                </div>
+            <div className="d-flex h-100 w-100 cgr-container">
+                {this.props.children}
             </div>
         );
     }

@@ -66,6 +66,9 @@ function renderGraph(graphlib) {
 
     var render = new dagreD3.render();
     render(d3.select('svg g'), graphlib);
+    var xCenterOffset = (svg.node().getBoundingClientRect().width - graphlib.graph().width) / 2;
+    svgGroup.attr("transform", "translate(" + xCenterOffset + ", 20)");
+    svg.attr("height", graphlib.graph().height + 40);
 }
 
 

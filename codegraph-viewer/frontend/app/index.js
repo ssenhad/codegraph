@@ -42,16 +42,11 @@ const Routes = () => (
     </Switch>
 );
 
-const App = () => (
-    <React.Fragment>
-        <Navbar />
-        <Routes />
-    </React.Fragment>
-);
-
 ReactDOM.render((
     <HashRouter>
-        <App />
+        <React.Fragment>
+            <Navbar />
+            <Routes />
+        </React.Fragment>
     </HashRouter>
 ), document.getElementById("root"));
-

@@ -18,15 +18,21 @@ import React from 'react';
 
 import apiService from '../../services/api-service';
 
-import ArtifactTitle from './artifact-title';
 import ArtifactVersions from './artifact-versions';
 import ArtifactDetails from './artifact-details';
 
-const ContentsHead = (props) => {
+const ArtifactTitle = ({ artifact }) => {
+    if (!artifact) {
+        return null;
+    }
+
     return (
-        <div className={`cgr-contents-head w-100 ${props.className}`}>
-            {props.children}
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol className="breadcrumb">
+                <li className="breadcrumb-item">{artifact.organization}</li>
+                <li className="breadcrumb-item active" aria-current="page">{artifact.name}</li>
+            </ol>
+        </nav>
     );
 };
 
@@ -53,10 +59,8 @@ export default class ArtifactOverview extends React.Component {
 
         return (
             <React.Fragment>
-                <ContentsHead className="shadow-sm">
-                    <ArtifactTitle artifact={this.props.artifact} />
-                    <ArtifactVersions artifact={this.props.artifact} versions={versions} />
-                </ContentsHead>
+                <ArtifactTitle artifact={this.props.artifact} />
+                <ArtifactVersions artifact={this.props.artifact} versions={versions} />
                 <ArtifactDetails artifact={details} />
             </React.Fragment>
         )

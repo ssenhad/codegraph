@@ -18,9 +18,9 @@ import React from 'react';
 
 import { withRouter } from 'react-router-dom';
 
-import Sidebar from '../../components/sidebar';
-import Contents from '../../components/contents';
-import Container from '../../components/container';
+import Sidebar from '../../components/page/sidebar';
+import Main from '../../components/page/main';
+import Container from '../../components/page/container';
 
 import apiService from '../../services/api-service';
 
@@ -63,38 +63,102 @@ function renderGraph(graphlib) {
     });
     svg.call(zoom);
 
-
     var render = new dagreD3.render();
     render(d3.select('svg g'), graphlib);
-    var xCenterOffset = (svg.node().getBoundingClientRect().width - graphlib.graph().width) / 2;
-    svgGroup.attr("transform", "translate(" + xCenterOffset + ", 20)");
-    svg.attr("height", graphlib.graph().height + 40);
+
+    // var xCenterOffset = (svg.node().getBoundingClientRect().width - graphlib.graph().width) / 2;
+    // svgGroup.attr("transform", "translate(" + xCenterOffset + ", 20)");
+    // svg.attr("height", graphlib.graph().height + 40);
 }
 
+class ArtifactView {
+
+    dependenciesConfigurations() {
+        return ['compile', 'runtime', 'testCompile'];
+    }
+}
+
+class DisplayOptions extends React.Component {
+
+    constructor() {
+        super();
+        this.toggle = this.toggle.bind(this);
+        this.state = { expanded: false };
+    }
+
+    toggle() {
+        this.setState({ expanded: !this.state.expanded })
+    }
+
+    render() {
+        const { expanded } = this.state;
+        const icon = expanded ? 'fa-angle-down' : 'fa-angle-up';
+
+        return (
+            <div className="mt-auto display-options">
+                <div className="head shadow-sm p-1" onClick={this.toggle}>
+                    <i className={`px-2 fa ${icon}`} /><span className="h6">Display options</span>
+                </div>
+                <div className={`body ${ expanded && 'expanded p-2'}`}>
+                    <div><b>Node labels</b></div>
+                    <div>
+                        <div><input type="checkbox" defaultChecked={true}></input> Dependencies</div>
+                        <div><input type="checkbox"></input> Types</div>
+                        <div><input type="checkbox"></input> Fields</div>
+                        <div><input type="checkbox"></input> Methods</div>
+                    </div>
+                </div>
+            </div>
+        );
+    }
+}
+
+class Configurations extends React.Component {
+    render() {
+        return (
+            <Sidebar.Section>
+                <div className="h6">Configurations</div>
+                {this.props.view.dependenciesConfigurations().map((configuration) => (
+                    <span href="#" className="badge badge-pill badge-primary" key={configuration}>{configuration}</span>
+                ))}
+                <span href="#" className="badge badge-pill badge-secondary">testRuntime</span>
+            </Sidebar.Section>
+        );
+    }
+}
 
 class Viewer extends React.Component {
+
+    constructor() {
+        super();
+        this.state = { view: new ArtifactView() };
+    }
 
     componentDidMount() {
         const { params: artifact } = this.props.match;
         apiService.dependencyGraph(artifact).then((data) => {
             const graph = toGraph(data);
             renderGraph(graph);
+            this.setState({ view: new ArtifactView() });
         });
     }
 
     render() {
         const { params: artifact } = this.props.match;
+        const { view } = this.state;
+        console.log(artifact);
+
         return (
             <Container>
-                <Sidebar title="Viewer">
-                    {artifact.organization}:{artifact.name}:{artifact.version}
+                <Sidebar title={`${artifact.organization}:${artifact.name}:${artifact.version}`}>
+                    <Configurations view={view} />
+                    <DisplayOptions />
                 </Sidebar>
-                <Contents>
-                    <div id="viewarea">
-                        <svg></svg>
+                <Main>
+                    <div className="w-100 h-100">
+                        <svg className="view"></svg>
                     </div>
-
-                </Contents>
+                </Main>
             </Container>
         );
     }

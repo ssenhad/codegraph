@@ -15,21 +15,20 @@ body {
 
 .cgr-container {
   padding-top: $cgr-top-padding;
-  //height: 100%;
 }
 
-.cgr-contents-head {
+.cgr-head {
   padding: 10px;
   background-color: $gray-100;
   border-bottom: solid 1px $cgr-border-color;
+  font-size: $font-size-base * 1.5;
+  font-weight: 600;
 }
 
-.cgr-contents {
-  //padding: 0;
-  //margin-left: auto;
+.cgr-main {
 }
 
-.cgr-content {
+.cgr-section {
   padding: 10px;
 }
 
@@ -42,9 +41,6 @@ body {
 }
 
 .cgr-text-heading {
-  font-size: $font-size-base * 1.5;
-  font-weight: 600;
-  padding: 15px 0 15px;
 }
 
 .cgr-text-sub-heading {

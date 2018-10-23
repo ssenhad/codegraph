@@ -35,14 +35,18 @@ text {
   stroke-width: 0.75px;
 }
 
-.disop {
+.display-options .head {
+  background-color: $gray-500;
+}
+
+.display-options .body {
   height: 0px;
   overflow: scroll;
   transition: height 0.3s ease-out;
+  background-color: $gray-300;
 }
 
-.disop.visible {
+.display-options .body.expanded {
   transition: height 0.3s ease-out;
-  max-height: 100px;
-  height: 100px;
+  height: 200px;
 }

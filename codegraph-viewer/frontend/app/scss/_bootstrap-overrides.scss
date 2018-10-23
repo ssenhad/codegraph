@@ -3,9 +3,14 @@ $font-size-base: .875rem;
 $primary: #950000;
 
 $spacer: 1rem !default;
-$navbar-padding-y:                  ($spacer / 5) !default;
-$navbar-padding-x:                  $spacer !default;
+$navbar-padding-y: ($spacer / 5) !default;
+$navbar-padding-x: $spacer !default;
+
+$breadcrumb-bg: none;
+$breadcrumb-active-color: $primary;
 
 @import "~bootstrap/scss/functions";
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
+
+

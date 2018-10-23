@@ -16,29 +16,33 @@
  */
 import React from 'react';
 
-const Content = (props) => {
-    return (
-        <div className="cgr-content">
-            {props.header && (
-                <div className="cgr-text-heading text-dark">
-                    {props.header}
+class Sidebar extends React.Component {
+
+    render() {
+        return (
+            <aside className="cgr-sidebar-fixed">
+                <div className="cgr-sidebar h-100 d-flex flex-column">
+                    {this.props.title && (<div className="cgr-sidebar-title">{this.props.title}</div>)}
+                    {this.props.children}
+                    {/*<div className="cgr-sidebar-contents d-flex h-100 flex-column">*/}
+                    {/*</div>*/}
                 </div>
-            )}
-            {props.children}
-        </div>
-    );
-};
+            </aside>
+        );
+    }
+}
 
-const Section = (props) => {
-    return (
-        <div className="cgr-content-section">
-            {props.header && (
-                <div className="cgr-text-sub-heading">{props.header}</div>
-            )}
-            {props.children}
-        </div>
-    );
-};
+class SidebarSection extends React.Component {
 
-export { Section };
-export default Content;
+    render() {
+        return (
+            <div className="cgr-sidebar-section px-2">
+                {this.props.children}
+            </div>
+        );
+    }
+}
+
+Sidebar.Section = SidebarSection;
+
+export default Sidebar;

@@ -20,6 +20,7 @@ import { Treee } from '@dnfeitosa/react-treee';
 import { Node } from '@dnfeitosa/react-treee/models';
 
 import apiService from '../../services/api-service';
+import Sidebar from "../../components/page/sidebar";
 
 class ArtifactsTree extends React.Component {
 
@@ -63,9 +64,11 @@ class ArtifactsTree extends React.Component {
 
     render() {
         return (
-            <Treee data={this.state.artifacts}
-                   onOpenNode={this.onOpen.bind(this)}
-                   onSelectNode={this.onSelect.bind(this)} />
+            <Sidebar.Section>
+                <Treee data={this.state.artifacts}
+                       onOpenNode={this.onOpen.bind(this)}
+                       onSelectNode={this.onSelect.bind(this)} />
+            </Sidebar.Section>
         );
     }
 }

@@ -1,5 +1,20 @@
 @import "variables";
 
+
+.rt-toggle {
+  width: 20px;
+}
+
+.rt-toggle-wrapper {
+  margin: -10px 0 0 -4px;
+
+  &::before {
+    font-family: 'Font Awesome 5 Free';
+    font-weight: 900;
+    content: "\F105";
+  }
+}
+
 .cgr-sidebar-fixed {
   width: 350px;
 
@@ -12,10 +27,6 @@
       padding: 10px 5px 5px 15px;
       font-size: 1.3em;
       font-weight: bold;
-    }
-
-    .cgr-sidebar-contents {
-      padding: 5px;
     }
   }
 }

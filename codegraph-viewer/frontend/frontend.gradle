@@ -5,6 +5,14 @@ node {
     nodeModulesDir = file("$projectDir/frontend")
 }
 
+sourceSets {
+    js {
+        resources {
+            srcDir 'frontend'
+        }
+    }
+}
+
 task npmBuild(type: NpmTask, dependsOn: npmInstall) {
     args = ['run', 'build']
 }

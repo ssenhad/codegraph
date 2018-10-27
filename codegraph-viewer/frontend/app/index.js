@@ -24,6 +24,7 @@ import ReactDOM from 'react-dom';
 
 import Navbar from './components/navigation/navbar';
 import Artifacts from './modules/artifacts/artifacts';
+import Viewer from './modules/viewer/viewer';
 
 const _404 = () => {
     return (
@@ -31,32 +32,21 @@ const _404 = () => {
     )
 };
 
-const Main = () => (
+const Routes = () => (
     <Switch>
-        <Route path="/viewer" component={Viewer} />
         <Route path="/artifacts" exact component={Artifacts} />
         <Route path="/artifacts/:organization/:name" exact component={Artifacts} />
         <Route path="/artifacts/:organization/:name/:version" component={Artifacts} />
+        <Route path="/viewer/:organization/:name/:version" component={Viewer} />
         <Route component={_404} />
     </Switch>
 );
 
-const App = () => (
-    <React.Fragment>
-        <Navbar />
-        <Main />
-    </React.Fragment>
-);
-
-class Viewer extends React.Component {
-    render() {
-        return <div>Viewer</div>
-    }
-}
-
 ReactDOM.render((
     <HashRouter>
-        <App />
+        <React.Fragment>
+            <Navbar />
+            <Routes />
+        </React.Fragment>
     </HashRouter>
 ), document.getElementById("root"));
-

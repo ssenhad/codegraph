@@ -16,18 +16,33 @@
  */
 import React from 'react';
 
-export default class Sidebar extends React.Component {
+class Sidebar extends React.Component {
 
     render() {
         return (
-            <div className="col-sm-12 col-md-5 col-lg-3 col-xl-3 d-md-block cgr-sidebar-fixed">
-                <div className="cgr-sidebar">
-                    <div className="cgr-sidebar-title">{this.props.title}</div>
-                    <div className="cgr-sidebar-contents">
-                        {this.props.children}
-                    </div>
+            <aside className="cgr-sidebar-fixed">
+                <div className="cgr-sidebar h-100 d-flex flex-column">
+                    {this.props.title && (<div className="cgr-sidebar-title">{this.props.title}</div>)}
+                    {this.props.children}
+                    {/*<div className="cgr-sidebar-contents d-flex h-100 flex-column">*/}
+                    {/*</div>*/}
                 </div>
+            </aside>
+        );
+    }
+}
+
+class SidebarSection extends React.Component {
+
+    render() {
+        return (
+            <div className="cgr-sidebar-section px-2">
+                {this.props.children}
             </div>
         );
     }
 }
+
+Sidebar.Section = SidebarSection;
+
+export default Sidebar;

@@ -19,6 +19,7 @@ const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     mode: 'development',
@@ -32,6 +33,9 @@ module.exports = {
         path: path.resolve(__dirname, 'dist')
     },
     plugins: [
+        new CopyWebpackPlugin([
+            { from: 'app/images', to: 'images' }
+        ]),
         new CleanWebpackPlugin(['dist']),
         new HtmlWebpackPlugin({
             template: path.join(__dirname, 'app/index.html')
@@ -90,9 +94,19 @@ module.exports = {
                     'css-loader'
                 ]
             },
-            { test: /\.(png|jpg|gif)$/, loader: 'url-loader' },
-            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "url-loader?limit=10000&mimetype=application/font-woff" },
-            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: "file-loader" },
+            {
+                test: /\.(png|jpg|gif)$/,
+                use: [
+                    {
+                        loader: 'file-loader',
+                        options: {
+                            name: '[name].[ext]?[hash]'
+                        }
+                    }
+                ]
+            },
+            { test: /\.woff(2)?(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'url-loader?limit=10000&mimetype=application/font-woff' },
+            { test: /\.(ttf|eot|svg)(\?v=[0-9]\.[0-9]\.[0-9])?$/, loader: 'file-loader' },
             { test: /\.html$/, loader: 'html-loader' }
         ]
     },

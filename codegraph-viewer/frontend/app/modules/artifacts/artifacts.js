@@ -17,9 +17,9 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 
-import Container from '../../components/container';
-import Sidebar from '../../components/sidebar';
-import Contents from '../../components/contents';
+import Container from '../../components/page/container';
+import Sidebar from '../../components/page/sidebar';
+import Main from '../../components/page/main';
 
 import ArtifactsTree from './artifacts-tree';
 import ArtifactOverview from './artifact-overview'
@@ -51,9 +51,9 @@ class Artifacts extends React.Component {
                 <Sidebar title="Artifacts">
                     <ArtifactsTree onSelect={this.select} />
                 </Sidebar>
-                <Contents>
+                <Main>
                     <ArtifactOverview artifact={artifact} key={`${artifact.organization}:${artifact.name}:${artifact.version}`}/>
-                </Contents>
+                </Main>
             </Container>
         );
     }

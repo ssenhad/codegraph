@@ -16,29 +16,14 @@
  */
 import React from 'react';
 
-const Content = (props) => {
-    return (
-        <div className="cgr-content">
-            {props.header && (
-                <div className="cgr-text-heading text-dark">
-                    {props.header}
-                </div>
-            )}
-            {props.children}
-        </div>
-    );
-};
+export default class Main extends React.Component {
+    render() {
+        return (
+            <main className="cgr-main d-flex h-100 w-100 ml-auto flex-column">
+                {this.props.children}
+            </main>
+        );
+    }
+}
 
-const Section = (props) => {
-    return (
-        <div className="cgr-content-section">
-            {props.header && (
-                <div className="cgr-text-sub-heading">{props.header}</div>
-            )}
-            {props.children}
-        </div>
-    );
-};
-
-export { Section };
-export default Content;
+export { Main };

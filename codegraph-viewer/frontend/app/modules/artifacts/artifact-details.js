@@ -18,7 +18,7 @@ import React from 'react';
 
 import { Link } from 'react-router-dom';
 
-import Content, { Section } from '../../components/content';
+import Section from '../../components/page/section';
 
 const DependenciesTable = ({ artifact }) => {
     return (
@@ -50,13 +50,11 @@ const DependenciesTable = ({ artifact }) => {
 
 const Toolbar = ({ artifact }) => {
     return (
-        <div className="cgr-section">
-            <div className="cgr-artifacts-toolbar">
-                <div>
-                    <Link className="btn btn-outline-primary" to={`/viewer/${artifact.organization}/${artifact.name}/${artifact.version}/dependency-graph`}>
-                        <i className="fas fa-sitemap fa-1x" /><span className="ml-3">Dependency Graph</span>
-                    </Link>
-                </div>
+        <div className="cgr-artifacts-toolbar">
+            <div>
+                <Link className="btn btn-outline-primary" to={`/viewer/${artifact.organization}/${artifact.name}/${artifact.version}/dependency-graph`}>
+                    <i className="fas fa-sitemap fa-1x" /><span className="ml-3">Dependency Graph</span>
+                </Link>
             </div>
         </div>
     );
@@ -71,7 +69,7 @@ export default class ArtifactDetails extends React.Component {
         }
 
         return (
-            <Content header={`${artifact.version} details`}>
+            <React.Fragment>
                 <Section>
                     <Toolbar artifact={artifact} />
                 </Section>
@@ -83,7 +81,7 @@ export default class ArtifactDetails extends React.Component {
                 <Section header="Info & Warnings">
                     <i>Nothing to show</i>
                 </Section>
-            </Content>
+            </React.Fragment>
         );
     }
 }

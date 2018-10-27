@@ -16,16 +16,31 @@
  */
 import React from 'react';
 
-const ArtifactTitle = ({ artifact }) => {
-    if (!artifact) {
-        return null;
-    }
-
+const Section = (props) => {
     return (
-        <div className="cgr-text-heading text-primary">
-            <i>{artifact.organization}:{artifact.name}</i>
+        <div className="cgr-section">
+            {props.header && (
+                <div className="cgr-text-heading text-dark">
+                    {props.header}
+                </div>
+            )}
+            {props.children}
         </div>
     );
 };
 
-export default ArtifactTitle;
+// const Section = (props) => {
+//     return (
+//         <div className="cgr-content-section">
+//             {props.header && (
+//                 <div className="cgr-text-sub-heading">{props.header}</div>
+//             )}
+//             {props.children}
+//         </div>
+//     );
+// };
+
+// Section.Section = Section;
+//
+// export { Section };
+export default Section;

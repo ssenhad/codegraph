@@ -1,8 +1,52 @@
-.cgr-viewer .cgr-contents {
-  padding: 0;
+svg.view {
+  width: 100%;
+  height: calc(100vh - #{$cgr-top-padding});
 }
 
-.cgr-viewer,
-#viewarea {
-  height: 100%;
+text {
+    font-weight: 300;
+    font-size: 14px;
+}
+
+.node {
+    cursor: default;
+}
+
+.node rect {
+  rx: 10;
+  ry: 10;
+}
+
+.node rect, .node ellipse, .node circle, .node polygon {
+    stroke: #000000;
+    fill: #fff;
+    stroke-width: 0.75px;
+    stroke-linecap: round;
+}
+
+.edgePath path:hover {
+    stroke: #636363;
+    stroke-width: 1.75px;
+    margin: 5px;
+}
+
+.edgePath path {
+  stroke: #000000;
+  stroke-width: 0.75px;
+}
+
+.display-options .head {
+  background-color: $gray-500;
+}
+
+.display-options .body {
+  height: 0px;
+  overflow: scroll;
+  transition: height 0.3s ease-out;
+  background-color: $gray-300;
+}
+
+.display-options .body.expanded {
+  transition: height 0.3s ease-out;
+  height: 200px;
 }

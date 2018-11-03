@@ -22,6 +22,8 @@ import {HashRouter, Switch, Route} from 'react-router-dom';
 import React from 'react';
 import ReactDOM from 'react-dom';
 
+import './extensions';
+
 import Navbar from './components/navigation/navbar';
 import Artifacts from './modules/artifacts/artifacts';
 import Viewer from './modules/viewer/viewer';

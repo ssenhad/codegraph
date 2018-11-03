@@ -24,8 +24,6 @@ class Sidebar extends React.Component {
                 <div className="cgr-sidebar h-100 d-flex flex-column">
                     {this.props.title && (<div className="cgr-sidebar-title">{this.props.title}</div>)}
                     {this.props.children}
-                    {/*<div className="cgr-sidebar-contents d-flex h-100 flex-column">*/}
-                    {/*</div>*/}
                 </div>
             </aside>
         );
@@ -36,7 +34,7 @@ class SidebarSection extends React.Component {
 
     render() {
         return (
-            <div className="cgr-sidebar-section px-2">
+            <div className="cgr-sidebar-section p-2">
                 {this.props.children}
             </div>
         );

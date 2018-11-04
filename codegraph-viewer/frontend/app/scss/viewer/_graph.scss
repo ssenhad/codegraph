@@ -16,12 +16,9 @@
   stroke-linecap: round;
 }
 
-.edgePath > path:hover {
-  stroke-width: 2.75px;
-}
-
 .edgePath > path {
-  stroke-width: 1.75px;
+  transition: stroke-width 100ms ease-out;
+  stroke-width: 1.5px;
 }
 
 .clusters rect {
@@ -31,31 +28,40 @@
 }
 
 @each $name, $value in $colors {
-  .bg-#{$name} rect, .#{$name} marker {
+  .node.bg-#{$name} rect, .edgePath.#{$name} marker {
     fill: lighten($value, $light-factor);
-    stroke: darken($value, $light-factor * 2);
+    stroke: darken($value, $light-factor * 1);
+    transition: fill 150ms ease-out;
   }
 
-  .bg-#{$name}.node:hover rect,
-  .bg-#{$name}.node.hover rect {
+  .node.bg-#{$name}:hover rect,
+  .node.bg-#{$name}.hover rect {
     fill: lighten($value, $light-factor * .7);
     stroke-width: 1.2px;
+    transition: fill 150ms ease-out;
   }
 
- .bg-#{$name}.node.selected rect {
-   fill: lighten($value, $light-factor - 8);
+  .node.bg-#{$name}.selected rect {
+   fill: lighten($value, $light-factor * .3);
    stroke-width: 1.8px;
  }
 
-  .#{$name} path {
-    stroke: $value;
+  .edgePath.#{$name} path {
+    stroke: lighten($value, $light-factor * .75);
+    transition: stroke-width 100ms ease-out;
   }
 
-  .#{$name}.light path {
-    stroke: lighten($value, $light-factor);
+  .edgePath.#{$name} path:hover,
+  .edgePath.#{$name}.hover path {
+    stroke-width: 2px;
+    stroke: lighten($value, $light-factor * .3);
   }
 
-  .#{$name}.dark path,  marker {
-    stroke: darken($value, $light-factor);
+  .edgePath.#{$name}.hover marker {
+    stroke-width: 1px;
+  }
+
+  .edgePath.#{$name}.selected path {
+    stroke: darken($value, $light-factor * .4);
   }
 }

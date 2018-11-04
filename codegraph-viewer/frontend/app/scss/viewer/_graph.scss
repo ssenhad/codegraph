@@ -1,0 +1,61 @@
+@import "../colors";
+
+.node {
+  cursor: default;
+}
+
+.node rect {
+  rx: 10;
+  ry: 10;
+}
+
+.node rect, .node ellipse, .node circle, .node polygon {
+  stroke: #000000;
+  fill: #fff;
+  stroke-width: 0.75px;
+  stroke-linecap: round;
+}
+
+.edgePath > path:hover {
+  stroke-width: 2.75px;
+}
+
+.edgePath > path {
+  stroke-width: 1.75px;
+}
+
+.clusters rect {
+  fill: #00ffd0;
+  stroke: #999;
+  stroke-width: 1.5px;
+}
+
+@each $name, $value in $colors {
+  .bg-#{$name} rect, .#{$name} marker {
+    fill: lighten($value, $light-factor);
+    stroke: darken($value, $light-factor * 2);
+  }
+
+  .bg-#{$name}.node:hover rect,
+  .bg-#{$name}.node.hover rect {
+    fill: lighten($value, $light-factor * .7);
+    stroke-width: 1.2px;
+  }
+
+ .bg-#{$name}.node.selected rect {
+   fill: lighten($value, $light-factor - 8);
+   stroke-width: 1.8px;
+ }
+
+  .#{$name} path {
+    stroke: $value;
+  }
+
+  .#{$name}.light path {
+    stroke: lighten($value, $light-factor);
+  }
+
+  .#{$name}.dark path,  marker {
+    stroke: darken($value, $light-factor);
+  }
+}

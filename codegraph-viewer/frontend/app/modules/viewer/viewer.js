@@ -70,7 +70,6 @@ function renderGraph(graphlib) {
             return graphlib.edge(e)._data.attributes.configurations;
         }).flat().distinct();
         classes.push(configsToNode.length == 0 || configsToNode.indexOf('compile') !== -1 ? 'bg-color-1' : 'bg-color-2');
-        classes.push('light');
         return classes.join(' ');
     }, true);
 

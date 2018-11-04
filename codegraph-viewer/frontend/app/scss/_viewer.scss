@@ -2,6 +2,7 @@
 @import "~bootstrap/scss/variables";
 @import "~bootstrap/scss/mixins";
 
+@import "./viewer/graph";
 
 svg.view {
   width: 100%;
@@ -11,30 +12,6 @@ svg.view {
 text {
     font-weight: 300;
     font-size: 14px;
-}
-
-.node {
-    cursor: default;
-}
-
-.node rect {
-  rx: 10;
-  ry: 10;
-}
-
-.node rect, .node ellipse, .node circle, .node polygon {
-    stroke: #000000;
-    fill: #fff;
-    stroke-width: 0.75px;
-    stroke-linecap: round;
-}
-
-.edgePath > path:hover {
-    stroke-width: 2.75px;
-}
-
-.edgePath > path {
-  stroke-width: 1.75px;
 }
 
 .display-options .head {
@@ -53,25 +30,6 @@ text {
   height: 200px;
 }
 
-.clusters rect {
-  fill: #00ffd0;
-  stroke: #999;
-  stroke-width: 1.5px;
-}
-
-$color-categories: (
-  color-1: #aec7e8,
-  color-2: #ffbb78,
-  color-3: #98df8a,
-  color-4: #ff9896,
-  color-5: #c5b0d5,
-  color-6: #c49c94,
-  color-7: #f7b6d2,
-  color-8: #c7c7c7,
-  color-9: #dbdb8d,
-  color-10: #9edae5
-);
-
 @mixin x-badge-variant($bg) {
   color: #212529;
   background-color: $bg;
@@ -85,7 +43,7 @@ $color-categories: (
   }
 }
 
-@each $name, $value in $color-categories {
+@each $name, $value in $colors {
   .#{$name} {
     color: $value;
   }
@@ -99,9 +57,7 @@ $color-categories: (
   }
 }
 
-$light-factor: 15%;
-
-@each $name, $value in $color-categories {
+@each $name, $value in $colors {
   .#{$name}.light {
     color: lighten($value, $light-factor);
   }
@@ -115,7 +71,7 @@ $light-factor: 15%;
   }
 }
 
-@each $name, $value in $color-categories {
+@each $name, $value in $colors {
   .#{$name}.dark {
     color: darken($value, $light-factor);
   }
@@ -126,32 +82,5 @@ $light-factor: 15%;
 
   .bg-#{$name}.dark {
     @include bg-variant($name, darken($value, $light-factor));
-  }
-}
-
-@each $name, $value in $color-categories {
-  .bg-#{$name} rect, .#{$name} marker {
-    fill: $value;
-    stroke: darken($value, $light-factor * 2);
-  }
-
-  .bg-#{$name}.light rect, .#{$name} marker {
-    fill: lighten($value, $light-factor);
-  }
-
-  .bg-#{$name}.dark rect, .#{$name} marker {
-    fill: darken($value, $light-factor);
-  }
-
-  .#{$name} path {
-    stroke: $value;
-  }
-
-  .#{$name}.light path {
-    stroke: lighten($value, $light-factor);
-  }
-
-  .#{$name}.dark path,  marker {
-    stroke: darken($value, $light-factor);
   }
 }

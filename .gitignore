@@ -22,6 +22,7 @@ codegraph-server/src/main/resources/public/node_modules
 codegraph-server/src/main/resources/public/yarn-latest
 .DS_Store
 classes
+.cache
 
 codegraph-viewer/frontend/node_modules
 codegraph-viewer/frontend/components

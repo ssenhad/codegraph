@@ -9,9 +9,12 @@
     "scripts": {
         "build": "webpack && npm run test:unit",
         "dev": "node stub-server/app.js",
+        "storybook": "start-storybook -p 9001 -c .storybook",
         "test:unit": "jest"
     },
     "devDependencies": {
+        "@storybook/addon-actions": "^4.0.2",
+        "@storybook/react": "^4.0.2",
         "babel-core": "^6.26.3",
         "babel-jest": "^23.6.0",
         "babel-loader": "^7.1.5",

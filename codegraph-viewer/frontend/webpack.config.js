@@ -65,7 +65,7 @@ module.exports = {
             {
                 test: /\.scss$/,
                 use: [
-                    // { loader: 'style-loader' },
+                    { loader: 'style-loader' },
                     { loader: MiniCssExtractPlugin.loader },
                     { loader: 'css-loader' },
                     {
@@ -80,7 +80,8 @@ module.exports = {
                         }
                     },
                     { loader: 'sass-loader' }
-                ]
+                ],
+                include: path.resolve(__dirname, ".")
             },
             {
                 test: /\.css$/,

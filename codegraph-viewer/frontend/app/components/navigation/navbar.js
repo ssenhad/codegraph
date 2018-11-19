@@ -31,9 +31,9 @@ export default class Navbar extends React.Component {
                         <li className="nav-item text-nowrap">
                             <a className="nav-link" href="#/artifacts">Artifacts</a>
                         </li>
-                        <li className="nav-item text-nowrap">
-                            <a className="nav-link" href="#/viewer">Viewer</a>
-                        </li>
+                        {/*<li className="nav-item text-nowrap">*/}
+                            {/*<a className="nav-link" href="#/viewer">Viewer</a>*/}
+                        {/*</li>*/}
                     </ul>
                     <form className="form-inline mt-2 mt-md-0">
                         <input type="text" name="artifact" className="form-control form-control-sm mr-sm-2" placeholder="Search..." />

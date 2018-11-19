@@ -14,33 +14,10 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import colors from '../scss/_colors.scss';
 
-class Sidebar extends React.Component {
-
-    render() {
-        return (
-            <aside className="cgr-sidebar-fixed">
-                <div className="cgr-sidebar h-100 d-flex flex-column">
-                    {this.props.title && (<div className="cgr-sidebar-title">{this.props.title}</div>)}
-                    {this.props.children}
-                </div>
-            </aside>
-        );
-    }
+class Colors {
+    static ALL = Array.from(Object.entries(colors), ([name, value]) => ({ name, value }));
 }
 
-class SidebarSection extends React.Component {
-
-    render() {
-        return (
-            <div className="cgr-sidebar-section p-2">
-                {this.props.children}
-            </div>
-        );
-    }
-}
-
-Sidebar.Section = SidebarSection;
-
-export default Sidebar;
+export default Colors;

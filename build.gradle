@@ -44,13 +44,7 @@ subprojects {
             '**/*.xml',
             '**/*Test.java',
             '**/*TestConfiguration.java',
-            '**/*TestBase.java',
-
-            '**/*.json',
-            '**/node_modules/**/*.*',
-            '**/Gruntfile.js',
-            '**/test/**/*.js',
-            '**/dist/*'
+            '**/*TestBase.java'
         ])
     }
 

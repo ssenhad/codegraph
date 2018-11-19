@@ -13,6 +13,18 @@ sourceSets {
     }
 }
 
+license {
+    excludes([
+        '**/*.json',
+        '**/node_modules/**/*.*',
+        '**/Gruntfile.js',
+        '**/test/**/*.js',
+        '**/dist/*',
+        '**/stories/**/*.js',
+        '**/.storybook/**/*.*'
+    ])
+}
+
 task npmBuild(type: NpmTask, dependsOn: npmInstall) {
     args = ['run', 'build']
 }

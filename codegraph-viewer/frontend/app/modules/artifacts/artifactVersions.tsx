@@ -14,14 +14,29 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import * as React from 'react';
 
-export default class Container extends React.Component {
+import { Link } from 'react-router-dom';
+import Section from "../../components/page/section";
+
+export default class ArtifactVersions extends React.Component<any, any> {
     render() {
+        const { artifact, versions } = this.props;
+
+        if (!versions || !artifact) {
+            return null;
+        }
+
         return (
-            <div className="d-flex h-100 w-100 cgr-container">
-                {this.props.children}
-            </div>
+            <Section header="Versions">
+                <div>
+                {versions.map((version: any) => (
+                    <span key={version.version}>
+                        <Link to={`/artifacts/${artifact.organization}/${artifact.name}/${version.version}`}>{version.version}</Link>&nbsp;&nbsp;&nbsp;
+                    </span>
+                ))}
+                </div>
+            </Section>
         );
     }
 }

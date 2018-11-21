@@ -14,28 +14,28 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import * as React from 'react';
 
 import { Treee } from '@dnfeitosa/react-treee';
 import { Node } from '@dnfeitosa/react-treee/models';
 
 import apiService from '../../services/api-service';
-import Sidebar from "../../components/page/sidebar";
+import { SidebarSection } from "../../components/page/sidebar";
 
-class ArtifactsTree extends React.Component {
+export default class ArtifactsTree extends React.Component<{ onSelect: (node: Node) => void }, { artifacts: Node[] | {}, artifactNode?: Node }> {
 
-    constructor() {
-        super();
-        this.state = { artifacts: {} }
+    constructor(props: any) {
+        super(props);
+        this.state = { artifacts: {} };
     }
 
-    onOpen(node) {
+    onOpen(node: Node) {
         if (Array.isArray(node.children)) {
             return;
         }
         node.loading = true;
         return apiService.artifactTree(node.id).then((data) => {
-            return node.children = data.nodes.map((n) => {
+            return node.children = data.nodes.map((n: any) => {
                 node.loading = false;
                 n.icon = n.type === 'organization' ? 'folder' : 'file';
                 let data = Node.fromData(n);
@@ -45,7 +45,7 @@ class ArtifactsTree extends React.Component {
         });
     }
 
-    onSelect(artifactNode) {
+    onSelect(artifactNode: Node) {
         this.props.onSelect(artifactNode);
         this.setState({ artifactNode });
     }
@@ -53,7 +53,7 @@ class ArtifactsTree extends React.Component {
     componentDidMount() {
         apiService.artifactTree().then((data) => {
             this.setState({
-                artifacts: data.nodes.map((node) => {
+                artifacts: data.nodes.map((node: any) => {
                     node.children = true;
                     node.icon = node.type === 'organization' ? 'folder' : 'file';
                     return node;
@@ -64,13 +64,11 @@ class ArtifactsTree extends React.Component {
 
     render() {
         return (
-            <Sidebar.Section>
+            <SidebarSection>
                 <Treee data={this.state.artifacts}
                        onOpenNode={this.onOpen.bind(this)}
-                       onSelectNode={this.onSelect.bind(this)} />
-            </Sidebar.Section>
+                       onSelectNode={this.onSelect.bind(this)}/>
+            </SidebarSection>
         );
     }
 }
-
-export default ArtifactsTree;

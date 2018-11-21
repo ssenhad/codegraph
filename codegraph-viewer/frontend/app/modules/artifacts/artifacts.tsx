@@ -14,56 +14,68 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
-import { withRouter } from 'react-router-dom';
+import * as React from 'react';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 import Container from '../../components/page/container';
 import Sidebar from '../../components/page/sidebar';
 import Main from '../../components/page/main';
 
-import ArtifactsTree from './artifacts-tree';
-import ArtifactOverview from './artifact-overview'
+import ArtifactsTree from './artifactsTree';
+import ArtifactOverview from './artifactOverview';
+import {ArtifactIdentity} from "../../models/core";
+import {Node} from '@dnfeitosa/react-treee/models';
 
-class Artifacts extends React.Component {
+interface UrlParameters {
+    organization: string;
+    name: string;
+    version: string;
+}
 
-    constructor(props) {
+interface Properties extends RouteComponentProps<UrlParameters> {
+}
+
+interface State {
+    artifact?: ArtifactIdentity
+}
+
+class Artifacts extends React.Component<Properties, State> {
+
+    constructor(props: Properties) {
         super(props);
 
         this.select = this.select.bind(this);
         this.state = {};
     }
 
-    static getDerivedStateFromProps(props) {
-        const { organization, name, version } = props.match.params;
-        return {
-            artifact: {
-                organization,
-                name,
-                version
-            }
-        }
-    }
-
     render() {
         const { artifact } = this.state;
+
         return (
             <Container>
                 <Sidebar title="Artifacts">
                     <ArtifactsTree onSelect={this.select} />
                 </Sidebar>
                 <Main>
-                    <ArtifactOverview artifact={artifact} key={`${artifact.organization}:${artifact.name}:${artifact.version}`}/>
+                    {artifact && (<ArtifactOverview artifact={artifact} key={`${artifact.organization}:${artifact.name}:${artifact.version}`}/>)}
                 </Main>
             </Container>
         );
     }
 
-    select(artifact) {
+    select(artifact: Node) {
         if (artifact.type === 'organization') {
             return;
         }
 
         this.props.history.push(`/artifacts/${artifact.parent}/${artifact.name}`);
+    }
+
+    static getDerivedStateFromProps(props: RouteComponentProps<UrlParameters>) : State {
+        const { organization, name, version } = props.match.params;
+        return {
+            artifact: {organization, name, version}
+        }
     }
 }
 

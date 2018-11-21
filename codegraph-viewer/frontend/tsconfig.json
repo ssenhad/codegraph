@@ -6,7 +6,7 @@
         "moduleResolution": "node",
         "strictNullChecks": true,
         "module": "es6",
-        "target": "es5",
+        "target": "es6",
         "lib": ["es5", "es2015", "dom"],
         "jsx": "react",
         "allowJs": true

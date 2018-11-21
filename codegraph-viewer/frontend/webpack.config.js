@@ -126,10 +126,10 @@ module.exports = {
         alias: {
             jquery: "jquery/src/jquery"
         },
-        extensions: ['.ts', '.tsx', '.js']
+        extensions: ['.ts', '.tsx', '.js', '.jsx']
     },
     externals: {
-        "react": "React",
-        "react-dom": "ReactDOM",
+        // "react": "React",
+        // "react-dom": "ReactDOM",
     }
 };

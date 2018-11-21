@@ -3,8 +3,8 @@
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * the Free Software Foundation, either value 3 of the License, or
+ * (at your option) any later value.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,33 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import * as React from 'react';
 
-class Sidebar extends React.Component {
-
+export default class Main extends React.Component<{}, {}> {
     render() {
         return (
-            <aside className="cgr-sidebar-fixed">
-                <div className="cgr-sidebar h-100 d-flex flex-column">
-                    {this.props.title && (<div className="cgr-sidebar-title">{this.props.title}</div>)}
-                    {this.props.children}
-                </div>
-            </aside>
-        );
-    }
-}
-
-class SidebarSection extends React.Component {
-
-    render() {
-        return (
-            <div className="cgr-sidebar-section p-2">
+            <main className="cgr-main d-flex h-100 w-100 ml-auto flex-column">
                 {this.props.children}
-            </div>
+            </main>
         );
     }
 }
 
-Sidebar.Section = SidebarSection;
-
-export default Sidebar;
+export { Main };

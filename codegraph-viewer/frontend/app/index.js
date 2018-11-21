@@ -25,8 +25,8 @@ import ReactDOM from 'react-dom';
 import './extensions';
 
 import Navbar from './components/navigation/navbar';
-import Artifacts from './modules/artifacts/artifacts';
-import Viewer from './modules/viewer/viewer';
+import Artifacts from './pages/artifacts/artifacts';
+import Viewer from './pages/viewer/viewer';
 
 const _404 = () => {
     return (

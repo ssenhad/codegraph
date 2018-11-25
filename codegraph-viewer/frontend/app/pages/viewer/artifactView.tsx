@@ -1,12 +1,12 @@
 import {Graph} from "../../models/graph";
-import {Artifact} from "../../models/core";
+import {Artifact, ArtifactIdentity} from "../../models/core";
 import * as _ from "lodash";
 
 export class ArtifactView {
     graph: Graph;
-    artifact: Artifact;
+    artifact?: ArtifactIdentity;
 
-    constructor(graph: Graph, artifact: Artifact) {
+    constructor(graph: Graph, artifact?: ArtifactIdentity) {
         this.graph = graph;
         this.artifact = artifact;
     }
@@ -26,7 +26,7 @@ export class ArtifactView {
     }
 
     // @ts-ignore
-    hideNodes(predicate) {
+    hideNodes(predicate: (node: Node<any>) => boolean) {
         this.graph.nodes.forEach((node) => {
             if (predicate(node)) {
                 // @ts-ignore

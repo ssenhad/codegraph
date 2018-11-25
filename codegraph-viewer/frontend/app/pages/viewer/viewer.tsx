@@ -18,10 +18,9 @@ import * as React from 'react';
 import * as d3 from 'd3';
 import * as dagre from 'dagre';
 import * as dagreD3 from 'dagre-d3';
-import * as graphlib from 'graphlib';
 import * as _ from 'lodash';
 
-import {withRouter} from 'react-router-dom';
+import {RouteComponentProps, withRouter} from 'react-router-dom';
 
 import {Sidebar} from '../../components/page/sidebar';
 
@@ -30,12 +29,13 @@ import Container from '../../components/page/container';
 
 import apiService from '../../services/api-service';
 
-import {Graph} from "../../models/graph";
+import {Edge, Graph, Node} from "../../models/graph";
 import {ArtifactView} from "./artifactView";
 import {Configurations} from "./configurations";
+import {ArtifactIdentity} from "../../models/core";
 
 
-function asGraphlibGraph(g: Graph) {
+function asGraphlibGraph(g: Graph) : dagre.graphlib.Graph {
     var graph = new dagre.graphlib.Graph({ compound: true })
         .setGraph({})
         .setDefaultEdgeLabel(function () { return {}; });
@@ -50,7 +50,7 @@ function asGraphlibGraph(g: Graph) {
     return graph;
 }
 
-function renderGraph(graphlib: graphlib.Graph) {
+function renderGraph(graphlib: dagre.graphlib.Graph) {
     // Set up zoom support
     var svg = d3.select('svg'),
         svgGroup = svg.append('g');
@@ -61,9 +61,8 @@ function renderGraph(graphlib: graphlib.Graph) {
 
     var render = new dagreD3.render();
 
-    const svgG = d3.select('svg g');
     // @ts-ignore
-    render(svgG, graphlib);
+    render(d3.select('svg g'), graphlib);
 
     // color nodes based on confs
     svgGroup.selectAll('.node').attr('class', function (node: string) {
@@ -101,29 +100,25 @@ function renderGraph(graphlib: graphlib.Graph) {
     // svg.attr("height", graphlib.graph().height + 40);
 }
 
+interface ViewerProps extends RouteComponentProps<ArtifactIdentity> {
+}
 
-type ViewerProps = { match: { params: { name: string, organization: string, version: string } } };
 type ViewerState = { view: ArtifactView };
 
 class Viewer extends React.Component<ViewerProps, ViewerState> {
 
-    constructor() {
-        // @ts-ignore
-        super();
-        // @ts-ignore
+    constructor(props: ViewerProps) {
+        super(props);
         this.state = { view: new ArtifactView({ nodes: [], edges: [] }) };
         this.toggle = this.toggle.bind(this);
     }
 
     componentDidMount() {
         const { params: artifact } = this.props.match;
-        // @ts-ignore
         apiService.dependencyGraph(artifact).then((data) => {
             let graph = Graph.fromData(data);
-            const graphlib = asGraphlibGraph(graph);
-            // @ts-ignore
-            renderGraph(graphlib);
-            // @ts-ignore
+            const g = asGraphlibGraph(graph);
+            renderGraph(g);
             this.setState({ view: new ArtifactView(graph, artifact) });
         });
     }
@@ -132,28 +127,24 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
         let view = this.state.view;
         let graph = view.graph;
 
-        // @ts-ignore
-        view.hideNodes((node) => {
+        view.hideNodes((node: Node<any>) => {
             // let attributes = node)._data.attributes;
             // return attributes.length == 1 && attributes.indexOf(configuration) !== -1;
+            return false;
         });
-        // @ts-ignore
-        view.hideEdges((edge) => {
-            let attributes = edge._data.attributes;
-            return attributes.length == 1 && attributes.indexOf(configuration) !== -1;
+
+        view.hideEdges((edge: Edge) => {
+            let configurations = edge.attributes.configurations;
+            return configurations.length == 1 && configurations.indexOf(configuration) !== -1;
         });
         const graphlib = asGraphlibGraph(graph);
-        // @ts-ignore
         renderGraph(graphlib);
     }
-
-
 
     render() {
         const { params: artifact } = this.props.match;
         const { view } = this.state;
 
-        // @ts-ignore
         return (
             <Container>
                 <Sidebar title={`${artifact.organization}:${artifact.name}:${artifact.version}`}>
@@ -171,5 +162,4 @@ class Viewer extends React.Component<ViewerProps, ViewerState> {
     }
 }
 
-// @ts-ignore
 export default withRouter(Viewer);

@@ -25,5 +25,3 @@ export default class Main extends React.Component<{}, {}> {
         );
     }
 }
-
-export { Main };

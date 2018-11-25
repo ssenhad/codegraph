@@ -16,12 +16,29 @@
  */
 import * as React from 'react';
 
+import apiService from '../../services/api-service';
+
 import { Link } from 'react-router-dom';
 import Section from "../../components/page/section";
 
 export default class ArtifactVersions extends React.Component<any, any> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {  };
+    }
+
+    componentDidMount() {
+        const { artifact } = this.props;
+        apiService.getArtifactVersions(artifact).then((x) => {
+            const {versions} = x;
+            this.setState({ versions });
+        })
+    }
+
     render() {
-        const { artifact, versions } = this.props;
+        const { artifact /*, versions*/ } = this.props;
+        const { versions } = this.state;
 
         if (!versions || !artifact) {
             return null;

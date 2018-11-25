@@ -16,7 +16,9 @@
  */
 import * as React from 'react';
 
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+
+import apiService from '../../services/api-service';
 
 import Section from '../../components/page/section';
 
@@ -64,8 +66,20 @@ const Toolbar = (props: { artifact: any }) => {
 
 export default class ArtifactDetails extends React.Component<any, any> {
 
-    render() {
+    constructor(props: any) {
+        super(props);
+        this.state = { }
+    }
+
+    componentDidMount() {
         const { artifact } = this.props;
+        artifact && artifact.version && apiService.getArtifact(artifact).then((artifact) => {
+            this.setState({ artifact });
+        });
+    }
+
+    render() {
+        const { artifact } = this.state;
         if (!artifact) {
             return null;
         }

@@ -22,9 +22,10 @@ import Sidebar from '../../components/page/sidebar';
 import Main from '../../components/page/main';
 
 import ArtifactsTree from './artifactsTree';
-import ArtifactOverview from './artifactOverview';
 import {ArtifactIdentity} from "../../models/core";
 import {Node} from '@dnfeitosa/react-treee/models';
+import ArtifactVersions from "./artifactVersions";
+import ArtifactDetails from "./artifactDetails";
 
 interface UrlParameters {
     organization: string;
@@ -38,6 +39,23 @@ interface Properties extends RouteComponentProps<UrlParameters> {
 interface State {
     artifact?: ArtifactIdentity
 }
+
+const ArtifactTitle = (props: { artifact: ArtifactIdentity }) => {
+    const {artifact} = props;
+    if (!props.artifact || !props.artifact.organization) {
+        return null;
+    }
+
+    return (
+        <nav aria-label="breadcrumb">
+            <ol className="breadcrumb">
+                <li className="breadcrumb-item">{artifact.organization}</li>
+                <li className="breadcrumb-item active" aria-current="page">{artifact.name}</li>
+                <li className="breadcrumb-item active" aria-current="page">{artifact.version}</li>
+            </ol>
+        </nav>
+    );
+};
 
 class Artifacts extends React.Component<Properties, State> {
 
@@ -57,7 +75,13 @@ class Artifacts extends React.Component<Properties, State> {
                     <ArtifactsTree onSelect={this.select} />
                 </Sidebar>
                 <Main>
-                    {artifact && (<ArtifactOverview artifact={artifact} key={`${artifact.organization}:${artifact.name}:${artifact.version}`}/>)}
+                    {artifact && artifact.organization && artifact.name && (
+                        <React.Fragment>
+                            <ArtifactTitle artifact={artifact} key={`title-${artifact.organization}:${artifact.name}:${artifact.version}`}/>
+                            <ArtifactVersions artifact={artifact} key={`${artifact.organization}:${artifact.name}`}/>
+                            <ArtifactDetails artifact={artifact} key={`details-${artifact.organization}:${artifact.name}:${artifact.version}`} />
+                        </React.Fragment>
+                    )}
                 </Main>
             </Container>
         );

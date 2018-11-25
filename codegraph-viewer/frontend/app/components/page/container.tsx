@@ -3,8 +3,8 @@
  *
  * This program is free software: you can redistribute it and/or modify
  * it under the terms of the GNU Affero General Public License as published by
- * the Free Software Foundation, either version 3 of the License, or
- * (at your option) any later version.
+ * the Free Software Foundation, either value 3 of the License, or
+ * (at your option) any later value.
  *
  * This program is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -14,3 +14,14 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+import * as React from 'react';
+
+export default class Container extends React.Component<{ children: React.ReactNode }, any> {
+    render() {
+        return (
+            <div className="d-flex h-100 w-100 cgr-container">
+                {this.props.children}
+            </div>
+        );
+    }
+}

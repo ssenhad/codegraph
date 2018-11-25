@@ -14,13 +14,16 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import * as React from 'react';
 
-import { Link } from 'react-router-dom';
+import {Link} from 'react-router-dom';
+
+import apiService from '../../services/api-service';
 
 import Section from '../../components/page/section';
 
-const DependenciesTable = ({ artifact }) => {
+const DependenciesTable = (props: { artifact: any }) => {
+    const { artifact } = props;
     return (
         <table className="table table-sm table-bordered table-responsive-lg">
             <thead>
@@ -32,7 +35,7 @@ const DependenciesTable = ({ artifact }) => {
                 </tr>
             </thead>
             <tbody>
-                {artifact.dependencies.map((dependency) => {
+                {artifact.dependencies.map((dependency: any) => {
                     const { organization, name, version, configurations } = dependency;
                     return (
                         <tr className="dependency" key={[organization, name, version, configurations].join(':')}>
@@ -48,7 +51,8 @@ const DependenciesTable = ({ artifact }) => {
     );
 };
 
-const Toolbar = ({ artifact }) => {
+const Toolbar = (props: { artifact: any }) => {
+    const { artifact } = props;
     return (
         <div className="cgr-artifacts-toolbar">
             <div>
@@ -60,10 +64,22 @@ const Toolbar = ({ artifact }) => {
     );
 };
 
-export default class ArtifactDetails extends React.Component {
+export default class ArtifactDetails extends React.Component<any, any> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = { }
+    }
+
+    componentDidMount() {
+        const { artifact } = this.props;
+        artifact && artifact.version && apiService.getArtifact(artifact).then((artifact) => {
+            this.setState({ artifact });
+        });
+    }
 
     render() {
-        const { artifact } = this.props;
+        const { artifact } = this.state;
         if (!artifact) {
             return null;
         }

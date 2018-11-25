@@ -29,18 +29,4 @@ const Section = (props) => {
     );
 };
 
-// const Section = (props) => {
-//     return (
-//         <div className="cgr-content-section">
-//             {props.header && (
-//                 <div className="cgr-text-sub-heading">{props.header}</div>
-//             )}
-//             {props.children}
-//         </div>
-//     );
-// };
-
-// Section.Section = Section;
-//
-// export { Section };
 export default Section;

@@ -16,12 +16,12 @@ sourceSets {
 license {
     excludes([
         '**/*.json',
-        '**/node_modules/**/*.*',
+        '**/node_modules/**/*',
         '**/Gruntfile.js',
         '**/test/**/*.js',
         '**/dist/*',
         '**/stories/**/*.js',
-        '**/.storybook/**/*.*'
+        '**/.storybook/**/*'
     ])
 }
 

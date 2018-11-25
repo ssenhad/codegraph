@@ -24,9 +24,10 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 module.exports = {
     mode: 'development',
     entry: [
-        './app/index.js',
+        './app/index.tsx',
         './app/scss/index.scss'
     ],
+    devtool: 'source-map',
     output: {
         filename: 'bundle.js',
         publicPath: '/',
@@ -57,6 +58,16 @@ module.exports = {
     ],
     module: {
         rules: [
+            {
+                test: /\.(ts|tsx)$/,
+                use: 'awesome-typescript-loader',
+                exclude: /node_modules/
+            },
+            {
+                enforce: "pre",
+                test: /\.js$/,
+                loader: "source-map-loader"
+            },
             {
                 test: /\.(js|jsx)$/,
                 exclude: /node_modules/,
@@ -114,6 +125,11 @@ module.exports = {
     resolve: {
         alias: {
             jquery: "jquery/src/jquery"
-        }
+        },
+        extensions: ['.ts', '.tsx', '.js', '.jsx']
+    },
+    externals: {
+        // "react": "React",
+        // "react-dom": "ReactDOM",
     }
 };

@@ -14,14 +14,31 @@
  * You should have received a copy of the GNU Affero General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-import React from 'react';
+import * as React from 'react';
+
+import apiService from '../../services/api-service';
 
 import { Link } from 'react-router-dom';
 import Section from "../../components/page/section";
 
-export default class ArtifactVersions extends React.Component {
+export default class ArtifactVersions extends React.Component<any, any> {
+
+    constructor(props: any) {
+        super(props);
+        this.state = {  };
+    }
+
+    componentDidMount() {
+        const { artifact } = this.props;
+        apiService.getArtifactVersions(artifact).then((x) => {
+            const {versions} = x;
+            this.setState({ versions });
+        })
+    }
+
     render() {
-        const { artifact, versions } = this.props;
+        const { artifact /*, versions*/ } = this.props;
+        const { versions } = this.state;
 
         if (!versions || !artifact) {
             return null;
@@ -30,7 +47,7 @@ export default class ArtifactVersions extends React.Component {
         return (
             <Section header="Versions">
                 <div>
-                {versions.map((version) => (
+                {versions.map((version: any) => (
                     <span key={version.version}>
                         <Link to={`/artifacts/${artifact.organization}/${artifact.name}/${version.version}`}>{version.version}</Link>&nbsp;&nbsp;&nbsp;
                     </span>
